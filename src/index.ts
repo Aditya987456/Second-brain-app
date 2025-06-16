@@ -4,12 +4,13 @@
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
-import { ConnectDB, UserModel } from "./db"
-import { z } from "zod"
+import { ConnectDB, ContentModel, UserModel } from "./db"
+import { any, z } from "zod"
 import bcrypt from 'bcrypt'
 import { error } from "console"
 const saltrounds=5;
 import dotenv from 'dotenv'
+import { UserMiddleware } from "./middleware";
 dotenv.config()  // to access all the .env file secrets code or link.
 
 const app=express()
@@ -112,7 +113,7 @@ app.post('/api/v1/signup', async (req: Request, res: Response) => {
 
 
 
-//-----------------------------   sinup   -------------------------------
+//-----------------------------   signup   -------------------------------
 //@ts-ignore
 app.post('/api/v1/signin', async (req:Request, res:Response)=>{
 
@@ -183,6 +184,48 @@ app.post('/api/v1/signin', async (req:Request, res:Response)=>{
         })
    }
 })
+
+
+
+
+
+
+
+//----------------------------------  add new content  ---------------------
+
+app.post('/api/v1/content', UserMiddleware ,async (req:Request, res:Response )=>{
+    try {
+        
+        const { title, link, type, tags }= req.body
+
+
+        await ContentModel.create({
+            link,
+            type,
+            title,
+            //@ts-ignore
+            userId:req.userId,
+            tags: []
+        })
+
+         res.status(200).json({
+            message:'successfully added content'
+        })
+
+
+
+    } catch (error) {
+        res.status(500).json({
+            message:'error in adding content.',
+            Error:error
+        })
+        
+    }
+
+
+})
+
+
 
 
 

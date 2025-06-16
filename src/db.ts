@@ -34,3 +34,20 @@ const UserSchema=new Schema({
 
 export const UserModel=mongoose.model('user', UserSchema);
 
+
+
+
+
+//----------------------  content schema -------------------------
+
+const ContentSchema=new Schema({
+    title:String,
+    link:String,
+    type:String,
+    tags:[{type:mongoose.Types.ObjectId, ref:'Tag'}],
+    userId:{type:mongoose.Types.ObjectId, ref:'User', required:true}
+}
+)
+
+export const ContentModel=mongoose.model('content', ContentSchema)
+
