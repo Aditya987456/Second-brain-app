@@ -230,6 +230,47 @@ app.post('/api/v1/content', UserMiddleware ,async (req:Request, res:Response )=>
 
 
 
+//-------------------------------------  retrieve content ------------------
+app.get('/api/v1/content', UserMiddleware, async (req, res)=>{
+//@ts-ignore
+    const userId=req.userId
+    const contents= await ContentModel.find({
+        userId:userId
+    }).populate("userId", "emailID username")   // select only or show only emailid and username.
+
+    res.json({
+        contents
+    })
+
+    
+})
+
+
+
+
+
+
+//---------------------------------  delete content  ----------------------------------------
+app.delete('/api/v1/content', UserMiddleware, async (req, res)=>{
+    const { contentId }=req.body
+    await ContentModel.deleteOne({
+        _id:contentId,
+      
+       
+    })
+
+
+    res.status(200).json({
+        message:'successfully deleted content'
+    })
+
+})
+
+
+
+
+
+
 
 
 
