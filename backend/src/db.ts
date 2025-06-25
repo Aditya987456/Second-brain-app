@@ -51,3 +51,18 @@ const ContentSchema=new Schema({
 
 export const ContentModel=mongoose.model('content', ContentSchema)
 
+
+
+
+
+
+
+//------------------------  link table- schema. -------------------------
+
+const LinkSchema=new Schema({ 
+    userId: {type: mongoose.Types.ObjectId, ref:'user', required: true, unique:true},  //it refers user table..in populating
+    hash:String,
+
+})
+export const linkModel = mongoose.model('link', LinkSchema)
+

@@ -4,13 +4,14 @@
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
-import { ConnectDB, ContentModel, UserModel } from "./db"
+import { ConnectDB, ContentModel, linkModel, UserModel } from "./db"
 import { any, z } from "zod"
 import bcrypt from 'bcrypt'
 import { error } from "console"
 const saltrounds=5;
 import dotenv from 'dotenv'
 import { UserMiddleware } from "./middleware";
+import { random } from "./utils";
 dotenv.config()  // to access all the .env file secrets code or link.
 
 const app=express()
@@ -87,8 +88,6 @@ app.post('/api/v1/signup', async (req: Request, res: Response) => {
        
     
 
-
-
     } catch (error:any) {
         if(error.code==11000){
             return res.status(403).json({
@@ -113,7 +112,7 @@ app.post('/api/v1/signup', async (req: Request, res: Response) => {
 
 
 
-//-----------------------------   signup   -------------------------------
+//-----------------------------   signin   -------------------------------
 //@ts-ignore
 app.post('/api/v1/signin', async (req:Request, res:Response)=>{
 
@@ -272,6 +271,114 @@ app.delete('/api/v1/content', UserMiddleware, async (req, res)=>{
 
 
 
+//--------------------------------  share content  -------------------------------------
+
+app.post('/api/v1/brain/share', UserMiddleware, async (req:Request, res:Response)=>{
+
+    
+    try {
+        const share=req.body.share
+
+        if(share){
+
+        const alreadylink=await linkModel.findOne({
+            //@ts-ignore
+            userId:req.userId
+        });
+
+
+        if(alreadylink){
+            res.json({ hash:alreadylink.hash })
+            return;
+        }
+
+
+        const hashVal=random(20)
+        await linkModel.create({
+            //@ts-ignore
+            userId:req.userId,
+            hash:hashVal
+        })
+
+        res.json({ hash:hashVal })
+        return;
+
+
+        }else{
+
+        await linkModel.deleteOne({
+            //@ts-ignore
+            userId:req.userId
+        });
+
+        res.json({
+            message:'successfully removed the link'});
+            return; 
+
+        }
+
+        
+    } catch(error){
+        console.error("Error in /brain/share:", error);
+        res.status(500).json({ message: 'Internal Server Error' });
+        return;
+
+        }
+
+
+    })
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+//----------------------------------- shared contents... ---------------------------------
+
+app.get('/api/v1/brain/:sharelink', async (req, res)=>{
+    
+    const hash = req.params.sharelink;
+
+    const link = await linkModel.findOne({
+        hash
+    })
+
+
+    if(!link){
+        res.status(411).json({
+            message:"sorry incorrect inputs."
+        })
+        return;
+    }
+
+    const content = await ContentModel.find({
+       //@ts-ignore
+        userId:link.userId
+    })
+
+
+    const user=await UserModel.findOne({
+        //@ts-ignore
+        userId:link.userId
+    })
+
+    res.json({
+        username:user?.username,
+        content:content
+    })
+
+
+
+})
 
 
 

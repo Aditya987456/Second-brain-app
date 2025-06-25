@@ -1,4 +1,5 @@
 import { Button } from "./components/Button"
+import { AddIons } from "./icons/PlusIcon"
 
 
 function App() {
@@ -9,7 +10,13 @@ function App() {
      
       <div className="bg-blue-50">  hi there</div>
 
-    <Button></Button>
+    <Button
+
+      varient={"secondary"}
+      startIcon={<AddIons/>}
+       
+
+    ></Button>
 
     </>
   )
