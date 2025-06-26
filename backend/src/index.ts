@@ -365,11 +365,11 @@ app.get('/api/v1/brain/:sharelink', async (req, res)=>{
         userId:link.userId
     })
 
-
     const user=await UserModel.findOne({
         //@ts-ignore
         userId:link.userId
     })
+
 
     res.json({
         username:user?.username,
