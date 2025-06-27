@@ -1,14 +1,26 @@
+import type { ReactElement } from "react";
+
 interface ButtonProps{
-    varient:"primary" | "secondary";
+    variant:"primary" | "secondary";
     size:"sm" | "md" | "lg";
     text:string;
-    startIcon?:any;   //? : optional.
-    endIcon?:any;
+    startIcon?:ReactElement;   //? : optional.
+    endIcon?:ReactElement;
     onClick: ()=>void;
 }
 
-export const Button =(props:ButtonProps)=>{
+const variantClasses = {
+    "primary": "bg-purple-600 text-white",
+    "secondary":"bg-purple-200", 
+}
 
-    return <button></button>
+const defaultstyles= "px-4 py-2 rounded-md m-2 cursor-pointer flex items-center"
+
+export const Button =({variant, text, startIcon}:ButtonProps)=>{
+
+    return <button className={variantClasses[variant] +" "+ defaultstyles}>
+        <span className="pr-3" >{startIcon}</span>
+        {text}
+    </button>
 
 }

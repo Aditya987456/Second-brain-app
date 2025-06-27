@@ -61,7 +61,7 @@ export const ContentModel=mongoose.model('content', ContentSchema)
 
 const LinkSchema=new Schema({ 
     userId: {type: mongoose.Types.ObjectId, ref:'user', required: true, unique:true},  //it refers user table..in populating
-    hash:String,
+    hash:String
 
 })
 export const linkModel = mongoose.model('link', LinkSchema)
