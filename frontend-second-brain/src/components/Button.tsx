@@ -6,19 +6,19 @@ interface ButtonProps{
     text:string;
     startIcon?:ReactElement;   //? : optional.
     endIcon?:ReactElement;
-    onClick: ()=>void;
+    onClick?: ()=>void;
 }
 
 const variantClasses = {
     "primary": "bg-purple-600 text-white",
-    "secondary":"bg-purple-200", 
+    "secondary":"bg-purple-100 text-purple-600", 
 }
 
 const defaultstyles= "px-4 py-2 rounded-md m-2 cursor-pointer flex items-center"
 
-export const Button =({variant, text, startIcon}:ButtonProps)=>{
+export const Button =({variant, text, startIcon, onClick}:ButtonProps)=>{
 
-    return <button className={variantClasses[variant] +" "+ defaultstyles}>
+    return <button onClick={onClick} className={variantClasses[variant] +" "+ defaultstyles}>
         <span className="pr-3" >{startIcon}</span>
         {text}
     </button>
