@@ -2,6 +2,8 @@
 import { useState } from "react"
 import { CrossIcon } from "../icons/crossIcon"
 import { Button } from "./Button"
+import AddContentModal from "./modal"
+import { Inputcomponent } from "./inputbox"
 
 
 export const AddContent=({open, onClose})=>{
@@ -12,7 +14,7 @@ export const AddContent=({open, onClose})=>{
             <div className="w-screen h-screen flex justify-center items-center relative ">
                 <span className="bg-white opacity-100 rounded-md py-4 px-2">
 
-                  
+
                     <div className=" flex items-center justify-end">
                         <h2 className="text-xl font-semibold text-center px-20">Add Content</h2>
                         <div className=" flex justify-end" onClick={onClose}>
@@ -42,20 +44,16 @@ export const AddContent=({open, onClose})=>{
 
         </div>}
 
+        {/* { open  &&   <AddContentModal/> } */}
+
     </div>
 }
 
 
-function Inputcomponent( {onChange, placeholder }: {onChange: () => void, placeholder?: string} ) {
 
-    return <div>
 
-        <input
-          type={"text"}
-          placeholder={placeholder}
-          className="px-2 py-2 my-2 border rounded-sm"
-          onChange={onChange} />
 
-    </div>
+
+
     
 }
