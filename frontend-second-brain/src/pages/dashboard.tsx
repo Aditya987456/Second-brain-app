@@ -30,8 +30,8 @@ export function Dashboard() {
 
         {/* header of dashboard -> your sec brain , search bar, share, add, theme button. */}
         <div className="flex gap-4 justify-end">
-          <Button variant='primary'  text="Share brain"  startIcon={<ShareIcons/>}></Button>
-          <Button onClick={ ()=>{setModalcard(true)} } variant='secondary'  text="Add content" startIcon={<AddIcons/>} ></Button>
+          <Button  onClick={ ()=>{setModalcard(true)} }  variant='primary'  text="Add content"  startIcon={<AddIcons/>}></Button>
+          <Button  variant='secondary'  text="Share brain" startIcon={<ShareIcons/>} ></Button>
         </div>
 
 
