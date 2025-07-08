@@ -13,9 +13,13 @@ import dotenv from 'dotenv'
 import { UserMiddleware } from "./middleware";
 import { random } from "./utils";
 dotenv.config()  // to access all the .env file secrets code or link.
+import cors from "cors"
 
 const app=express()
 app.use(express.json())
+app.use(cors())
+
+
 ConnectDB();
 
 
@@ -26,7 +30,7 @@ ConnectDB();
 
 
 
-
+app.use(express.json());
 
 
 
