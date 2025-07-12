@@ -181,7 +181,7 @@ app.post('/api/v1/signin', async (req:Request, res:Response)=>{
         //#6: send token after signin
         res.status(200).json({
             message:'Signed in successfully',
-            Token:token
+            Token:token          //here when i use token in the backend then i have to use this as  ' .Token '
         })
 
  
@@ -213,7 +213,7 @@ app.post('/api/v1/content', UserMiddleware ,async (req:Request, res:Response )=>
             title,
             //@ts-ignore
             userId:req.userId,
-            tags: []
+            //tags: []
         })
 
          res.status(200).json({

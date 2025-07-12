@@ -34,14 +34,15 @@ export function Signin() {
                 password
             })
 
-            const Token=response.data.token;
+            const Token=response.data.Token;
             localStorage.setItem("token",Token)
+
 
 
             navigate('/dashboard')
 
             
-        } catch (error) {
+        }catch (error) {
             alert('error in signing in'+ error)
         }
     }

@@ -46,8 +46,7 @@ const ContentSchema=new Schema({
     type:String,
     tags:[{type:mongoose.Types.ObjectId, ref:'Tag'}],
     userId:{type:mongoose.Types.ObjectId, ref:'user', required:true}
-}
-)
+})
 
 export const ContentModel=mongoose.model('content', ContentSchema)
 

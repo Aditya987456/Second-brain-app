@@ -112,28 +112,3 @@ export function Signup() {
 }
 
 
-
-
-        {/* <div className="w-screen h-screen bg-gray-200 flex justify-center items-center">
-
-            <div className="bg-white rounded-xl border-2 w-4/12 px-8 py-8">
-                <div className="flex justify-center items-center text-2xl pb-4 font-bold" ><h1>Create Account</h1></div>
-                
-                <div className="pb-2"><h2>Username</h2>
-                <Inputcomponent reference={UsernameRef} placeholder="Username"></Inputcomponent>
-                </div>
-
-                 <div className="pb-2"><h2>EmailID</h2>
-                <Inputcomponent reference={EmailRef} placeholder="EmailID"></Inputcomponent>
-                </div>
-                
-               <div className="pb-2"><h2>Password</h2>
-                <Inputcomponent reference={PasswordRef} placeholder="Password"></Inputcomponent>
-                </div>
-
-                <div className="flex justify-center py-4">
-                    <Button onClick={signup} fullwidth={true} variant="primary"  text="Signup"/>
-                </div>
-            </div>
-
-        </div> */}

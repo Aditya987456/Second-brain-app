@@ -23,10 +23,10 @@ export const AddContent=({open, onClose})=>{
                     </div>
 
                     <div className="flex justify-center items-center my-2">
-                    <div>
-                        <Inputcomponent placeholder={"Title..."}/>
-                        <Inputcomponent placeholder={"Link..."}/>
-                    </div>
+                        <div>
+                            <Inputcomponent placeholder={"Title..."}/>
+                            <Inputcomponent placeholder={"Link..."}/>
+                        </div>
                     </div>
 
                     <div className="flex justify-center">
