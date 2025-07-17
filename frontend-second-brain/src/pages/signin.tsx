@@ -79,6 +79,7 @@ export function Signin() {
                             variant="primary"
                             text="Sign in"
                             fullwidth={true}
+                            //@ts-ignore
                             onClick={ (e:any)=>signin(e) }
                        /></div>
 

@@ -1,44 +1,58 @@
 // src/pages/LandingPage.tsx
 
-import { Brain, Link2, Youtube, Twitter, FileText } from "lucide-react";
+import { Link2, Youtube, Twitter, FileText } from "lucide-react";
+import brain2icon from "../assets/brain2icon.png"
+import heroImage from "../assets/heroImage.png"
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-black">
       {/* Header */}
-      <header className="flex justify-between items-center px-6 py-4 shadow-sm">
-        <div className="flex items-center gap-2 text-xl font-semibold">
-          <Brain className="text-blue-600" />
-          <span>My Second Brain</span>
-        </div>
-        <nav className="space-x-6 font-medium">
-          <a href="#" className="hover:text-blue-600">Home</a>
-          <a href="#" className="hover:text-blue-600">About</a>
-          <a href="#" className="hover:text-blue-600">Contact</a>
-        </nav>
-      </header>
+      <div className="flex justify-center pt-6">
+        <header className="fixed h-16 w-full max-w-[1250px] bg-purple-100/30 backdrop-blur-md rounded-xl border-purple-600 shadow-md px-4 md:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-xl font-semibold">
+              <img src={brain2icon} alt="logo" className="w-10 h-10 text-2xl font font-extrabold "/>
+              <span>Second Brain</span>
+            </div>
+            <nav className="space-x-6 font-medium">
+             
+              <a href="#" className="hover:text-purple-600">About</a>
+              <a href="#" className="hover:text-purple-600">Contact</a>
+            </nav>
+        </header>
+      </div>
+     
+
 
       {/* Hero */}
-      <section className="flex flex-col-reverse lg:flex-row items-center px-8 py-12 max-w-7xl mx-auto">
+      <section className="flex flex-col-reverse  lg:flex-row  px-20 min-h-screen  max-w-7xl mx-auto">
         {/* Left Content */}
-        <div className="flex-1 space-y-6">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            Create Your <br /> <span className="text-blue-600">Second Brain</span>
+        <div className="flex-1">
+          <h1 className="text-4xl md:text-7xl mt-40">
+            <span className="block leading-[5rem]  font-bold">Create Your</span>
+            <span className="block text-purple-600 font-extrabold">Second Brain</span>
           </h1>
-          <p className="text-lg text-gray-600">
-            Store links, videos, tweets and ideas in one convenient place.
+
+          <p className="text-lg font-medium text-gray-600 mt-4 px-2">
+            Store and organize your digital life — links, YouTube videos, tweets, notes, and more.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl text-lg font-semibold transition">
+
+          <h2 className="mt-24 text-purple-500 font-bold text-4xl">Powered by AI to search smarter</h2>
+          <div className="font-semibold text-gray-600 text-lg mt-2 px-2">Forget scrolling through bookmarks — just ask, and your AI brain delivers</div>
+          
+          <button className="bg-purple-600 mt-20 ml-20 hover:bg-purple-700 text-white px-8 py-5 rounded-xl text-lg font-semibold transition">
             Get Started
           </button>
+          <button className="ml-8 px-8 py-4 font-bold text-lg border-purple-600 border-2 hover:bg-purple-200 text-purple-900 rounded-xl transition">Try Demo</button>
+        
         </div>
 
         {/* Illustration */}
         <div className="flex-1 mb-10 lg:mb-0">
           <img
-            src="/illustration.svg" // Replace with actual path
+            src={heroImage} // Replace with actual path
             alt="Second Brain Illustration"
-            className="w-full max-w-lg mx-auto"
+            className="w-full  max-w-lg mx-auto"
           />
         </div>
       </section>
