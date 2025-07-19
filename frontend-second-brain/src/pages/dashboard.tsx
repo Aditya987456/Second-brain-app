@@ -14,9 +14,9 @@ const [isOpen, setIsOpen] = useState(false); // Set to false initially in real p
   const { contents, loading, fetchcontents } = useContent();
   //const [ modalcard, setModalcard ]=useState(false);
 
-  if (loading) {
-    return <div className="p-4">Loading your brain... 🧠</div>;
-  }
+  // if (loading) {
+  //   return <div className="p-4">Loading your brain... 🧠</div>;
+  // }
 
   return (
 
@@ -24,7 +24,7 @@ const [isOpen, setIsOpen] = useState(false); // Set to false initially in real p
 
     <Sidebar/>
 
-    <div className="p-4 ml-72 min-h-screen border-2">
+    <div className="p-4 md:ml-72 ml-16  min-h-screen transition-all duration-300 ease-in-out">
 
 
         { isOpen && <AddContentModal 

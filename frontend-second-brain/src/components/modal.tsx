@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, Instagram } from "lucide-react";
+import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, Instagram, Github } from "lucide-react";
 import { Inputcomponent } from "./inputbox";
 import axios from "axios";
 import { BACKEND_URL } from "../pages/config";
@@ -103,8 +103,8 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
           </button>
 
           <button  onClick={()=>{setNextmodal("enterdetails"), setType("instagram")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
-            <Instagram className="w-8 h-8 text-pink-500" />
-            <span className="mt-2 text-md">Instagram</span>
+            <Github className="w-8 h-8 text-black" />
+            <span className="mt-2 text-md">Github</span>
           </button>
 
 

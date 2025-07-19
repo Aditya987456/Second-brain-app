@@ -6,46 +6,130 @@ import brain2icon from "../assets/brain2icon.png"
 import icontext from "../assets/icontext.png"
 import secondbrainmain from "../assets/secondbrainmain.png"
 import { MenuIcon } from "../icons/menu"
+import { useState } from "react"
+import { DocsIcon } from "../icons/docsIcons"
+import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram, Github } from "lucide-react";
 
 export const Sidebar=()=>{
+
+    const [ isSidebarOpen, setIsSidebarOpen ]=useState(true)
 
 
     return <div>
 
 
-        <div className=" h-screen md:bg-purple-50 border-r w-16 bg-purple-50 md:w-72 fixed left-0 md:top-0">
+            <div className={`h-screen  border-r-2 bg-purple-50  fixed left-0  transition-all duration-300 ease-linear
+                             
+                             ${isSidebarOpen ? 'w-72 ' : 'w-16'}
 
-        {/* logo+cross  ---  in sidebar */}
-        <div className="md:flex md:justify-between md:items-center md:relative md:-top-12">
-            <div className="md:hidden flex justify-center text-center bg-green-700 "><MenuIcon/></div>
-            <span className=" md:mt-2 md:size-60 mt-16"><img src={secondbrainmain} alt="logo" /></span>
-            <span className="hidden pt-4 cursor-pointer pr-2 text-3xl text-gray-500  hover:text-gray-700">X</span>
+                             `}>
+
+          
+   
+
+                    
+                    <div className=" left-0 top-0 ">
+                            {/* --------- for the logo and menu mobile view -------- */}
+                            <div
+                                    className={`cursor-pointer transition-all duration-300 ease-linear                                
+                                                ${isSidebarOpen ? 'ml-72 rotate-180' : 'ml-16 '}
+                                                `}
+                                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                    >
+                                    <MenuIcon />
+                                </div>
+
+
+
+
+                            {/* -------------------- Logo + Text  ------------------- */}
+                            <div className="flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
+                                <img src={brain2icon} alt="logo" className="w-12 shrink-0" />
+                                <p
+                                    className={`
+                                    transition-all duration-300 ease-in-out 
+                                    whitespace-nowrap 
+                                    overflow-hidden
+                                    text-2xl
+                                    text-purple-700
+                                    font-semibold
+
+                                    ${isSidebarOpen ? 'opacity-100 w-auto ml-1' : 'opacity-0 w-0'}
+                                    `}
+                                >
+                                    Second Brain
+                                </p>
+                            </div>
+
+
+                    </div>
+
+
+
+            {/* ------------- all the items of sidebar.  ---------------------- */}
+                <div className="mt-16 whitespace-nowrap 
+                                    overflow-hidden">
+                    <ul className="relative left-0 text-md font-normal space-y-2 " >
+                        <li><SidebarItems sidebar={isSidebarOpen} text="Twitter" icon={<TwitterIcon/>}/></li>
+                        <li><SidebarItems sidebar={isSidebarOpen} text="Youtube" icon={<YtIcons/>}/></li>
+                        <li><SidebarItems sidebar={isSidebarOpen} text="Github" icon={< Github/>}/></li>
+                        <li><SidebarItems sidebar={isSidebarOpen} text="Documents" icon={<FileText className="text-yellow-400"></FileText>}/></li>
+                        <li><SidebarItems sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600"></Link2>}/></li>
+                        <li><SidebarItems sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
+                    </ul>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+
+
+
+
+            {/* below -> logout button. */}
+             <div className="mt-96  p-2 cursor-pointer  rounded-md flex justify-center hover:bg-purple-100">
+                <LogOut></LogOut><p className={` pl-4 text-lg  ${isSidebarOpen ? 'opacity-100 w-auto ml-1' : 'opacity-0 w-0'}`} >Logout</p>
+            </div>
+
         </div>
 
-        {/* all the items of sidebar. */}
-        <div className="mt-16">
-            <ul className="relative left-4 text-lg space-y-6" >
-                <li><SidebarItems text="Twitter" icon={<TwitterIcon/>}/></li>
-                <li><SidebarItems text="Youtube" icon={<YtIcons/>}/></li>
-            </ul>
-            <div className="md:hidden md:size-10 text-green-500  hover:text-gray-700"><MenuIcon/></div>
-        </div>
 
-
-
-
-
-        {/* below -> logout button. */}
-        <div className="mt-96 flex justify-center">
-            <button className="bg-purple-600 rounded-md px-4 py-2 text-white">LOGOUT</button>
-        </div>
-
-
-
-
-
-
-    </div>
 
 
 
