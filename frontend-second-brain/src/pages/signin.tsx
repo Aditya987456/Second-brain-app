@@ -49,9 +49,9 @@ export function Signin() {
 
     return (
         
-        <div className="min-h-screen bg-gray-200  flex justify-center items-center px-6 py-12">
+        <div className="min-h-screen   flex justify-center items-center px-6 py-12">
             
-            <div className=" max-w-4xl w-full rounded-xl shadow-lg bg-white overf grid grid-cols-1 md:grid-cols-2">
+            <div className=" max-w-4xl w-full rounded-xl border-2 border-t-8 border-t-purple-400 bg-white overf grid grid-cols-1 md:grid-cols-2">
 
 
 
@@ -85,7 +85,7 @@ export function Signin() {
 
                     </form> 
                     <p className="text-sm text-gray-500 ml-20" >
-                        Don't have an Account? {"  "} <a href="/signup" className="text-[#6A5ACD] hover:underline">SignUp</a>
+                        Don't have an Account? {"  "} <a href="/signup" className="text-[#6A5ACD] text-lg fond-md hover:underline">SignUp</a>
                     </p>
                     
                  </div>

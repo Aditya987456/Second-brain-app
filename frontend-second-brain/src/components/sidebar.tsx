@@ -10,10 +10,18 @@ import { useState } from "react"
 import { DocsIcon } from "../icons/docsIcons"
 import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram, Github } from "lucide-react";
 
-export const Sidebar=()=>{
 
-    const [ isSidebarOpen, setIsSidebarOpen ]=useState(true)
 
+//types for sidebar arguments....
+interface SidebarProps {
+    isSidebarOpen: boolean;
+    setIsSidebarOpen: (value: boolean) => void;
+}
+
+
+
+
+export const Sidebar=( { isSidebarOpen, setIsSidebarOpen }: SidebarProps )=>{
 
     return <div>
 

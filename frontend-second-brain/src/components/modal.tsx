@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, Instagram, Github } from "lucide-react";
+import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, Github } from "lucide-react";
 import { Inputcomponent } from "./inputbox";
 import axios from "axios";
 import { BACKEND_URL } from "../pages/config";
@@ -79,7 +79,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
 
       
       
-      {/* first step of modal-> it has all 4-6 cards inside for the type of the content. */}
+    {/* first step of modal-> it has all 4-6 cards inside for the type of the content. */}
        { nextmodal==="select" &&  (<div><div  className="grid grid-cols-2 gap-6">
 
           <button onClick={()=>{setNextmodal("enterdetails"), setType("twitter")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
@@ -132,7 +132,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
 
 
 
-      {/*second step of modal -> it has inputbox for the title and link with back and submit button. */}
+    {/*second step of modal -> it has inputbox for the title and link with back and submit button. */}
         {nextmodal === "enterdetails"  &&  ( 
           <form  className=" space-y-6 bg-white text-black mx-4 py-2 rounded-lg relative h-full flex flex-col justify-between" onSubmit={HandleSubmitform}>
           <p className="text-center text-md  text-gray-600">

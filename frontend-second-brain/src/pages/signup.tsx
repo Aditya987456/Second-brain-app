@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Button } from "../components/Button";
 import { Inputcomponent } from "../components/inputbox";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { BACKEND_URL } from "./config";
 import brainimg from "../assets/brainimg.png"
 export function Signup() {
@@ -16,6 +16,9 @@ export function Signup() {
      const navigate = useNavigate()
     
 
+
+
+
     async function signup(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();    //$$$$ because --> triggers a default submit, which reloads the page unless explicitly prevented.
         try {
@@ -23,6 +26,12 @@ export function Signup() {
         const username = UsernameRef.current?.value;
         const password = PasswordRef.current?.value;
         const emailid = EmailRef.current?.value;
+
+        //checking not submit the form empty.
+        if (!emailid || !username || !password) {
+            alert("All fields are required.");
+            return;
+            }
 
 
         //sending post request --> to backend
@@ -46,9 +55,9 @@ export function Signup() {
 
     return (
         
-        <div className="min-h-screen bg-gray-200  flex justify-center items-center px-6 py-12">
+        <div className="min-h-screen   flex justify-center items-center px-6 py-12">
             
-            <div className=" max-w-4xl w-full rounded-xl shadow-lg bg-white overf grid grid-cols-1 md:grid-cols-2">
+            <div className=" max-w-4xl w-full rounded-xl border-2 border-t-8 border-t-purple-400 bg-white overf grid grid-cols-1 md:grid-cols-2">
 
 
 
@@ -87,7 +96,8 @@ export function Signup() {
 
                     </form> 
                     <p className="text-sm text-gray-500 ml-20" >
-                        Already have an Account? {"  "} <a href="/signin" className="text-[#6A5ACD] hover:underline">SignIn</a>
+                        Already have an Account? {"  "} <Link to="/signin" className="text-[#6A5ACD] hover:underline text-lg fond-md">SignIn</Link>
+
                     </p>
 
 
