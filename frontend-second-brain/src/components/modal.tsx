@@ -102,7 +102,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
             <span className="mt-2 text-md">Link</span>
           </button>
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("instagram")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("github")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <Github className="w-8 h-8 text-black" />
             <span className="mt-2 text-md">Github</span>
           </button>

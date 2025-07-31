@@ -43,8 +43,10 @@ export function Signin() {
 
             
         }catch (error) {
-            alert('error in signing in'+ error)
-        }
+            console.log(error.response?.data);  // <-- ?
+            alert('Error signing in: ' + error.response?.data?.message || 'Something went wrong');
+            }
+
     }
 
     return (

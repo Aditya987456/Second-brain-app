@@ -6,15 +6,30 @@ import { ShareIcons } from "../icons/ShareIcon";
 import { TwitterIcon } from "../icons/twitterIcon";
 import { YtIcons } from "../icons/ytIcons";
 import { useRef } from "react";
+import { CircleEllipsis, Github, Link, Link2 } from "lucide-react";
+import { BACKEND_URL } from "../pages/config";
+import axios from "axios";
+   import toast from 'react-hot-toast';
+
 
 interface Cardprops{
+    id: string;
     title:string;
     link:string;
-    type:"twitter" | "youtube" | "docs" | "instagram" 
+    type:"twitter" | "youtube" | "docs" | "github" | "link" | "others" 
     //setTwitterScriptLoaded?: (value: boolean) => void;
     isTwitterScriptLoaded?: boolean;
     setTwitterScriptLoaded?: React.Dispatch<React.SetStateAction<boolean>>;   //$$$"This is a function that sets a boolean state."
-}
+    onDelete: (id: string) => void;
+  }
+
+
+
+
+
+
+
+
 
 
 
@@ -43,8 +58,8 @@ const TypeIcons=(type:string)=>{
             return <YtIcons/>
             
 
-        case "instagram":
-            return <InstaIcon/>
+        case "github":
+            return <Github/>
             
 
         case "docs":
@@ -53,8 +68,13 @@ const TypeIcons=(type:string)=>{
 
         case "twitter":
             return <TwitterIcon/>
+
+        case "link":
+            return <Link2/>
+
+        case "others":
+            return <CircleEllipsis/>
             
-        
         
         default:
             return null;
@@ -67,8 +87,8 @@ const TypeIcons=(type:string)=>{
 
 
 
-//#-------------------------------**** cards that accept all this three things ****-----------------------------------
-export function Card({title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded}:Cardprops) {
+//#-------------------------------**** cards that accept all this things ****-----------------------------------
+export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded, onDelete}:Cardprops) {
 
 
 
@@ -92,6 +112,40 @@ export function Card({title, link, type, isTwitterScriptLoaded, setTwitterScript
 
 
 
+      //------------------------****  Deleting the card   ****-------------------------
+
+
+
+
+ async function DeletingCard() {
+    try {
+      await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+        data : { contentId: id },
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      });
+
+      toast.success("Card deleted!");
+      onDelete(id); // update frontend dashboard
+    } catch (error) {
+      console.error("Error deleting card:", error);
+      toast.error("Error deleting content");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------revise some part of this ------------++++++++++
 const hasAlertedRef = useRef(false); // ✳️ Track alert state
 
 const embededLink = useMemo(() => {
@@ -146,6 +200,28 @@ useEffect(() => {
 
 
     //.................. for the github card  ..........................
+  {type === 'github' && (
+  <div className="bg-gray-50 p-4 rounded shadow-sm border">
+    <p className="text-sm text-gray-600 mb-2">GitHub Repository:</p>
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-600 font-medium underline break-words"
+    >
+      {link}
+    </a>
+  </div>
+)}
+
+
+
+
+
+
+
+
+    //.................. for the links card  ..........................
 
 
 
@@ -155,7 +231,9 @@ useEffect(() => {
 
 
 
-    //.................. for the youtube card  ..........................
+
+
+    //.................. for the docs card  ..........................
 
 
 
@@ -164,28 +242,17 @@ useEffect(() => {
 
 
 
-
-
-
-    //.................. for the youtube card  ..........................
-
+    //.................. for the others card  ..........................
 
 
 
 
 
 
-
-    //.................. for the youtube card  ..........................
-
-
-
-
-
-
-
-
-
+//////////////////////----------------------testing something.
+const testingsomething=()=>{
+  alert('clicked saaaaar')
+}
 
 
 
@@ -200,22 +267,24 @@ useEffect(() => {
 
         <div className="min-h-48 mt-4 p-2 min-w-80 max-w-80 shadow-lg rounded-lg border-slate-200 border">
 
-           {/* --------------- header of the card  ------------------ */}
+        {/* ------------------------- header of the card  ------------------------------- */}
             <div className=" flex justify-between text-gray-500">  
 
                 <div className="flex items-center justify-between text-md">
-                    <div className=" text-gray-500 pr-4">
+                    <div  className=" text-gray-500 pr-4">
                         {TypeIcons(type)}
                          </div>
+                         {/* title of the card */}
                         <span className="text-black">{title}</span>
                 </div>
 
-
+                    {/* share icon on top of the card */}
                 <div className="flex items-center">
                     <div className="mr-3">
                         <ShareIcons/>
                     </div>
-                    <div>
+                  {/* delete icon on top of the card */}
+                    <div onClick={DeletingCard} >
                         <DeleteIcons/>
                     </div>
                 </div>
