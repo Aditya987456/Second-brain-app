@@ -1,6 +1,8 @@
 //npm run build & npm run start
 
 
+
+
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
@@ -37,6 +39,8 @@ ConnectDB();
 
 
 
+
+//### *Note->  ExpiresAt -> fo mongodb clear data,    ExpiresIn -> for session of the token for the real users not for demo user...
 
 
 
@@ -93,7 +97,9 @@ app.post('/api/v1/signup', async (req: Request, res: Response) => {
         await UserModel.create({
             emailID,
             password:hashedPassword,
-            username
+            username,
+            isDemo: false,
+            expireAt: null // not expires the real user.
         })
 
 
@@ -299,7 +305,7 @@ app.post('/api/v1/brain/share', UserMiddleware, async (req:Request, res:Response
     try {
         const share=req.body.share
 
-        if(share){
+        if(share){ 
 
         const alreadylink=await linkModel.findOne({
             //@ts-ignore
@@ -362,7 +368,7 @@ app.post('/api/v1/brain/share', UserMiddleware, async (req:Request, res:Response
 
 
 
-//----------------------------------- shared contents... ---------------------------------
+//-----------------------------------  get shared contents... ---------------------------------
 
 app.get('/api/v1/brain/:sharelink', async (req, res)=>{
     
@@ -399,6 +405,42 @@ app.get('/api/v1/brain/:sharelink', async (req, res)=>{
 
 
 })
+
+
+
+
+
+//---------------------------------------------  Try demo ---------------------------------------------
+
+// #NOTE --> In MongoDB, TTL is a feature that lets you automatically delete documents after a certain   amount of time — without writing any cleanup code.
+
+app.post("/api/v1/demo-login", async (req: Request, res: Response) => {
+  try {
+    const uniqueId = `demo-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+    const demoUser = await UserModel.create({
+      _id: uniqueId,
+      emailID: `${uniqueId}@demo.com`,
+      username: "DemoUser",
+      password: "ABCDabcd1234",
+      isDemo: true,
+      expireAt: new Date(Date.now() + 2 * 60 * 60 * 1000) // 2 hours TTL
+    });
+
+    const token = jwt.sign(
+      { id: demoUser._id, isDemo: true },
+      process.env.JWT_SECRET!,
+      { expiresIn: "2h" }
+    );
+
+    return res.json({ message: "Demo session started", token });
+  } catch (err) {
+    return res.status(500).json({ message: "Failed to start demo session" });
+  }
+});
+
+
+
 
 
 
