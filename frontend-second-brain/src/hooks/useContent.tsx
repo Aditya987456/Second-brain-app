@@ -5,15 +5,17 @@ import axios from "axios"
 
 
 
+//creating this custom hook----------------------------
+export const useContent=(filterType = "")=>{
+      const [allContents, setAllContents] = useState<ContentType[]>([]);   //it have all the content fetched from server
+      const [contents, setContents] = useState<ContentType[]>([]);     //it has only filtered content like "", "Youtube", "Twitter"  etc.
+      const [loading, setLoading] = useState(false);
+     
 
-export const useContent=(filterType="")=>{
-    const [ contents, setContents] = useState([])
-    const [ loading, setLoading ] = useState(false)
-
-    //-----  fetch the all contents. -----
+    //---------------------   fetch the all contents.   ----------------
     async function fetchcontents() {
         setLoading(true)
-                    console.log("Token being used:", localStorage.getItem("token"));
+        //console.log("Token being used:", localStorage.getItem("token"));   //for testing ,
 
 
         try {
@@ -23,22 +25,34 @@ export const useContent=(filterType="")=>{
                 },
             })
 
-            const allContents=response.data.contents
-            const filteredcontents=filterType? allContents.filter(items =>items.type=== filterType) : allContents
-            setContents(filteredcontents)
+            const AllFetchedContents=response.data.contents
+            setAllContents(AllFetchedContents)
              
         } catch (error) {
-              console.error("Error fetching content-usecontent saar:", error);
+              console.error("Error fetching content--->usecontent saar:", error);
         } finally {
             setLoading(false);
             }
     }
 
 
-
+//runs when page loads.
     useEffect( ()=>{
         fetchcontents();
-    }, [filterType] )   //agar kuch filter nahi hai fir bhi refresh hoga becz filter is "" is passing
+    }, [] )  
+    
+    
+
+//**** filtering contents,,,,
+
+  useEffect(() => {
+    const filtered = filterType
+      ? allContents.filter((item) => item.type === filterType)
+      : allContents;
+
+    setContents(filtered);
+  }, [filterType, allContents]);
+
 
 
 
@@ -49,3 +63,18 @@ export const useContent=(filterType="")=>{
     return {contents, loading, setContents, fetchcontents, setLoading }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//$$$ Improvements -->  use re-filtering instead of refetching...

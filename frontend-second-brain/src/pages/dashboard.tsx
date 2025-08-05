@@ -15,6 +15,7 @@ import { useOutletContext } from "react-router-dom";
 
 type OutletContextType = {
   isSidebarOpen: boolean;
+  filter: string;
 };
 
 
@@ -22,12 +23,14 @@ type OutletContextType = {
 
 export function Dashboard() {
 
-  const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
 
-  const { isSidebarOpen } = useOutletContext<OutletContextType>();
+
+const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
+
+const { isSidebarOpen, filter } = useOutletContext<OutletContextType>();
 
 const [isOpen, setIsOpen] = useState(false); // Set to false initially in real project
-const { contents, loading, fetchcontents, setContents } = useContent();
+const { contents, loading, fetchcontents, setContents } = useContent(filter);
 
   //const [ modalcard, setModalcard ]=useState(false);
 
@@ -42,6 +45,12 @@ function handleDelete(id: string) {
   // Update state to remove the deleted card without refetching everything
   setContents(prev => prev.filter(content => content._id !== id));
 }
+
+
+
+
+const username = localStorage.getItem("username") || "guest";
+const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a string
 
 
 
@@ -63,6 +72,21 @@ function handleDelete(id: string) {
           fetchcontents={fetchcontents}
           onClose={ ()=>{ setIsOpen(false) }}
            /> }
+
+
+
+        {/* -------------------------   Demo section   ------------------------- */}
+        {isDemo && (
+          <div className="bg-yellow-100 text-yellow-800 p-3 rounded mb-4 text-sm">
+            You're using a <strong>temporary demo account</strong>. All data will be deleted after 2 hours.
+            <br />
+            <a href="/signup" className="text-blue-600 underline font-semibold">Sign up</a> to keep your content!
+          </div>
+        )}
+
+
+
+
 
   {/*  ------------- header of dashboard -> your sec brain , search bar, share, add, theme button. */}
         
@@ -88,16 +112,23 @@ function handleDelete(id: string) {
 
 
 
+
+
+
+
+
+
+
   {/* -------------------------- all the cards are there ------------------ */}
-        <div className=" columns-1 mt-10 sm:columns-2 md:columns-3 xl:columns-4 space-y-4">
+        <div className=" columns-1 mt-10 sm:columns-2 md:columns-3 xl:columns-4 space-y-6">
           
           { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
             contents.map(({ _id, type, link, title }) => {
               //const { type, link, title } = item;  // it is same as passing in the props like
-              return <div key={link} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20" > <Card
-                id={_id}
+              return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20" > <Card
+                id={_id}  
                 type={type}
-                key={link}
+               
                 link={link}
                 title={title}
                 isTwitterScriptLoaded={isTwitterScriptLoaded}
@@ -125,3 +156,23 @@ function handleDelete(id: string) {
   )
 }
 
+
+
+
+
+
+
+
+
+
+/*
+
+Question arises when there is solution in gpt that says separately use github url in the contents.map () because
+
+Why You Might Be Rendering GitHubCard Separately
+You likely created GitHubCard as a standalone component to fetch GitHub metadata and display a rich preview. But if your <Card /> component already handles rendering logic based on type, then the better approach is:
+
+## then the better approach is:
+
+✅ Move the GitHub-specific logic inside the Card component, just like you do for Twitter or YouTube.
+ */

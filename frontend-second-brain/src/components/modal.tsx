@@ -87,28 +87,28 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
             <span className="mt-2 text-md">Tweet</span>
           </button>
 
-          <button onClick={()=>{setNextmodal("enterdetails"), setType("youtube")}}  className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button onClick={()=>{setNextmodal("enterdetails"), setType("Youtube")}}  className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <Youtube className="w-8 h-8 text-red-500" />
             <span className="mt-2 text-md">Video</span>
           </button>
 
-          <button onClick={()=>{setNextmodal("enterdetails"), setType("document")}} className="flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
+          <button onClick={()=>{setNextmodal("enterdetails"), setType("Docs")}} className="flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
             <FileText className="w-8 h-8 text-yellow-400" />
             <span className="mt-2 text-md">Document</span>
           </button>
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("link")}} className="flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Link")}} className="flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
             <Link2 className="w-8 h-8 text-slate-600" />
             <span className="mt-2 text-md">Link</span>
           </button>
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("github")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Github")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <Github className="w-8 h-8 text-black" />
             <span className="mt-2 text-md">Github</span>
           </button>
 
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("others")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Others")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <CircleEllipsis className="w-8 h-8 text-blue-400" />
             <span className="mt-2 text-md">Others</span>
           </button>

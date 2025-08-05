@@ -4,12 +4,15 @@ import { Link2, Youtube, Twitter, FileText } from "lucide-react";
 
 import heroImage from "../assets/heroImage.png"
 import { useNavigate } from "react-router-dom";
-
+import { HandleDemo } from "./HandleDemo";
 
 
 export default function LandingPage() {
 
+ 
+
   const navigate=useNavigate()
+
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -47,7 +50,9 @@ export default function LandingPage() {
                 </button>
                 <button
                   className="px-4 py-2 md:px-8 md:py-4 font-bold text-sm md:text-lg border-purple-600 border-2 hover:bg-purple-200 text-purple-900 rounded-md md:rounded-xl transition"
+                   onClick={()=>HandleDemo(navigate)}
                 >
+                 
                   Try Demo
                 </button>
             </div>

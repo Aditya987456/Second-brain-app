@@ -93,11 +93,14 @@ app.post('/api/v1/signup', async (req: Request, res: Response) => {
 
 
 
+        //triming the username
+        const trimmedUsername = username.split(" ")[0].slice(0, 10);
+
         //#5: now valid things are getting stored in the db.        
         await UserModel.create({
             emailID,
             password:hashedPassword,
-            username,
+            username:trimmedUsername,
             isDemo: false,
             expireAt: null // not expires the real user.
         })
@@ -193,7 +196,13 @@ app.post('/api/v1/signin', async (req:Request, res:Response)=>{
         //#6: send token after signin
         res.status(200).json({
             message:'Signed in successfully',
-            Token:token          //here when i use token in the backend then i have to use this as  ' .Token '
+            Token:token,          //here when i use token in the backend then i have to use this as  ' .Token '
+            
+            user: {               //here we are also sending isDemo for knowing is the user on real or just demo page and username for the hii, guest   like things...
+                isDemo: findUserGmail.isDemo,
+                username: findUserGmail.username
+    }
+        
         })
 
  
@@ -211,7 +220,7 @@ app.post('/api/v1/signin', async (req:Request, res:Response)=>{
 
 
 
-//----------------------------------  add new content  ---------------------
+//----------------------------------  add new content  --------------------------------
 
 app.post('/api/v1/content', UserMiddleware ,async (req:Request, res:Response )=>{
     try {
@@ -419,9 +428,8 @@ app.post("/api/v1/demo-login", async (req: Request, res: Response) => {
     const uniqueId = `demo-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
     const demoUser = await UserModel.create({
-      _id: uniqueId,
       emailID: `${uniqueId}@demo.com`,
-      username: "DemoUser",
+      username: "Guest",
       password: "ABCDabcd1234",
       isDemo: true,
       expireAt: new Date(Date.now() + 2 * 60 * 60 * 1000) // 2 hours TTL
@@ -433,10 +441,19 @@ app.post("/api/v1/demo-login", async (req: Request, res: Response) => {
       { expiresIn: "2h" }
     );
 
-    return res.json({ message: "Demo session started", token });
-  } catch (err) {
-    return res.status(500).json({ message: "Failed to start demo session" });
-  }
+    return res.json({ message: "Demo session started",
+        token,
+        username: demoUser.username,
+        isDemo: true                
+        
+        });
+
+
+
+  } catch (err: any) {
+  console.error("❌ DEMO LOGIN ERROR:", err);
+  return res.status(500).json({ message: "Failed to start demo session", error: err.message });
+}
 });
 
 

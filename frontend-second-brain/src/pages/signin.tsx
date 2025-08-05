@@ -35,7 +35,11 @@ export function Signin() {
             })
 
             const Token=response.data.Token;
+            
             localStorage.setItem("token",Token)
+            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("isDemo", response.data.isDemo);
+
 
 
 

@@ -1,12 +1,16 @@
 import type { ReactElement } from "react";
 
-export function SidebarItems( {text,icon,sidebar}:{
+export function SidebarItems( {text,icon,sidebar, setFilter}:{
     text:string;
     icon:ReactElement;
     sidebar:boolean
+    setFilter: (value: string) => void
+
 } ) {
 
-    return <div className="flex gap-6  hover:bg-purple-100 rounded-md transition-all duration-300 ease-in-out 
+    return <div
+             onClick={()=>setFilter(text)}
+             className="flex gap-6  hover:bg-purple-100 rounded-md transition-all duration-300 ease-in-out 
                                     whitespace-nowrap 
                                     overflow-hidden mr-2 ml-2 pl-3 p-2 cursor-pointer" >
                 <span className="size-2">{icon}</span>

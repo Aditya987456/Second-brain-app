@@ -29,7 +29,15 @@ export const ConnectDB=async ()=>{
 const UserSchema=new Schema({
     emailID:{type:String, unique:true, required:true},
     password:{type:String, required:true},
-    username:{type:String, unique:false}
+    username:{type:String, unique:false},
+    isDemo: { type: Boolean, default: false },
+
+  // TTL logic – only triggers if this field is set
+  expireAt: {
+    type: Date,
+    default: null,
+    expires: 0 // MongoDB auto-deletes only when expireAt is a real date
+  }
 })
 
 export const UserModel=mongoose.model('user', UserSchema);

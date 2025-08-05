@@ -9,8 +9,10 @@ import { useRef } from "react";
 import { CircleEllipsis, Github, Link, Link2 } from "lucide-react";
 import { BACKEND_URL } from "../pages/config";
 import axios from "axios";
-   import toast from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
+import { useState } from "react";
+import GitHubCard from "./githubCard";
 
 interface Cardprops{
     id: string;
@@ -54,25 +56,25 @@ function convertLink(link: string) {
 //---------- for selecting the icons ---------
 const TypeIcons=(type:string)=>{
     switch (type) {
-        case "youtube":
+        case "Youtube":
             return <YtIcons/>
             
 
-        case "github":
+        case "Github":
             return <Github/>
             
 
-        case "docs":
+        case "Docs":
             return <DocsIcon/>
             
 
-        case "twitter":
+        case "Twitter":
             return <TwitterIcon/>
 
-        case "link":
+        case "Link":
             return <Link2/>
 
-        case "others":
+        case "Others":
             return <CircleEllipsis/>
             
         
@@ -145,7 +147,7 @@ export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScr
 
 
 
-//--------------revise some part of this ------------++++++++++
+//--------------revise some part of this ------------++++++++++  yt card
 const hasAlertedRef = useRef(false); // ✳️ Track alert state
 
 const embededLink = useMemo(() => {
@@ -166,7 +168,7 @@ useEffect(() => {
 
   if (isLikelyYoutube && !isEmbedValid) {
     hasAlertedRef.current = true;
-    alert("⚠️ Invalid YouTube link—please check your URL.");
+    alert("Invalid YouTube link—please check your URL.");
   }
 }, [type, link, embededLink]);
 
@@ -200,19 +202,19 @@ useEffect(() => {
 
 
     //.................. for the github card  ..........................
-  {type === 'github' && (
-  <div className="bg-gray-50 p-4 rounded shadow-sm border">
-    <p className="text-sm text-gray-600 mb-2">GitHub Repository:</p>
-    <a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-600 font-medium underline break-words"
-    >
-      {link}
-    </a>
-  </div>
-)}
+  // {type === 'github' &&
+  //    <GitHubCard key={`${id}`} repoUrl={link} />
+  //  }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -265,7 +267,7 @@ const testingsomething=()=>{
 
 
 
-        <div className="min-h-48 mt-4 p-2 min-w-80 max-w-80 shadow-lg rounded-lg border-slate-200 border">
+        <div className="min-h-48 mt-4 p-2 min-w-80 max-w-80 shadow-sm hover:shadow-xl rounded-lg border-slate-200 border">
 
         {/* ------------------------- header of the card  ------------------------------- */}
             <div className=" flex justify-between text-gray-500">  
@@ -293,7 +295,7 @@ const testingsomething=()=>{
 
 
     {/*----------------------------------- DASHBOARD -->  embedding video, tweets, docs, links  -------------------------------- */}
-           <div className=" m-1 mt-6">
+           <div className=" m-1 mt-2">
 
 
 
@@ -357,6 +359,41 @@ const testingsomething=()=>{
                     <blockquote className="twitter-tweet"> <a href={link.replace('x.com', 'twitter.com')} ></a> </blockquote>
                   </div> 
                 }
+
+
+
+            {/* ****************************     github card    ************************************ */}
+                {type === "github" && link && <GitHubCard repoUrl={link} />}
+
+
+
+
+
+
+
+
+
+            {/* ********   docs link, links, others  --> preview using microlink.io API    **************/}
+              {(type === 'docs' || type === 'link' || type === 'others') && link && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-md border transition overflow-hidden"
+                >
+                  <img
+                    src={`https://api.microlink.io?url=${encodeURIComponent(link)}&screenshot=true&embed=screenshot.url`}
+                    alt="Link preview"
+                    className="w-full h-40 object-cover"
+                  />
+                </a>
+              )}
+
+
+
+
+
+
            </div>
 
 

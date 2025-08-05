@@ -16,12 +16,13 @@ import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram,
 interface SidebarProps {
     isSidebarOpen: boolean;
     setIsSidebarOpen: (value: boolean) => void;
+    setFilter:(value:string)=>void
 }
 
 
 
 
-export const Sidebar=( { isSidebarOpen, setIsSidebarOpen }: SidebarProps )=>{
+export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter }: SidebarProps )=>{
 
     return <div>
 
@@ -51,7 +52,9 @@ export const Sidebar=( { isSidebarOpen, setIsSidebarOpen }: SidebarProps )=>{
 
 
                             {/* -------------------- Logo + Text  ------------------- */}
-                            <div className="flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
+                            <div
+                            onClick={() => setFilter("")}
+                             className="flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
                                 <img src={brain2icon} alt="logo" className="w-12 shrink-0" />
                                 <p
                                     className={`
@@ -78,55 +81,14 @@ export const Sidebar=( { isSidebarOpen, setIsSidebarOpen }: SidebarProps )=>{
                 <div className="mt-16 whitespace-nowrap 
                                     overflow-hidden">
                     <ul className="relative left-0 text-md font-normal space-y-2 " >
-                        <li><SidebarItems sidebar={isSidebarOpen} text="Twitter" icon={<TwitterIcon/>}/></li>
-                        <li><SidebarItems sidebar={isSidebarOpen} text="Youtube" icon={<YtIcons/>}/></li>
-                        <li><SidebarItems sidebar={isSidebarOpen} text="Github" icon={< Github/>}/></li>
-                        <li><SidebarItems sidebar={isSidebarOpen} text="Documents" icon={<FileText className="text-yellow-400"></FileText>}/></li>
-                        <li><SidebarItems sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600"></Link2>}/></li>
-                        <li><SidebarItems sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
+                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Twitter" icon={<TwitterIcon/>}/></li>
+                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Youtube" icon={<YtIcons/>}/></li>
+                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Github" icon={< Github/>}/></li>
+                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Docs" icon={<FileText className="text-yellow-400"></FileText>}/></li>
+                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600"></Link2>}/></li>
+                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
                     </ul>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-
 
 
 
