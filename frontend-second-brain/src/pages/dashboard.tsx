@@ -29,7 +29,7 @@ const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
 
 const { isSidebarOpen, filter } = useOutletContext<OutletContextType>();
 
-const [isOpen, setIsOpen] = useState(false); // Set to false initially in real project
+const [isOpen, setIsOpen] = useState(false); // Set to false initially in real project -->
 const { contents, loading, fetchcontents, setContents } = useContent(filter);
 
   //const [ modalcard, setModalcard ]=useState(false);
@@ -49,7 +49,7 @@ function handleDelete(id: string) {
 
 
 
-const username = localStorage.getItem("username") || "guest";
+const username = localStorage.getItem("username") || "guest";    // -- will do something in v2
 const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a string
 
 
@@ -120,7 +120,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
 
   {/* -------------------------- all the cards are there ------------------ */}
-        <div className=" columns-1 mt-10 sm:columns-2 md:columns-3 xl:columns-4 space-y-6">
+        <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2 md:columns-3 xl:columns-4 space-y-6">
           
           { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
             contents.map(({ _id, type, link, title }) => {

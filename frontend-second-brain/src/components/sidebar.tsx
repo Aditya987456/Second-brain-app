@@ -54,7 +54,7 @@ export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter }: SidebarPr
                             {/* -------------------- Logo + Text  ------------------- */}
                             <div
                             onClick={() => setFilter("")}
-                             className="flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
+                             className=" cursor-pointer flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
                                 <img src={brain2icon} alt="logo" className="w-12 shrink-0" />
                                 <p
                                     className={`

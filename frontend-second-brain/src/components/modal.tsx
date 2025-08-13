@@ -3,20 +3,25 @@ import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, Github } from "luc
 import { Inputcomponent } from "./inputbox";
 import axios from "axios";
 import { BACKEND_URL } from "../pages/config";
+import { TwitterIcon } from "../icons/twitterIcon";
+import toast from "react-hot-toast";
 
 
 
 
-
+//  here isOpen is saying is the modal is open like popup or not?
+// onclose for setIsOpen false and close the modal.
 
 export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) {
  
  
   const [ nextmodal, setNextmodal ]=useState<"select"|"enterdetails">("select")
+  
   const [type, setType]=useState<string|null>(null)
-
   const titleRef=useRef<HTMLInputElement>(null)
   const linkRef=useRef<HTMLInputElement>(null)
+
+  const [ loading, setLoading ]=useState(false)
 
 
 
@@ -24,10 +29,13 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
   const HandleSubmitform=async (e:React.FormEvent)=>{
       e.preventDefault();  //prevent deafault form submission 
 
+    setLoading(true);
+    const loadingToast = toast.loading("Adding your content...");
+
 
       //********  send backend request to add the content   ******* */
       try {
-        await axios.post(`${BACKEND_URL}/api/v1/content`, {
+        const res= await axios.post(`${BACKEND_URL}/api/v1/content`, {
           title:titleRef.current?.value,
           link:linkRef.current?.value,
           type:type,
@@ -38,14 +46,28 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
           }}
       )
 
-        fetchcontents()
-        onClose()    //modal close on form submit...
+      if (!res) throw new Error("Failed to add content");
+
+      toast.success("Content added successfully! 🎉", {
+        id: loadingToast,
+      });
+
+
+        await fetchcontents()   //why await because ..
+        onClose()    //modal close on form submit...  only automatically close on successfully submit.
 
         
       } catch (error) {
-        console.log('error in adding content', error)
-      }
+       toast.error(String(error) || "Something went wrong", {
+        id: loadingToast,
+      });
+    } finally {
+      setLoading(false);
+      //onClose()    //here also we can add like irrespective of error or sucess in adding content just close modal.
+    }
   }
+  
+
 
 
   if (!isOpen) return null;
@@ -82,7 +104,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
     {/* first step of modal-> it has all 4-6 cards inside for the type of the content. */}
        { nextmodal==="select" &&  (<div><div  className="grid grid-cols-2 gap-6">
 
-          <button onClick={()=>{setNextmodal("enterdetails"), setType("twitter")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button onClick={()=>{setNextmodal("enterdetails"), setType("Twitter")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <Twitter className="w-8 h-8 text-sky-400" />
             <span className="mt-2 text-md">Tweet</span>
           </button>

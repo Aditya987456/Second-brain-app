@@ -16,6 +16,11 @@ import { UserMiddleware } from "./middleware";
 import { random } from "./utils";
 dotenv.config()  // to access all the .env file secrets code or link.
 import cors from "cors"
+import { OpenAI } from 'openai';
+import { getMetadataFromLink } from "./utils/metadata";
+import { getOpenAISummary } from "./utils/getopenAIsummary";
+import { getEmbedding } from "./utils/embedding";
+
 
 const app=express()
 app.use(express.json())
@@ -36,11 +41,14 @@ app.use(cors())
 ConnectDB();
 
 
+// Initialize OpenAI-----
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 
 
 
-//### *Note->  ExpiresAt -> fo mongodb clear data,    ExpiresIn -> for session of the token for the real users not for demo user...
+//### *Note->  ExpiresAt -> fo mongodb clear data,    
+// ExpiresIn -> for session of the token for the real users not for demo user...
 
 
 
@@ -221,11 +229,53 @@ app.post('/api/v1/signin', async (req:Request, res:Response)=>{
 
 
 //----------------------------------  add new content  --------------------------------
-
-app.post('/api/v1/content', UserMiddleware ,async (req:Request, res:Response )=>{
+//@ts-ignore
+app.post('/api/v1/content', UserMiddleware , async (req, res )=>{
     try {
-        
-        const { title, link, type, tags }= req.body
+
+        const { title, link, type }= req.body     //-------------- from the user ------------------
+
+        //checking the link and title should not be empty.
+        if (!link.trim() || !title.trim()) {
+            return res.status(400).json({ error: "Link and title are required." });
+        }
+
+
+        let metadata = await getMetadataFromLink(link); // from Microlink gets metadata
+        let summary=""
+
+
+        //this ensure that metadata should not be empty --> if not empty then getsummary of that link...
+        if (metadata && metadata.trim()) {
+            summary = await getOpenAISummary(metadata);
+        }
+
+
+        //fallback --> if metadata and summary is not available...
+        if (!metadata.trim() && !summary.trim()) {
+            metadata = `Content could not be fetched. Link: ${link}`;
+        }
+
+
+        let finalContent = `${metadata} ${summary}`.trim();
+
+          if (!finalContent) {
+            // fallback: store the link or a placeholder title
+            finalContent = title || "No metadata/summary available";
+          }
+
+
+
+        //---------------generating embedding--
+            // const embeddingResponse=await openai.embeddings.create({
+            //     model: 'text-embedding-3-small',
+            //     input: finalContent,
+            // })
+            // const embedding=embeddingResponse.data[0].embedding
+
+        const embedding = await getEmbedding(finalContent); // your GitHub inference embedding function
+
+
 
 
         await ContentModel.create({
@@ -234,7 +284,9 @@ app.post('/api/v1/content', UserMiddleware ,async (req:Request, res:Response )=>
             title,
             //@ts-ignore
             userId:req.userId,
-            //tags: []
+            //tags: []             //----- later in V2
+            content: finalContent,
+            embedding,
         })
 
          res.status(200).json({
@@ -422,8 +474,8 @@ app.get('/api/v1/brain/:sharelink', async (req, res)=>{
 //---------------------------------------------  Try demo ---------------------------------------------
 
 // #NOTE --> In MongoDB, TTL is a feature that lets you automatically delete documents after a certain   amount of time — without writing any cleanup code.
-
-app.post("/api/v1/demo-login", async (req: Request, res: Response) => {
+//@ts-ignore
+app.post("/api/v1/demo-login", async (req, res) => {
   try {
     const uniqueId = `demo-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
@@ -456,6 +508,28 @@ app.post("/api/v1/demo-login", async (req: Request, res: Response) => {
 }
 });
 
+
+
+
+//-------------------------------------  search Ai ------------------------------------------
+// app.get("api/v1/ai-answer", async (req, res)=>{
+
+//     try {
+
+//         const SearchQuery=req.query.q
+//         if(!SearchQuery){
+//             return res.status(400)
+//         }
+        
+//     } catch (error) {
+        
+//     }
+
+
+
+
+
+// } )
 
 
 

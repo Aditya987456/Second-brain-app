@@ -1,1 +1,1 @@
-{"root":["./src/db.ts","./src/index.ts","./src/middleware.ts","./src/utils.ts"],"errors":true,"version":"5.8.3"}
+{"root":["./src/db.ts","./src/index.ts","./src/middleware.ts","./src/utils.ts","./src/script/embed.ts","./src/utils/embedding.ts","./src/utils/getopenAIsummary.ts","./src/utils/githubModels.ts","./src/utils/metadata.ts"],"version":"5.8.3"}

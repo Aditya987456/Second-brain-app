@@ -18,7 +18,7 @@ interface Cardprops{
     id: string;
     title:string;
     link:string;
-    type:"twitter" | "youtube" | "docs" | "github" | "link" | "others" 
+    type:"Twitter" | "Youtube" | "Docs" | "Github" | "Link" | "Others" 
     //setTwitterScriptLoaded?: (value: boolean) => void;
     isTwitterScriptLoaded?: boolean;
     setTwitterScriptLoaded?: React.Dispatch<React.SetStateAction<boolean>>;   //$$$"This is a function that sets a boolean state."
@@ -151,13 +151,13 @@ export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScr
 const hasAlertedRef = useRef(false); // ✳️ Track alert state
 
 const embededLink = useMemo(() => {
-  if (type !== "youtube") return "";
+  if (type !== "Youtube") return "";
   return convertLink(link);
 }, [link, type]);
 
 useEffect(() => {
   if (
-    type !== "youtube" ||
+    type !== "Youtube" ||
     !link ||
     hasAlertedRef.current || // ✳️ Prevent repeat alerts
     embededLink === "" // ✳️ embededLink not ready yet
@@ -178,7 +178,7 @@ useEffect(() => {
 
 //.................. for the twitter card  ..........................
   useEffect(() => {
-  if (type !== "twitter") return;
+  if (type !== "Twitter") return;
 
   if (!isTwitterScriptLoaded) {
     const script = document.createElement("script");
@@ -300,7 +300,7 @@ const testingsomething=()=>{
 
 
             {/*************************  youtube card  *****************************/}
-              {type==='youtube' && embededLink && <div className="aspect-video ">
+              {type==='Youtube' && embededLink && <div className="aspect-video ">
                 <iframe className="shadow-none rounded-md w-full h-full"
                   src={embededLink}
                   title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
@@ -352,7 +352,7 @@ const testingsomething=()=>{
 
 
             {/************************  twitter card  *******************************/}
-            {type==='twitter' && 
+            {type==='Twitter' && 
                  <div>
                     {/* <div id="tweet-container" class="h-40 bg-gray-200 animate-pulse mb-4">
                     </div> */}
@@ -363,7 +363,7 @@ const testingsomething=()=>{
 
 
             {/* ****************************     github card    ************************************ */}
-                {type === "github" && link && <GitHubCard repoUrl={link} />}
+                {type === "Github" && link && <GitHubCard repoUrl={link} />}
 
 
 
@@ -374,7 +374,7 @@ const testingsomething=()=>{
 
 
             {/* ********   docs link, links, others  --> preview using microlink.io API    **************/}
-              {(type === 'docs' || type === 'link' || type === 'others') && link && (
+              {(type === 'Docs' || type === 'Link' || type === 'Others') && link && (
                 <a
                   href={link}
                   target="_blank"

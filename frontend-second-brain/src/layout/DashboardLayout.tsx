@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/sidebar";
 import { useState, useEffect } from "react";
-
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -29,6 +29,12 @@ export default function DashboardLayout() {
   <div className="flex-1 overflow-y-auto p-4">
     <Outlet context={{isSidebarOpen, filter}}  />
   </div>
+
+  {/* Toast notification container */}
+  <Toaster position="top-right" reverseOrder={false} />
+
+
+
 </div>
 
   );
