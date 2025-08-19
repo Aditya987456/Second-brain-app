@@ -38,7 +38,7 @@ model: "openai/text-embedding-3-small",
     return response.data[0].embedding;
   } catch (err) {
     console.error("Embedding error:", err);
-    return null;
+    return [];
   }
 }
 

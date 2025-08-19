@@ -20,6 +20,16 @@ import { OpenAI } from 'openai';
 import { getMetadataFromLink } from "./utils/metadata";
 import { getOpenAISummary } from "./utils/getopenAIsummary";
 import { getEmbedding } from "./utils/embedding";
+import { getLLMResponse } from "./utils/getLLMResponse";
+
+
+
+export interface AuthRequest extends Request {
+  userId?: string;
+}
+
+
+
 
 
 const app=express()
@@ -241,67 +251,86 @@ app.post('/api/v1/content', UserMiddleware , async (req, res )=>{
         }
 
 
-        let metadata = await getMetadataFromLink(link); // from Microlink gets metadata
-        let summary=""
+        //----save content immediately only title and link----
+        const content = await ContentModel.create({
+        link,
+        type,
+        title,
+        //@ts-ignore
+        userId: req.userId,
+        content: "Processing metadata...",
+        embedding:null,
+        });
+
+//async function done in backend after adding content.
+        ( async ()=>{
+
+            try {
+
+                let metadata = await getMetadataFromLink(link); // from Microlink gets metadata
+                let summary=""
+
+                //this ensure that metadata should not be empty --> if not empty then getsummary of that link...
+                if (metadata && metadata.trim()) {
+                    summary = await getOpenAISummary(metadata);
+                }
+                
+
+                 //fallback --> if metadata and summary is not available...
+                if (!metadata.trim() && !summary.trim()) {
+                    metadata = `Content could not be fetched. Link: ${link}`;
+                }
 
 
-        //this ensure that metadata should not be empty --> if not empty then getsummary of that link...
-        if (metadata && metadata.trim()) {
-            summary = await getOpenAISummary(metadata);
+                let finalContent = `${metadata} ${summary}`.trim();
+
+                if (!finalContent) {
+                    // fallback: store the link or a placeholder title
+                    finalContent = title || "No metadata/summary available";
+                }
+
+
+                const embedding = await getEmbedding(finalContent); // your GitHub inference embedding function
+
+                // Update DB record---> after all the async tasks done.
+                await ContentModel.findByIdAndUpdate(content._id, {
+                content: finalContent,
+                embedding,
+                });
+
+
+                
+            }catch (err) {   //-----> GPT se hai.
+                console.error("Background processing failed:", err);
+                await ContentModel.findByIdAndUpdate(content._id, {
+                content: "Metadata/summary fetch failed.",
+                });
+            }
+
+
         }
 
-
-        //fallback --> if metadata and summary is not available...
-        if (!metadata.trim() && !summary.trim()) {
-            metadata = `Content could not be fetched. Link: ${link}`;
-        }
+        )();
 
 
-        let finalContent = `${metadata} ${summary}`.trim();
-
-          if (!finalContent) {
-            // fallback: store the link or a placeholder title
-            finalContent = title || "No metadata/summary available";
-          }
+       
+//instant message after saving link and title...
+    res.status(200).json({
+        message: "Content saved, processing metadata in background",
+        contentId: content._id,
+        });
+       
 
 
 
-        //---------------generating embedding--
-            // const embeddingResponse=await openai.embeddings.create({
-            //     model: 'text-embedding-3-small',
-            //     input: finalContent,
-            // })
-            // const embedding=embeddingResponse.data[0].embedding
+   } catch (error) {
+  console.error("Error in /api/v1/content:", error);
 
-        const embedding = await getEmbedding(finalContent); // your GitHub inference embedding function
-
-
-
-
-        await ContentModel.create({
-            link,
-            type,
-            title,
-            //@ts-ignore
-            userId:req.userId,
-            //tags: []             //----- later in V2
-            content: finalContent,
-            embedding,
-        })
-
-         res.status(200).json({
-            message:'successfully added content'
-        })
-
-
-
-    } catch (error) {
-        res.status(500).json({
-            message:'error in adding content.',
-            Error:error
-        })
-        
-    }
+  res.status(500).json({
+    message: "Error in adding content.",
+    error: error instanceof Error ? error.message : error
+  });
+}
 
 
 })
@@ -512,24 +541,158 @@ app.post("/api/v1/demo-login", async (req, res) => {
 
 
 //-------------------------------------  search Ai ------------------------------------------
-// app.get("api/v1/ai-answer", async (req, res)=>{
+//@ts-ignore
+app.get("/api/v1/ai-answer", UserMiddleware, async (req:AuthRequest, res)=>{
 
-//     try {
+    try {
 
-//         const SearchQuery=req.query.q
-//         if(!SearchQuery){
-//             return res.status(400)
-//         }
+      const SearchQuery=req.query.q as string
+
+      if (!SearchQuery) {
+        return res.status(400).json({ error: "Missing query" });
+      }
+
+      // ## embedding search query...
+      const SearchQueryEmbedding=await getEmbedding(SearchQuery)
+
+
+      // ## seacrh in mongodb vector
+     
+let results
+        try {
+        results = await ContentModel.aggregate([
+        {
+            $vectorSearch: {
+            index: "SB-vectorSearch",       // name of the stored vector index from the database
+            path: "embedding",                  //document from mongodb collection to match
+            queryVector: SearchQueryEmbedding,   // query to search
+            numCandidates: 100,       //it picks first 100 closest content
+            limit: 3,                   // shows the top 3 best matches
+            // filter: { userId: new mongoose.Types.ObjectId(req.userId) }  //filter so that only that user data will go to llm
+            // @ts-ignore
+            filter: {
+              userId: new mongoose.Types.ObjectId(req.userId), // ✅ proper casting
+            },
+            //@ts-ignore
+           includeScore: true
+        } }
+
+
+  ]);
+} catch (dbError: any) {
+  console.error("❌ Vector search failed:", dbError.message || dbError);
+  return res.status(500).json({
+    LLMresponses: "⚠️ Vector search failed, please try again.",
+    cards: [],
+  });
+}
+
+// console.log(JSON.stringify(results, null, 2));
+    // 3️⃣ Use `_vectorScore` from the aggregation
+    results.forEach(r => console.log(r._vectorScore?.toFixed(2) ?? "N/A"));
+
+//console.log(results)
+
+//sort result.
+results.sort((a, b) => b.score - a.score);
+
+
+
+//filtering threshold.
+const threshold = parseFloat(req.query.threshold as string) || 0.5;
+let relevantResults = results.filter((r: any) => r.score >= threshold);
+
+
+//print scores as well
+results.forEach(r => {
+ // console.log(`Score: ${r.score.toFixed(3)} | Title: ${r.title}`);
+ console.log(r.score?.toFixed(2) ?? 'N/A');
+
+
+ results.forEach(r => console.log(r._vectorScore?.toFixed(2) ?? 'N/A'));
+
+
+
+
+
+});
+
+
+if (relevantResults.length === 0 && results.length > 0) {
+  relevantResults = results.slice(0, 2);
+}
+
+
+
+
+
+let prompt = "";
+let cards: any[] = [];
+
+        //## taking all the top matched card for the context to LLM using structure like card-1, card-2 with line break between them
+        if(relevantResults.length>0){
+            const ContextLLM = relevantResults.map( (item, idx)=>
+                `Card: ${idx+1}: ${item.title}\n ${item.content}` ).join("\n\n")
         
-//     } catch (error) {
+
+
+
         
-//     }
+
+        // ##  prompt that we will send to llm -
+         prompt = `
+
+        You are an AI assistant for a Second Brain app.
+        User's question: "${SearchQuery}"
+
+        Here are the most relevant saved notes/cards:${ContextLLM}
+
+        Answer the question using the saved content.
+        At the end, also mention: "I've included your saved cards below."`;
+
+        cards = relevantResults.map(doc => ({
+        _id: doc._id,
+        title: doc.title,
+        link: doc.link,
+        type: doc.type
+      }));
+
+    }else {
+        prompt = `
+        User's question: "${SearchQuery}"
+
+        You have no saved content for this topic.
+        Answer the question from your own knowledge.
+        Also mention: "No saved cards matched your search. `;
+        }
+
+
+        console.log("📝 Final prompt sent to LLM:\n", prompt);
+     
+    //## LLM answer-------------------
+    const LLMresponses=await getLLMResponse(prompt)    
+    const safeResponse=LLMresponses && LLMresponses.trim() ? 
+        LLMresponses : "No AI answer found 🤔"
+
+    //## responses ---------------------
+     res.json({LLMresponses:safeResponse, cards})
+  
+    }catch (error: any) {
+  console.error("search Error", error.message || error)
+  res.status(500).json({ error: error.message || "Internal server error" })
+}
+
+
+
+// return res.json({
+//     LLMresponses: "TEST-ANSWER",
+//     cards: []})
 
 
 
 
 
-// } )
+} )
 
 
 

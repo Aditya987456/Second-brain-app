@@ -53,7 +53,7 @@ const ContentSchema=new Schema({
     link:String,
     type:String,
     // tags:[{type:mongoose.Types.ObjectId, ref:'Tag'}],
-    userId:{type:mongoose.Types.ObjectId, ref:'user', required:true},
+    userId:{type:mongoose.Types.ObjectId, required:true},  //here no much need of the ref
     content: String,
     embedding: { type: [Number], default: undefined },
     //createdAt: { type: Date, default: Date.now },        //will add this in v2
