@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 //  here isOpen is saying is the modal is open like popup or not?
 // onclose for setIsOpen false and close the modal.
 
-export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) {
+export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllContents  }:any) {
  
  
   const [ nextmodal, setNextmodal ]=useState<"select"|"enterdetails">("select")
@@ -48,14 +48,15 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
 
       if (!res) throw new Error("Failed to add content");
 
-      toast.success("Content added successfully! 🎉", {
-        id: loadingToast,
-      });
+      
 
-
-        await fetchcontents()   //why await because ..
+        const newContent=res.data.content
+        //await fetchcontents()   //why await because ..
+        setAllContents((prev: any) => [newContent, ...prev]);
         onClose()    //modal close on form submit...  only automatically close on successfully submit.
-
+        toast.success("Content added successfully! 🎉", {
+                id: loadingToast,
+              });
         
       } catch (error) {
        toast.error(String(error) || "Something went wrong", {
@@ -63,7 +64,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents }:any) 
       });
     } finally {
       setLoading(false);
-      //onClose()    //here also we can add like irrespective of error or sucess in adding content just close modal.
+     // onClose()    //here also we can add like irrespective of error or sucess in adding content just close modal.
     }
   }
   

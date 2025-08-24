@@ -56,7 +56,17 @@ const ContentSchema=new Schema({
     userId:{type:mongoose.Types.ObjectId, required:true},  //here no much need of the ref
     content: String,
     embedding: { type: [Number], default: undefined },
+    status: {
+    type: String,
+    enum: ["pending", "retrying", "ready", "failed"],
+    default: "pending"
+    },
+    retryCount: {
+    type: Number,
+    default: 0
+    }
     //createdAt: { type: Date, default: Date.now },        //will add this in v2
+
 
 })
 

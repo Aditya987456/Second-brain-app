@@ -10,7 +10,7 @@ import { CircleEllipsis, Github, Link, Link2 } from "lucide-react";
 import { BACKEND_URL } from "../pages/config";
 import axios from "axios";
 import toast from 'react-hot-toast';
-
+import { TwitterCard } from "./TwitterCard";
 import { useState } from "react";
 import GitHubCard from "./githubCard";
 
@@ -23,16 +23,9 @@ interface Cardprops{
     isTwitterScriptLoaded?: boolean;
     setTwitterScriptLoaded?: React.Dispatch<React.SetStateAction<boolean>>;   //$$$"This is a function that sets a boolean state."
     onDelete: (id: string) => void;
+    status: "ready" | "pending" | "retrying" | "failed"
+    retrycounting:Number
   }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -90,7 +83,51 @@ const TypeIcons=(type:string)=>{
 
 
 //#-------------------------------**** cards that accept all this things ****-----------------------------------
-export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded, onDelete}:Cardprops) {
+export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded, onDelete, status}:Cardprops) {
+
+  //----  status color dots logic here.
+ const statusColors: Record<string, string> = {
+  ready: "",
+  pending: "bg-yellow-500",
+  retrying: "bg-blue-500",
+  failed: "bg-red-500",
+};
+
+const statusTooltips: Record<string, string> = {
+  ready: "Content fetched successfully. Search results will be accurate.",
+  pending: "Content is still being processed. AI searches might not find this content yet.",
+  retrying: "Fetching again. Processing is still active.",
+  failed: "Failed to fetch or process content. Search results may be inaccurate. Try editing or retrying.",
+};
+
+
+
+
+  // ------------------------ Twitter embed ------------------------
+  //.................. for the twitter card  ..........................
+  useEffect(() => {
+  if (type !== "Twitter") return;
+
+  if (!isTwitterScriptLoaded) {
+    const script = document.createElement("script");
+    script.setAttribute("src", "https://platform.twitter.com/widgets.js");
+    script.setAttribute("async", "true");
+    script.setAttribute("charset", "utf-8");
+    document.body.appendChild(script);
+
+    setTwitterScriptLoaded?.(true);
+    
+  } else {
+    // if already loaded script then do rerender.
+    (window as any).twttr?.widgets?.load();
+  }
+}, [type]);
+
+
+
+
+
+
 
 
 
@@ -114,11 +151,7 @@ export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScr
 
 
 
-      //------------------------****  Deleting the card   ****-------------------------
-
-
-
-
+//------------------------****  Deleting the card   ****-------------------------
  async function DeletingCard() {
     try {
       await axios.delete(`${BACKEND_URL}/api/v1/content`, {
@@ -135,13 +168,6 @@ export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScr
       toast.error("Error deleting content");
     }
   }
-
-
-
-
-
-
-
 
 
 
@@ -177,36 +203,23 @@ useEffect(() => {
 
 
 //.................. for the twitter card  ..........................
-  useEffect(() => {
-  if (type !== "Twitter") return;
+//   useEffect(() => {
+//   if (type !== "Twitter") return;
 
-  if (!isTwitterScriptLoaded) {
-    const script = document.createElement("script");
-    script.setAttribute("src", "https://platform.twitter.com/widgets.js");
-    script.setAttribute("async", "true");
-    script.setAttribute("charset", "utf-8");
-    document.body.appendChild(script);
+//   if (!isTwitterScriptLoaded) {
+//     const script = document.createElement("script");
+//     script.setAttribute("src", "https://platform.twitter.com/widgets.js");
+//     script.setAttribute("async", "true");
+//     script.setAttribute("charset", "utf-8");
+//     document.body.appendChild(script);
 
-    setTwitterScriptLoaded?.(true);
+//     setTwitterScriptLoaded?.(true);
     
-  } else {
-    // if already loaded script then do rerender.
-    (window as any).twttr?.widgets?.load();
-  }
-}, [type]);
-
-
-
-
-
-
-
-    //.................. for the github card  ..........................
-  // {type === 'github' &&
-  //    <GitHubCard key={`${id}`} repoUrl={link} />
-  //  }
-
-
+//   } else {
+//     // if already loaded script then do rerender.
+//     (window as any).twttr?.widgets?.load();
+//   }
+// }, [type]);
 
 
 
@@ -224,12 +237,6 @@ useEffect(() => {
 
 
     //.................. for the links card  ..........................
-
-
-
-
-
-
 
 
 
@@ -276,19 +283,48 @@ const testingsomething=()=>{
                     <div  className=" text-gray-500 pr-4">
                         {TypeIcons(type)}
                          </div>
-                         {/* title of the card */}
+
+
+
+
+                         
+
+
+
+
+                         {/* title of the card */}                       
                         <span className="text-black">{title}</span>
                 </div>
 
                     {/* share icon on top of the card */}
                 <div className="flex items-center">
+
+
+
+                {/* Status Dot */}
+                        <span
+                          className={`relative  h-3 mr-1 w-3 rounded-full ${statusColors[status]}`}
+                          title={statusTooltips[status]} // shows tooltip on hover
+                        ></span>
+
+
+
+
                     <div className="mr-3">
                         <ShareIcons/>
                     </div>
+
                   {/* delete icon on top of the card */}
                     <div onClick={DeletingCard} >
                         <DeleteIcons/>
                     </div>
+
+
+                    
+
+
+
+
                 </div>
 
             </div>
@@ -352,13 +388,18 @@ const testingsomething=()=>{
 
 
             {/************************  twitter card  *******************************/}
-            {type==='Twitter' && 
+            
+    {type==='Twitter' && 
                  <div>
                     {/* <div id="tweet-container" class="h-40 bg-gray-200 animate-pulse mb-4">
                     </div> */}
                     <blockquote className="twitter-tweet"> <a href={link.replace('x.com', 'twitter.com')} ></a> </blockquote>
                   </div> 
                 }
+
+
+
+                
 
 
 

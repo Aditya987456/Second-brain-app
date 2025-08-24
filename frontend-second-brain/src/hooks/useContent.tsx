@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { BACKEND_URL } from "../pages/config"
 import axios from "axios"
 
@@ -13,27 +13,46 @@ export const useContent=(filterType = "")=>{
      
 
     //---------------------   fetch the all contents.   ----------------
-    async function fetchcontents() {
-        setLoading(true)
-        //console.log("Token being used:", localStorage.getItem("token"));   //for testing ,
+    // async function fetchcontents() {
+    //     setLoading(true)
+    //     //console.log("Token being used:", localStorage.getItem("token"));   //for testing ,
 
 
-        try {
-            const response=await axios.get(`${BACKEND_URL}/api/v1/content`, {
-                headers: {
-                    authorization:localStorage.getItem("token")
-                },
-            })
+    //     try {
+    //         const response=await axios.get(`${BACKEND_URL}/api/v1/content`, {
+    //             headers: {
+    //                 authorization:localStorage.getItem("token")
+    //             },
+    //         })
 
-            const AllFetchedContents=response.data.contents
-            setAllContents(AllFetchedContents)
+    //         const AllFetchedContents=response.data.contents
+    //         setAllContents(AllFetchedContents)
              
-        } catch (error) {
-              console.error("Error fetching content--->usecontent saar:", error);
-        } finally {
-            setLoading(false);
-            }
+    //     } catch (error) {
+    //           console.error("Error fetching content--->usecontent saar:", error);
+    //     } finally {
+    //         setLoading(false);
+    //         }
+    // }
+
+
+    const fetchcontents = useCallback(async () => {
+    setLoading(true);
+    try {
+
+      const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
+        headers:{
+           authorization: localStorage.getItem("token") || "" },
+      });
+
+      setAllContents(response.data.contents || []);
+    } catch (e) {
+        console.error("Error fetching content:", e);
+    } finally {
+      setLoading(false);
     }
+  }, []);
+
 
 
 //runs when page loads.
@@ -44,23 +63,27 @@ export const useContent=(filterType = "")=>{
     
 
 //**** filtering contents,,,,
+  // useEffect(() => {
+  //   const filtered = filterType
+  //     ? allContents.filter((item) => item.type === filterType)
+  //     : allContents;
 
-  useEffect(() => {
-    const filtered = filterType
-      ? allContents.filter((item) => item.type === filterType)
-      : allContents;
+  //   setContents(filtered);
+  // }, [filterType, allContents]);
 
-    setContents(filtered);
-  }, [filterType, allContents]);
-
-
+useEffect(() => {
+  const filtered = filterType
+    ? allContents.filter(item => item.type === filterType)
+    : allContents;
+  setContents(filtered);
+}, [filterType, allContents]);
 
 
 
     
 
 
-    return {contents, loading, setContents, fetchcontents, setLoading }
+    return {contents, loading, setContents, fetchcontents, setLoading, setAllContents }
 
 }
 

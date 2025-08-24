@@ -21,9 +21,31 @@ export default function DashboardLayout() {
 
 
 
+
+//--------------- Load the Twitter script only once and only create the tweet once per card.-------
+//  const [isTwitterScriptLoaded, setIsTwitterScriptLoaded] = useState(false);
+//  useEffect(() => {
+//   if (!document.querySelector('script[src*="twitter.com/widgets.js"]')) {
+//     const script = document.createElement("script");
+//     script.src = "https://platform.twitter.com/widgets.js";
+//     script.async = true;
+//     script.onload = () => console.log("Twitter widgets.js loaded");
+//     document.body.appendChild(script);
+//   } else {
+//     (window as any).twttr?.widgets?.load();
+//   }
+// }, []);
+
+
+
+
+
+
+
+
   return (
     <div className="flex h-screen">
-  <Sidebar setFilter={setFilter} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+  <Sidebar filter={filter} setFilter={setFilter} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
   
   {/* Main content area */}
   <div className="flex-1 overflow-y-auto p-4">

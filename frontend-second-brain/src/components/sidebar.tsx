@@ -1,7 +1,7 @@
 import { CrossIcon } from "../icons/crossIcon"
 import { TwitterIcon } from "../icons/twitterIcon"
 import { YtIcons } from "../icons/ytIcons"
-import { SidebarItems } from "./sidebarItems"
+//import { SidebarItems isActive={filter === "Twitter"}  } from "./sidebarItems"
 import brain2icon from "../assets/brain2icon.png"
 import icontext from "../assets/icontext.png"
 import secondbrainmain from "../assets/secondbrainmain.png"
@@ -9,20 +9,20 @@ import { MenuIcon } from "../icons/menu"
 import { useState } from "react"
 import { DocsIcon } from "../icons/docsIcons"
 import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram, Github } from "lucide-react";
-
-
+import { SidebarItems } from "./sidebarItems"
 
 //types for sidebar arguments....
 interface SidebarProps {
     isSidebarOpen: boolean;
     setIsSidebarOpen: (value: boolean) => void;
-    setFilter:(value:string)=>void
+    setFilter:(value:string)=>void;
+    filter: string
 }
 
 
 
 
-export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter }: SidebarProps )=>{
+export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter, filter }: SidebarProps )=>{
 
     return <div>
 
@@ -81,12 +81,12 @@ export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter }: SidebarPr
                 <div className="mt-16 whitespace-nowrap 
                                     overflow-hidden">
                     <ul className="relative left-0 text-md font-normal space-y-2 " >
-                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Twitter" icon={<TwitterIcon/>}/></li>
-                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Youtube" icon={<YtIcons/>}/></li>
-                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Github" icon={< Github/>}/></li>
-                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Docs" icon={<FileText className="text-yellow-400"></FileText>}/></li>
-                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600"></Link2>}/></li>
-                        <li><SidebarItems setFilter={setFilter} sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
+                        <li><SidebarItems isActive={filter === "Twitter"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Twitter" icon={<TwitterIcon/>}/></li>
+                        <li><SidebarItems isActive={filter === "Youtube"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Youtube" icon={<YtIcons/>}/></li>
+                        <li><SidebarItems isActive={filter === "Github"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Github" icon={< Github/>}/></li>
+                        <li><SidebarItems isActive={filter === "Docs"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Docs" icon={<FileText className="text-yellow-400"></FileText>}/></li>
+                        <li><SidebarItems isActive={filter === "Links"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600"></Link2>}/></li>
+                        <li><SidebarItems isActive={filter === "Others"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
                     </ul>
                 </div>
 

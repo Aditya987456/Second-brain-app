@@ -32,13 +32,16 @@ export const LinkPreviewCard = ({ url }: Props) => {
       rel="noopener noreferrer"
       className="block border rounded-xl overflow-hidden shadow hover:shadow-lg transition max-w-full"
     >
-      {preview.images?.[0] && (
-        <img
-          src={preview.images[0]}
-          alt={preview.title || "Link preview"}
-          className="w-full object-cover max-h-60"
-        />
-      )}
+      <div className="w-full aspect-video overflow-hidden rounded-t-xl">
+  {preview.images?.[0] && (
+    <img
+      src={preview.images[0]}
+      alt={preview.title || "Link preview"}
+      className="w-full h-full object-cover"
+    />
+  )}
+</div>
+
       <div className="p-4 bg-white">
         <h3 className="font-semibold text-lg truncate">{preview.title}</h3>
         <p className="text-sm text-gray-600 line-clamp-2">

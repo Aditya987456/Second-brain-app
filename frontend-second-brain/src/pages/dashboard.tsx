@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { AddContent } from "../components/AddContent"
 import { Button } from "../components/Button"
 import { Card } from "../components/card"
@@ -17,6 +17,7 @@ import axios from "axios"
 type OutletContextType = {
   isSidebarOpen: boolean;
   filter: string;
+  
 };
 
 
@@ -30,13 +31,43 @@ const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
 const { isSidebarOpen, filter } = useOutletContext<OutletContextType>();
 
 const [isOpen, setIsOpen] = useState(false); // Set to false initially in real project -->
-const { contents, loading, fetchcontents, setContents } = useContent(filter);
+const { contents, loading, fetchcontents, setContents, setAllContents } = useContent(filter);
 
-//----- for search ---------
+//--------------- for search ---------
 const [query, setQuery] = useState("");
 const [results, setResults] = useState<any[]>([]);      // search result response from the LLM
 const [showResults, setShowResults] = useState(false);   //to show search result on the dashboard and hide content
 const [ aiResult, setAiResult ]=useState("")
+
+
+
+
+
+
+//  // Load Twitter script only once when Dashboard mounts
+//   useEffect(() => {
+//     // Check if script is already loaded
+//     if (!document.querySelector('script[src*="twitter.com/widgets.js"]')) {
+//       const script = document.createElement("script");
+//       script.src = "https://platform.twitter.com/widgets.js";
+//       script.async = true;
+//       script.charset = "utf-8";
+//       script.onload = () => setTwitterScriptLoaded(true);
+//       document.body.appendChild(script);
+//     } else {
+//       setTwitterScriptLoaded(true);
+//     }
+
+//     // Cleanup: Re-load widgets when dashboard unmounts (optional)
+//     return () => {
+//       if ((window as any).twttr) {
+//         (window as any).twttr.widgets.load();
+//       }
+//     };
+//   }, []);
+
+
+
 
 
 
@@ -121,7 +152,7 @@ async function HandleSearch() {
 
 function handleDelete(id: string) {
   // Update state to remove the deleted card without refetching everything
-  setContents(prev => prev.filter(content => content._id !== id));
+ setAllContents(prev => prev.filter(c => c._id !== id));
 }
 
 
@@ -147,6 +178,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
         { isOpen && <AddContentModal 
           isOpen={isOpen}
+          setAllContents={setAllContents}
           fetchcontents={fetchcontents}
           onClose={ ()=>{ setIsOpen(false) }}
            /> }
@@ -248,6 +280,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
                 isTwitterScriptLoaded={isTwitterScriptLoaded}
                 setTwitterScriptLoaded={setTwitterScriptLoaded}
                 onDelete={handleDelete}
+                
               />
             </div>
           ))}
@@ -259,12 +292,12 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
            <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2 md:columns-3 xl:columns-4 space-y-6">
         <>
           { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
-              contents.map(({ _id, type, link, title }) => {
+              contents.map(({ _id, type, link, title,status }) => {
                 //const { type, link, title } = item;  // it is same as passing in the props like
                 return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20" > <Card
                   id={_id}  
                   type={type}
-                
+                  status={status}
                   link={link}
                   title={title}
                   isTwitterScriptLoaded={isTwitterScriptLoaded}
