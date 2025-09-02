@@ -55,7 +55,7 @@ export function Signin() {
 
     return (
         
-        <div className="min-h-screen   flex justify-center items-center px-6 py-12">
+        <div className="flex flex-grow mt-20 justify-center items-center px-6 py-12">
             
             <div className=" max-w-4xl w-full rounded-xl border-2 border-t-8 border-t-purple-400 bg-white overf grid grid-cols-1 md:grid-cols-2">
 

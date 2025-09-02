@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { AddContent } from "../components/AddContent"
 import { Button } from "../components/Button"
 import { Card } from "../components/card"
@@ -9,143 +9,111 @@ import { useContent } from "../hooks/useContent"
 import AddContentModal from "../components/modal"
 import { SearchBar } from "../components/Searchbar"
 import { SearchIcon } from "../icons/search"
-
+import { AIResponseCard } from "../components/AIresponse"
 
 import { useOutletContext } from "react-router-dom";
 import axios from "axios"
-
-type OutletContextType = {
-  isSidebarOpen: boolean;
-  filter: string;
-  
-};
+import React from "react"
+import { DashboardContext } from "./DashboardContext"
+// type OutletContextType = {
+//   isSidebarOpen: boolean;
+//   filter: string;
+//   showResults:boolean
+//   setShowResults: (value: boolean) => void;
+//   query:string
+//   setQuery:(value:string)=>void
+// };
 
 
 
 
 export function Dashboard() {
 
+    const contextDashboard = React.useContext(DashboardContext);
+    if (!contextDashboard) return null;
+  
+    const { query, setQuery, filter, setFilter, showResults, setShowResults, isSidebarOpen, setIsSidebarOpen } = contextDashboard;
+  
+  
 
 
 const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
-const { isSidebarOpen, filter } = useOutletContext<OutletContextType>();
+//const { isSidebarOpen, filter, setShowResults, showResults, query, setQuery } = useOutletContext<OutletContextType>();
 
 const [isOpen, setIsOpen] = useState(false); // Set to false initially in real project -->
 const { contents, loading, fetchcontents, setContents, setAllContents } = useContent(filter);
 
 //--------------- for search ---------
-const [query, setQuery] = useState("");
+//const [query, setQuery] = useState("");
 const [results, setResults] = useState<any[]>([]);      // search result response from the LLM
-const [showResults, setShowResults] = useState(false);   //to show search result on the dashboard and hide content
+//const [showResults, setShowResults] = useState(false);   //to show search result on the dashboard and hide content
 const [ aiResult, setAiResult ]=useState("")
 
-
-
-
-
-
-//  // Load Twitter script only once when Dashboard mounts
-//   useEffect(() => {
-//     // Check if script is already loaded
-//     if (!document.querySelector('script[src*="twitter.com/widgets.js"]')) {
-//       const script = document.createElement("script");
-//       script.src = "https://platform.twitter.com/widgets.js";
-//       script.async = true;
-//       script.charset = "utf-8";
-//       script.onload = () => setTwitterScriptLoaded(true);
-//       document.body.appendChild(script);
-//     } else {
-//       setTwitterScriptLoaded(true);
-//     }
-
-//     // Cleanup: Re-load widgets when dashboard unmounts (optional)
-//     return () => {
-//       if ((window as any).twttr) {
-//         (window as any).twttr.widgets.load();
-//       }
-//     };
-//   }, []);
+const [ loadai, setLoadai ]=useState(false)
+const [ typingdone, setTypingdone ]=useState(false)   //for representing that is the typing of ai result is completed or not???
 
 
 
 
 
 
-// async function HandleSearch() {
-//   if(!query.trim()) return;
+// stable callback for TypingText
+// const handleTypingComplete = useCallback(() => {
+//   setTypingdone(true);
+// }, []);
 
-//   try {
-//     const res= await axios.get(`/api/v1/ai-answer`, { params: {q:query}})
-//     console.log("AI API response:", res.data);  // 👈 check this
-//     setResults(res.data.cards || [])
-//     setAiResult(res.data.LLMresponses || "")
-//     setShowResults(true)   // ---jab sab kuch response aa gaya hai to show karo...
-    
-//   } catch (error) {
-//      console.error("Search error:", error);
-//   }
-  
-// } 
+
 
 
 
 async function HandleSearch() {
   if (!query.trim()) return;
 
+//old clear saar
+  setResults([])
+  setAiResult('')
+//new start
+  setShowResults(true);
+  setLoadai(true)
+  setTypingdone(false); 
+  setShowResults(true); // show after data is ready
+ 
 
   try {
      const token = localStorage.getItem("token")
     const res = await axios.get(`http://localhost:3000/api/v1/ai-answer`,
-       { params: { q: query },
+      { params: { q: query },
        headers: { Authorization: token ? token : "" } },
       );
     
     
     
     
-       //console.log("📩 API raw response:", res.data);
-    // ✅ safely extract values
+       console.log("API response:", res.data);
+    //  safely extract values
     const cards = res.data?.cards || [];
-    const aiResponse = res.data?.LLMresponses?.trim() || "No AI answer found 🤔";
+    // const aiResponse = res.data?.LLMresponses?.trim() || "No AI answer found 🤔";
+    const aiResponse = res.data?.LLMresponses?.trim();
+    setAiResult(aiResponse || "🤖 AI didn’t return a response. Try again or check your saved cards.");
 
+   
     setResults(cards);
-    setAiResult(aiResponse);
-    setShowResults(true);   // only show when everything is ready
+    // setAiResult(aiResponse);
+   // setShowResults(true);   // only show when everything is ready
 
-  } catch (error: any) {
-    // ✅ show error in UI instead of console.log
-    setAiResult("⚠️ Sorry, something went wrong while fetching the AI answer.");
-    setResults([]);
-    setShowResults(true);
+  }catch (error: any) {
+  const message =
+    error?.response?.data?.message ||
+    error?.message ||
+    "Service temporarily unavailable";
+
+  setAiResult(`⚠ ${message}`);
+  setResults([]);
+  setShowResults(true);
+}finally{
+    setLoadai(false)
   }
 }
-
-
-
-
-
-
-
-
-  //const [ modalcard, setModalcard ]=useState(false);
-
-  // if (loading) {
-  //   return <div className="p-4">Loading your brain... 🧠</div>;
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -168,7 +136,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
   return (
 
-   <div className={`  ${ 
+   <div className={`transition-all duration-300 ease-linear  ${ 
           isSidebarOpen ? "ml-72" : "ml-16"} `} >
 
     
@@ -263,38 +231,49 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
 // ai-responses---
         <>
-          {/* AI's Answer */}
-          <div className="p-4 mb-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <strong>AI Answer:</strong>
-            <p>{aiResult ? aiResult : "No AI answer found 🤔"}</p>
-          </div>
+          {/* ########---------- AI's Answer  -----------######## */}
+          {/* <div className="p-4 mb-4  border border-purple-200 rounded-lg"> */}
+            <div className="mb-4 ml-10"><strong className="text-xl text-purple-700">AI Answer :</strong></div>
+            {/* <p className="text-md">{aiResult ? aiResult : "No AI answer found 🤔"}</p> */}
+          <AIResponseCard text={aiResult} isLoading={loadai} onTypingComplete={ ()=>setTypingdone(true) } />
+          {/* </div> */}
 
           {/* Search Result Cards */}
-          {results.map(({ _id, type, link, title }) => (
-            <div key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20">
-              <Card
-                id={_id}
-                type={type}
-                link={link}
-                title={title}
-                isTwitterScriptLoaded={isTwitterScriptLoaded}
-                setTwitterScriptLoaded={setTwitterScriptLoaded}
-                onDelete={handleDelete}
-                
-              />
-            </div>
-          ))}
+
+          {typingdone && results.length > 0 && (
+            <>
+              <div className="font-bold text-xl mt-12 ml-10 text-purple-700">Your Saved Contents:</div>
+              <div className="md:flex rounded-lg flex-wrap">
+                {results.map(({ _id, type, link, title }) => (
+                  <div key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20">
+                    <Card
+                      id={_id}
+                      type={type}
+                      link={link}
+                      title={title}
+                      isTwitterScriptLoaded={isTwitterScriptLoaded}
+                      setTwitterScriptLoaded={setTwitterScriptLoaded}
+                      onDelete={handleDelete}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+)}
+
+
+
         </>
 
           :
         
 // default dashboard--
-           <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2 md:columns-3 xl:columns-4 space-y-6">
+           <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2  md:columns-3 xl:columns-4 space-y-6">
         <>
           { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
               contents.map(({ _id, type, link, title,status }) => {
                 //const { type, link, title } = item;  // it is same as passing in the props like
-                return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20" > <Card
+                return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20 transition" > <Card
                   id={_id}  
                   type={type}
                   status={status}

@@ -1,4 +1,4 @@
-export const DarkButton=()=>{
+export const LightmodeButton=()=>{
 
 
     return <div>

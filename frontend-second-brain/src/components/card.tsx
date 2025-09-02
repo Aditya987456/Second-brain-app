@@ -274,7 +274,7 @@ const testingsomething=()=>{
 
 
 
-        <div className="min-h-48 mt-4 p-2 min-w-80 max-w-80 shadow-sm hover:shadow-xl rounded-lg border-slate-200 border">
+        <div className="min-h-48 mt-4 p-2 min-w-80 max-w-80 shadow-lg hover:shadow-xl transition rounded-lg border-slate-200 border">
 
         {/* ------------------------- header of the card  ------------------------------- */}
             <div className=" flex justify-between text-gray-500">  

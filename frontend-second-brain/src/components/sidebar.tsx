@@ -10,19 +10,35 @@ import { useState } from "react"
 import { DocsIcon } from "../icons/docsIcons"
 import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram, Github } from "lucide-react";
 import { SidebarItems } from "./sidebarItems"
-
-//types for sidebar arguments....
-interface SidebarProps {
-    isSidebarOpen: boolean;
-    setIsSidebarOpen: (value: boolean) => void;
-    setFilter:(value:string)=>void;
-    filter: string
-}
+import { DashboardContext } from "../pages/DashboardContext"
+import React from "react"
 
 
+// //types for sidebar arguments....
+// interface SidebarProps {
+//     isSidebarOpen: boolean;
+//     setIsSidebarOpen: (value: boolean) => void;
+//     setFilter:(value:string)=>void;
+//     filter: string
+//     showResults:boolean
+//     setShowResults: (value: boolean) => void;
+//     query:string
+//     setQuery:(value:string)=>void
+// }
 
 
-export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter, filter }: SidebarProps )=>{
+
+
+export const Sidebar=()=>{
+
+  const contextDashboard = React.useContext(DashboardContext);
+  if (!contextDashboard) return null;
+
+  const { query, setQuery, filter, setFilter, showResults, setShowResults, isSidebarOpen, setIsSidebarOpen } = contextDashboard;
+
+
+
+
 
     return <div>
 
@@ -53,7 +69,9 @@ export const Sidebar=( { isSidebarOpen, setIsSidebarOpen, setFilter, filter }: S
 
                             {/* -------------------- Logo + Text  ------------------- */}
                             <div
-                            onClick={() => setFilter("")}
+                            
+                            onClick={() =>{ setFilter(""), setShowResults(false), setQuery("") } }
+                            
                              className=" cursor-pointer flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
                                 <img src={brain2icon} alt="logo" className="w-12 shrink-0" />
                                 <p

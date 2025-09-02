@@ -7,26 +7,16 @@ import LandingPage from "./pages/landingPage"
 import { Signin } from "./pages/signin"
 import { Signup } from "./pages/signup"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-
-
+import { ThemeProvider } from "./context/themeContext"
+import { SupportPage } from "./pages/supportme"
 
 
   
 function App() {
   
   return (
-    // <BrowserRouter>
-    //     <Routes>
-    //         <Route path="/d"  element={<Dashboard/>}/>
-    //         <Route path="/signup" element={<Signup/>} />
-    //         <Route path="/signin" element={<Signin/>} />
-    //         <Route path="/" element={<LandingPage/>} />
-
-    //         <Route path="/dashboard" element={<Dashboard/>} />
-
-    //     </Routes>
-    // </BrowserRouter>   
-    
+ 
+<ThemeProvider>  
     <BrowserRouter>
     
   <Routes>
@@ -36,6 +26,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/support" element={<SupportPage/>}/>
     </Route>
 
     {/* Dashboard layout without Navbar */}
@@ -47,7 +38,8 @@ function App() {
   </Routes>
 </BrowserRouter>
 
-    
+
+</ThemeProvider>  
 
     )
 }

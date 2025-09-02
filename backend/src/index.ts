@@ -22,7 +22,7 @@ import { getOpenAISummary } from "./utils/getopenAIsummary";
 import { getEmbedding } from "./utils/embedding";
 import { getLLMResponse } from "./utils/getLLMResponse";
 import { queueFetchContent } from "./worker";
-
+import { getLLMResponseWithRetry } from "./utils/getLLMResponse";
 
 export interface AuthRequest extends Request {
   userId?: string;
@@ -1136,8 +1136,18 @@ Also mention: "No saved cards matched your search."
       `;
     }
 
+    console.log("🚀 Final Prompt:", prompt.length, prompt.slice(0, 400));
+
+
     // 6️⃣ LLM Answer
-    const LLMresponses = await getLLMResponse(prompt);
+    let LLMresponses = "";
+        try {
+          LLMresponses = await getLLMResponseWithRetry(prompt);
+        } catch (err: any) {
+          console.error("LLM error:", err.message || err);
+          LLMresponses = "⚠️ AI service is temporarily unavailable. Here's what I found from your saved cards:";
+        }
+
     const safeResponse = LLMresponses?.trim() || "No AI answer found 🤔";
 
     res.json({ LLMresponses: safeResponse, cards });
@@ -1145,6 +1155,14 @@ Also mention: "No saved cards matched your search."
     console.error("search Error", error.message || error);
     res.status(500).json({ error: error.message || "Internal server error" });
   }
+
+
+
+
+
+
+  
+
 });
 
 
