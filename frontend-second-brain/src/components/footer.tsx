@@ -1,5 +1,5 @@
 import { Github, Twitter, Linkedin } from "lucide-react";
-
+import brain2icon from "../assets/brain2icon.png"
 export  function Footer() {
   return (
     <footer className="bg-gray-50 dark:bg-darkbg border-t border-gray-200 dark:border-gray-700 py-10 px-6">
@@ -8,7 +8,12 @@ export  function Footer() {
         {/*-------- logo + name---*/}
         <div>
             
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h3 className="text-2xl flex font-bold text-gray-900 dark:text-white">
+          <img 
+              src={brain2icon} 
+              alt="logo" 
+              className="h-16 -mt-4"
+            />
 
              Second Brain</h3>
           <p className="mt-3 text-md text-gray-600 dark:text-gray-400">

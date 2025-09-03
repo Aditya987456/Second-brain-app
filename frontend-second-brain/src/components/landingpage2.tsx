@@ -32,7 +32,7 @@ export default function LandingSection() {
   ]; 
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 px-6 -mt-32 dark:bg-darkbg">
+    <div className="min-h-screen bg-white text-gray-800 md:px-6 mt-10 md:-mt-32 dark:bg-darkbg">
    
 
 
@@ -41,12 +41,12 @@ export default function LandingSection() {
 
 
 
-{/* --------------------------------demo section--------------------------- */}
+{/* --------------------------------demo video section--------------------------- */}
 
     <section className="relative bg-white dark:bg-darkbg px-6 md:px-20">
 
 
-      <div className="max-w-7xl px-20   mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-24 items-center">
+      <div className="max-w-7xl md:px-20  mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-x-24 items-center">
         
         {/* Left: Demo Video */}
         <motion.div
@@ -59,6 +59,7 @@ export default function LandingSection() {
 
         </motion.div>
 
+        
         {/* Right: How It Works */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
@@ -66,7 +67,7 @@ export default function LandingSection() {
   transition={{ duration: 0.8, delay: 0.2 }}
   className="w-full"
         >
-          <h2 className="text-4xl border-l-4 border-purple-500 pl-4 font-extrabold tracking-tight text-gray-900 dark:text-white mb-10">
+          <h2 className="md:text-4xl text-2xl md:mt-0 mt-8 border-l-4 border-purple-500 pl-4 font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 md:mb-10">
             How It Works
           </h2>
           {/* <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
@@ -74,19 +75,20 @@ export default function LandingSection() {
             intelligent retrieval, and modular design to help you build your Second Brain effortlessly.
           </p> */}
 
-          <ul className="space-y-3">
+          <ul className="md:space-y-3 space-y-1">
             {[
               "Upload or sync your notes, articles, and bookmarks",
               "We embed and index your content using vector search",
               "Ask questions or explore — and get meaningful, contextual answers from LLM",
             ].map((step, i) => (
               <li key={i} className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-secondary text-md">{step}</span>
+                <CheckCircle className="w-4 md:w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                <span className="text-gray-700 dark:text-secondary text-sm md:text-lg">{step}</span>
               </li>
             ))}
           </ul>
         </motion.div>
+
       </div>
     </section> 
 
@@ -120,7 +122,8 @@ export default function LandingSection() {
                       dark:border-black shadow-md border p-6 
                       dark:shadow-sm dark:transition-all
                        dark:shadow-purple-900 dark:hover:shadow-sm
-                        text-center hover:shadow-2xl transition"
+                        text-center hover:shadow-2xl transition md:mx-0 mx-6"
+                      
           >
             <div className="mb-4 flex justify-center">{f.icon}</div>
             <h3 className="font-semibold text-lg mb-2 dark:text-white">{f.title}</h3>

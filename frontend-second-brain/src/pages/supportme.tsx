@@ -9,8 +9,8 @@ export function SupportPage() {
     <div className="min-h-screen bg-white dark:bg-darkbg flex flex-col items-center justify-center px-6 py-16">
       
       {/* Heading */}
-      <h1 className="text-3xl flex md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        <HeartPlus className="h-14 w-14 mr-4 pb-2 text-purple-600" /> Support Second Brain
+      <h1 className=" mt-4 text-2xl flex md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <HeartPlus className="sm:h-14 h-10 w-14 mr-0 sm:mr-4 pb-2 text-purple-600" /> Support Second Brain
       </h1>
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-xl mb-10">
         I’m building <span className="font-semibold">Second Brain</span> to help people 
