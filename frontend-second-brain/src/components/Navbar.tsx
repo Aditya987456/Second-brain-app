@@ -44,26 +44,25 @@ export const Navbar = () => {
 
 
   return (
-    <div className="flex justify-center pt-2 md:pt-6 dark:bg-darkbg">
-      <header
-         className="fixed z-[999] h-16 w-full max-w-[1250px] 
+    <div className="flex justify-center pt-2 md:pt-6 dark:bg-darkbg ">
+     <header
+  className="fixed z-[999] h-16 w-full max-w-[1250px] 
   bg-purple-200/30
-   dark:bg-gray-900/60
+  dark:bg-[#111111]/50
   backdrop-blur-md rounded-full md:rounded-3xl
-   border-purple-600 dark:border-gray-700
-  shadow-md dark:shadow-gray-900
+  border-purple-600 dark:border-[#1E1E1E]
+  shadow-md dark:shadow-purple-900/30
   px-4 md:px-6 py-4 mx-1
-  dark:md:border-none    dark:border-x-2
-  
+  md:mt-0
   flex items-center justify-between gap-4"
 >
         {/* Logo + Title */}
         <div onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+          className="cursor-pointer flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           <img
             src={brain2icon}
             alt="logo"
-            className="w-10 h-10"
+            className="w-10 h-10  "
           />
           <span>Second Brain</span>
         </div>

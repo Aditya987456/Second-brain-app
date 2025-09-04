@@ -2,7 +2,7 @@ import { Github, Twitter, Linkedin } from "lucide-react";
 import brain2icon from "../assets/brain2icon.png"
 export  function Footer() {
   return (
-    <footer className="bg-gray-50 dark:bg-darkbg border-t border-gray-200 dark:border-gray-700 py-10 px-6">
+    <footer className="bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-700 py-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/*-------- logo + name---*/}
