@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.transition-theme {
+  @apply transition-colors duration-500;
+}
+
+
+/* ye is liye hai ki on changing the theme not show harsh change on UI we will add this in theme context and remove it after applying. */
+html.theme-transition {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+

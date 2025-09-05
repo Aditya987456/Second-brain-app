@@ -37,8 +37,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // --- Apply theme to <html> and save in localStorage ...
   useEffect(() => {
     const root = window.document.documentElement;
+
+     // Adding class for transition
+    root.classList.add("theme-transition");
+
     root.classList.toggle("dark", theme === "dark");
+
     localStorage.setItem("theme", theme);
+
+
+    // after transition it will remove the class
+    const timeout = setTimeout(() => {
+      root.classList.remove("theme-transition");
+    }, 500); 
+
+    return () => clearTimeout(timeout);
+
+
+
   }, [theme]);
 
 

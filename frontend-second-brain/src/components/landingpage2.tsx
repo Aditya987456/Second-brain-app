@@ -32,7 +32,7 @@ export default function LandingSection() {
   ]; 
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 md:px-6 mt-10 md:-mt-32 dark:bg-darkbg">
+    <div className="min-h-screen text-gray-800 md:px-6 mt-10 md:-mt-32 dark:bg-darkbg">
    
 
 
@@ -43,7 +43,7 @@ export default function LandingSection() {
 
 {/* --------------------------------demo video section--------------------------- */}
 
-    <section className="relative bg-white dark:bg-darkbg px-6 md:px-20">
+    <section className="relative  px-6 md:px-20">
 
 
       <div className="max-w-7xl md:px-20  mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-x-24 items-center">

@@ -19,7 +19,7 @@ export default function LandingPage() {
 
 
   return (
-    <div className="min-h-screen bg-white text-black dark:text-white dark:bg-darkbg">
+    <div className=" min-h-screen text-black dark:text-white dark:bg-darkbg">
       {/* Header
       <Navbar/>    */}
 
@@ -74,12 +74,12 @@ export default function LandingPage() {
 
           </div>
         {/* image side wala */}
-        <div className="flex-1 md:mt-4 -mt-2">
+        <div className="flex-1 md:mt-4 -mt-2 ">
           
           <img
             src={heroImage} 
             alt="Second Brain image"
-            className="w-full max-w-lg mx-auto block dark:hidden"
+            className="w-full  max-w-lg mx-auto block dark:hidden"
           />
 
 {/* when theme --> dark  */}

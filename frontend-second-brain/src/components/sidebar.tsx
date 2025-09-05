@@ -12,6 +12,7 @@ import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram,
 import { SidebarItems } from "./sidebarItems"
 import { DashboardContext } from "../pages/DashboardContext"
 import React from "react"
+import { DarkmodeButton } from "./darkLightButton"
 
 
 // //types for sidebar arguments....
@@ -43,7 +44,8 @@ export const Sidebar=()=>{
     return <div>
 
 
-            <div className={`h-screen  border-r-2 bg-purple-50  fixed left-0  transition-all duration-300 ease-linear
+            <div className={` top-4 rounded-r-xl h-screen  border-r border-t bg-purple-50 dark:bg-gray-900 dark:border-purple-400 dark:text-white 
+             fixed left-0  transition-all duration-300 ease-linear
                              
                              ${isSidebarOpen ? 'w-72 ' : 'w-16'}
 
@@ -72,7 +74,7 @@ export const Sidebar=()=>{
                             
                             onClick={() =>{ setFilter(""), setShowResults(false), setQuery("") } }
                             
-                             className=" cursor-pointer flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
+                             className="dark:bg-darkbg cursor-pointer flex items-center gap-2 ml-2 overflow-hidden bg-purple-200 rounded-lg mr-2">
                                 <img src={brain2icon} alt="logo" className="w-12 shrink-0" />
                                 <p
                                     className={`
@@ -81,6 +83,7 @@ export const Sidebar=()=>{
                                     overflow-hidden
                                     text-2xl
                                     text-purple-700
+                                    
                                     font-semibold
 
                                     ${isSidebarOpen ? 'opacity-100 w-auto ml-1' : 'opacity-0 w-0'}
@@ -105,13 +108,14 @@ export const Sidebar=()=>{
                         <li><SidebarItems isActive={filter === "Docs"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Docs" icon={<FileText className="text-yellow-400"></FileText>}/></li>
                         <li><SidebarItems isActive={filter === "Links"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600"></Link2>}/></li>
                         <li><SidebarItems isActive={filter === "Others"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
+                        <li className=""><span className="pl-3"><DarkmodeButton/>Toogle theme</span></li>
                     </ul>
                 </div>
 
 
 
             {/* below -> logout button. */}
-             <div className="mt-96  p-2 cursor-pointer  rounded-md flex justify-center hover:bg-purple-100">
+             <div className="relative top-12 p-2 cursor-pointer  rounded-md flex justify-center hover:bg-purple-100">
                 <LogOut></LogOut><p className={` pl-4 text-lg  ${isSidebarOpen ? 'opacity-100 w-auto ml-1' : 'opacity-0 w-0'}`} >Logout</p>
             </div>
 

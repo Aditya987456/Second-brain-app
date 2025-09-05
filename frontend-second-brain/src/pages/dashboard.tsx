@@ -136,7 +136,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
   return (
 
-   <div className={`transition-all duration-300 ease-linear  ${ 
+   <div className={`transition-all duration-300 ease-linear   ${ 
           isSidebarOpen ? "ml-72" : "ml-16"} `} >
 
     
