@@ -105,9 +105,9 @@ export function Signin() {
                      <img src={brainimgdark} className="hidden dark:block w-80 mt-4" alt="logo" />
 
                     <p
-                        className="dark:text-secondary -mt-10 text-center text-[#333] text-xl font-medium leading-relaxed"
+                        className="dark:text-secondary -mt-10 text-center text-[#333] text-md font-medium leading-relaxed"
                         >
-                        Store links, videos, tweets and  <br/>ideas with ease.</p>
+                        Second Brain doesn’t just store your knowledge — it thinks with you. Our AI understands context, connects ideas, and find ideas by meaning, not just keywords.</p>
                  </div>
             </div>
 

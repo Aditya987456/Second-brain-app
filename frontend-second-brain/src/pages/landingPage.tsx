@@ -45,7 +45,7 @@ export default function LandingPage() {
 
           <p className="text-sm md:text-xl dark:text-secondary font-medium text-slate-600 md:mt-10 mt-2 px-4 md:px-2 flex justify-center  md:justify-normal">
             {/* Store and organize your digital life — links,  YouTube <br className="md:hidden"/> videos, tweets, notes, and more. */}
-            No more scrolling through endless contents. Our AI search understands your content and bring you the right answer.
+          Second Brain doesn’t just store your knowledge — it thinks with you. Our AI understands context, connects ideas, and find ideas by meaning, not just keywords.
           </p>
 
 

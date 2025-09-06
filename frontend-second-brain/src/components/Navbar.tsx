@@ -71,12 +71,14 @@ export const Navbar = () => {
         <nav className="font-medium">
           <div className="flex justify-end items-center space-x-6">
             <a
+            onClick={()=>navigate('/about')}
               href="#"
               className="text-gray-800 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
             >
               About
             </a>
             <a
+            onClick={()=>navigate('/contact')}
               href="#"
               className="text-gray-800 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
             >

@@ -12,12 +12,12 @@ export default function LandingSection() {
     {
       icon: <FaThumbtack size={28} className="text-purple-600" />,
       title: "Save Anything",
-      desc: "Store YouTube videos, GitHub repos, tweets, docs, notes and more in one place."
+      desc: "Whether it’s a YouTube tutorial, GitHub project, tweet, or handwritten note—keep everything in one organized space."
     },
     {
       icon: <FaSearch size={28} className="text-purple-600" />,
       title: "Smart Search",
-      desc: "AI-powered search helps you find exactly what you need without scrolling."
+      desc: "AI-powered search understands your content and helps you retrieve exactly what you need without scrolling endlessly."
     },
     {
       icon: <FaFolder size={28} className="text-purple-600" />,
@@ -77,9 +77,9 @@ export default function LandingSection() {
 
           <ul className="md:space-y-3 space-y-1">
             {[
-              "Upload or sync your notes, articles, and bookmarks",
+              "Upload or sync notes, articles, videos, bookmarks, and more—all in one place that’s easy to access anytime.",
               "We embed and index your content using vector search",
-              "Ask questions or explore — and get meaningful, contextual answers from LLM",
+              "Type a question — and instantly get context-aware answers and suggestions powered by advanced AI models.",
             ].map((step, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="w-4 md:w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0" />

@@ -17,8 +17,7 @@ export  function Footer() {
 
              Second Brain</h3>
           <p className="mt-3 text-md text-gray-600 dark:text-gray-400">
-            Build your digital second brain powered by AI search & semantic recall.  
-            Stay organized, connected, and never lose track of knowledge again.
+           Second Brain doesn’t just store your knowledge — it thinks with you. Our AI understands context, connects ideas, and find ideas by meaning, not just keywords.
           </p>
         </div>
 
@@ -48,9 +47,9 @@ export  function Footer() {
           </a>
 
           <div className="flex gap-4 mt-6">
-            <a href="https://github.com/yourusername" target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-indigo-500"><Github /></a>
-            <a href="https://twitter.com/yourusername" target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-indigo-500"><Twitter /></a>
-            <a href="https://linkedin.com/in/yourusername" target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-indigo-500"><Linkedin /></a>
+            <a href="https://github.com/Aditya987456" target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-indigo-500"><Github /></a>
+            <a href="https://x.com/AdityaRaj_x" target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-indigo-500"><Twitter /></a>
+            <a href="https://www.linkedin.com/in/aditya-raj-006978250/" target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-indigo-500"><Linkedin /></a>
           </div>
         </div>
       </div>

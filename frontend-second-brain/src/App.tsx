@@ -9,6 +9,8 @@ import { Signup } from "./pages/signup"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ThemeProvider } from "./context/themeContext"
 import { SupportPage } from "./pages/supportme"
+import { About } from "./pages/about"
+import { Contact } from "./pages/contact"
 
 
   
@@ -27,6 +29,8 @@ function App() {
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/support" element={<SupportPage/>}/>
+      <Route path="/about" element={<About/>}/>
+      <Route path="/contact" element={<Contact/>}/>
     </Route>
 
     {/* Dashboard layout without Navbar */}
