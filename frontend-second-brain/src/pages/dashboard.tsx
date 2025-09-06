@@ -190,12 +190,13 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
         onChange={(e) => setQuery(e.target.value)}   // $$$Each keystroke is captured by onChange.
         type="text"
         placeholder="Let AI find it for you..."
-        className="w-full pr-20 pl-4 py-2 border border-purple-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
+        className="w-full pr-20 pl-4 py-2 border dark:bg-zinc-800 dark:text-white border-purple-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
       />
       <button
         onClick={HandleSearch}
         className=" font-semibold absolute right-1 top-1 bottom-1 px-4
           bg-custom-gradient
+          hover:bg-custom-gradient2
         text-white rounded-lg  transition"
       >
         AI search
@@ -222,7 +223,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
 
   {/* -------------------------- all the cards are there ------------------ */}
-    <div className=" transition-all duration-300 ease-linear  mt-10  ">
+    <div className=" transition-all duration-300 ease-linear   mt-10  ">
           
 
 
@@ -233,7 +234,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
         <>
           {/* ########---------- AI's Answer  -----------######## */}
           {/* <div className="p-4 mb-4  border border-purple-200 rounded-lg"> */}
-            <div className="mb-4 ml-10"><strong className="text-xl text-purple-700">AI Answer :</strong></div>
+            <div className="mb-4 ml-10"><strong className="text-xl dark:text-white text-purple-700">AI Answer :</strong></div>
             {/* <p className="text-md">{aiResult ? aiResult : "No AI answer found 🤔"}</p> */}
           <AIResponseCard text={aiResult} isLoading={loadai} onTypingComplete={ ()=>setTypingdone(true) } />
           {/* </div> */}
@@ -242,7 +243,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
           {typingdone && results.length > 0 && (
             <>
-              <div className="font-bold text-xl mt-12 ml-10 text-purple-700">Your Saved Contents:</div>
+              <div className="font-bold text-xl mt-12 ml-10 text-purple-700 dark:text-white">Your Saved Contents:</div>
               <div className="md:flex rounded-lg flex-wrap">
                 {results.map(({ _id, type, link, title }) => (
                   <div key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20">

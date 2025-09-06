@@ -12,7 +12,7 @@ interface TypingTextProps {
 
 
 
-export const Typingtext = ({ text, speed = 30, onComplete  }:TypingTextProps) => {
+export const Typingtext = ({ text, speed = 20, onComplete  }:TypingTextProps) => {
   const [displayed, setDisplayed] = useState('');
 
   useEffect(() => {

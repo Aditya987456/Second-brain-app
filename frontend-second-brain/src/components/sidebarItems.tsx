@@ -14,7 +14,7 @@ export function SidebarItems( {text,icon,sidebar, setFilter ,isActive}:{
             tabIndex={0}
             onClick={() => setFilter(text)}
             onKeyDown={(e) => e.key === "Enter" && setFilter(text)}
-             className={`flex gap-6  hover:bg-purple-100 dark:hover:bg-gray-800 rounded-md transition-all duration-300 ease-in-out 
+             className={`flex gap-6  hover:bg-purple-100 dark:hover:bg-[#282828] rounded-md transition-all duration-300 ease-in-out 
                                     whitespace-nowrap 
                                     overflow-hidden mr-2 ml-2 pl-3 p-2 cursor-pointer
                                     ${isActive ? 'bg-purple-200' : ''} focus:outline-none `} >

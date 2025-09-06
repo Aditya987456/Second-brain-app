@@ -85,17 +85,17 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
 
 
 {/* ---------------------------------  modal div   ------------------------------  */}
-      <div className="bg-white text-black w-full max-w-sm mx-4 sm:mx-0 rounded-lg px-10 py-12 relative transition-all">
+      <div className="dark:border dark:border-zinc-600 bg-white dark:bg-[#323232] text-black w-full max-w-sm mx-4 sm:mx-0 rounded-lg px-10 py-12 relative transition-all">
         
 {/* bg-white text-black px-4 py-8 rounded-lg   space-y-6 relative */}
       {/* header of the add content modal. */}
         <button
-          className="absolute top-3 right-3 text-gray-400 hover:text-gray-800"
+          className="absolute top-3 dark:hover:text-white dark:text-gray-400 right-3 text-gray-400 hover:text-gray-800"
           onClick={onClose}
         >
           <X />
         </button>
-        <h2 className="pb-10 text-3xl font-semibold text-center">Add Content</h2>
+        <h2 className="pb-10 text-3xl font-semibold text-center dark:text-white">Add Content</h2>
 
 
 
@@ -105,35 +105,35 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
     {/* first step of modal-> it has all 4-6 cards inside for the type of the content. */}
        { nextmodal==="select" &&  (<div><div  className="grid grid-cols-2 gap-6">
 
-          <button onClick={()=>{setNextmodal("enterdetails"), setType("Twitter")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button onClick={()=>{setNextmodal("enterdetails"), setType("Twitter")}} className="flex flex-col items-center px-12 py-6 dark:bg-[#282728] dark:hover:bg-[#141414] dark:border-none hover:bg-gray-100 bg-white  rounded border">
             <Twitter className="w-8 h-8 text-sky-400" />
-            <span className="mt-2 text-md">Tweet</span>
+            <span className="mt-2 text-md dark:text-white ">Tweet</span>
           </button>
 
-          <button onClick={()=>{setNextmodal("enterdetails"), setType("Youtube")}}  className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button onClick={()=>{setNextmodal("enterdetails"), setType("Youtube")}}  className="dark:bg-[#282728] dark:hover:bg-[#141414] dark:border-none flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <Youtube className="w-8 h-8 text-red-500" />
-            <span className="mt-2 text-md">Video</span>
+            <span className="mt-2 text-md dark:text-secondary">Video</span>
           </button>
 
-          <button onClick={()=>{setNextmodal("enterdetails"), setType("Docs")}} className="flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
+          <button onClick={()=>{setNextmodal("enterdetails"), setType("Docs")}} className="dark:bg-[#282728] dark:hover:bg-[#141414] dark:border-none flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
             <FileText className="w-8 h-8 text-yellow-400" />
-            <span className="mt-2 text-md">Document</span>
+            <span className="mt-2 text-md dark:text-white">Document</span>
           </button>
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Link")}} className="flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
-            <Link2 className="w-8 h-8 text-slate-600" />
-            <span className="mt-2 text-md">Link</span>
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Link")}} className="dark:bg-[#282728] dark:hover:bg-[#141414] dark:border-none flex flex-col items-center px-12 py-6  hover:bg-gray-100 bg-white rounded border">
+            <Link2 className="w-8 h-8 text-slate-600 dark:text-slate-400" />
+            <span className="mt-2 text-md dark:text-white">Link</span>
           </button>
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Github")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
-            <Github className="w-8 h-8 text-black" />
-            <span className="mt-2 text-md">Github</span>
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Github")}} className="dark:bg-[#282728] dark:hover:bg-[#141414] dark:border-none flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+            <Github className="w-8 h-8 text-black dark:text-white" />
+            <span className="mt-2 text-md dark:text-white">Github</span>
           </button>
 
 
-          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Others")}} className="flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
+          <button  onClick={()=>{setNextmodal("enterdetails"), setType("Others")}} className="dark:bg-[#282728] dark:hover:bg-[#141414] dark:border-none flex flex-col items-center px-12 py-6 hover:bg-gray-100 bg-white rounded border">
             <CircleEllipsis className="w-8 h-8 text-blue-400" />
-            <span className="mt-2 text-md">Others</span>
+            <span className="mt-2 text-md dark:text-white">Others</span>
           </button>
 
         </div>
@@ -157,9 +157,9 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
 
     {/*second step of modal -> it has inputbox for the title and link with back and submit button. */}
         {nextmodal === "enterdetails"  &&  ( 
-          <form  className=" space-y-6 bg-white text-black mx-4 py-2 rounded-lg relative h-full flex flex-col justify-between" onSubmit={HandleSubmitform}>
-          <p className="text-center text-md  text-gray-600">
-            Add details for <span className="font-bold">{type}</span> </p>
+          <form  className=" dark:bg-[#323232] dark:text-white space-y-6 bg-white text-black mx-4 py-2 rounded-lg relative h-full flex flex-col justify-between" onSubmit={HandleSubmitform}>
+          <p className="text-center text-md dark:text-secondary  text-gray-600">
+            Add details for <span className="font-bold dark:text-white">{type}</span> </p>
 
           <div>Title
           <Inputcomponent
@@ -177,14 +177,14 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
         <div className="flex justify-center items-center">
             <button
               type="submit"
-              className="mt-8 m-2 text-white w-full py-2 bg-green-700 rounded hover:bg-green-950 font-semibold text-md"
+              className="mt-8 m-2 text-white w-full py-2 bg-green-700 dark:hover:bg-green-600 rounded hover:bg-green-950 font-semibold text-md"
                >
               Add content
             </button>
 
 
             <button
-              className="mt-8 m-2 font-semibold text-white w-full py-2 bg-slate-600 rounded hover:bg-slate-800 text-md"
+              className="mt-8 m-2 font-semibold text-white w-full py-2 bg-slate-600 dark:hover:bg-slate-500 rounded hover:bg-slate-800 text-md"
               onClick={() => setNextmodal("select") } 
               >
               Go back

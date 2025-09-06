@@ -54,7 +54,7 @@ const TypeIcons=(type:string)=>{
             
 
         case "Github":
-            return <Github/>
+            return <Github className="dark:text-white"/>
             
 
         case "Docs":
@@ -65,7 +65,7 @@ const TypeIcons=(type:string)=>{
             return <TwitterIcon/>
 
         case "Link":
-            return <Link2/>
+            return <Link2 className="dark:text-slate-300"/>
 
         case "Others":
             return <CircleEllipsis/>
@@ -274,7 +274,12 @@ const testingsomething=()=>{
 
 
 
-        <div className="min-h-48 mt-4 p-2 min-w-80 max-w-80 shadow-lg hover:shadow-xl transition rounded-lg border-slate-200 border">
+        <div className="dark:bg-[#282727] dark:border-zinc-950 dark:hover:border-zinc-500  min-h-48 mt-4 p-2
+         min-w-80 max-w-80 shadow-lg hover:shadow-2xl rounded-lg 
+          border-slate-200 border
+         transition-all duration-300 ease-linear
+          
+          ">
 
         {/* ------------------------- header of the card  ------------------------------- */}
             <div className=" flex justify-between text-gray-500">  
@@ -293,7 +298,7 @@ const testingsomething=()=>{
 
 
                          {/* title of the card */}                       
-                        <span className="text-black">{title}</span>
+                        <span className="text-black dark:text-white">{title}</span>
                 </div>
 
                     {/* share icon on top of the card */}
