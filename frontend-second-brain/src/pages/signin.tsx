@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Dashboard } from "./dashboard";
 import brainimg from "../assets/brainimg.png"
 import brainimgdark from "../assets/brainimgdark.png"
-
+import toast from "react-hot-toast";
 
 
 
@@ -41,14 +41,14 @@ export function Signin() {
             localStorage.setItem("isDemo", response.data.isDemo);
 
 
-
+            toast.success(response.data.message || "Signed in successfully!"); 
 
             navigate('/dashboard')
 
             
-        }catch (error) {
+        }catch (error:any) {
             console.log(error.response?.data);  // <-- ?
-            alert('Error signing in: ' + error.response?.data?.message || 'Something went wrong');
+            toast.error(error.response?.data?.message || "Something went wrong");
             }
 
     }

@@ -82,7 +82,7 @@ const navigate=useNavigate()
                             
                             onClick={() =>{ setFilter(""), setShowResults(false), setQuery("") } }
                             
-                             className="     dark:bg-purple-500 cursor-pointer flex items-center gap-2 ml-2
+                             className="     dark:bg-purple-600 cursor-pointer flex items-center gap-2 ml-2
                                              overflow-hidden bg-purple-200 rounded-lg mr-2
                                                     ">
                                 <img src={brain2icon} alt="logo" className="w-12 dark:filter dark:brightness-0 dark:invert shrink-0" />

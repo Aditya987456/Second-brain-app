@@ -6,6 +6,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { BACKEND_URL } from "./config";
 import brainimg from "../assets/brainimg.png"
 import brainimgdark from "../assets/brainimgdark.png"
+import toast from "react-hot-toast";
+
+
+
+
 export function Signup() {
 
 
@@ -30,7 +35,7 @@ export function Signup() {
 
         //checking not submit the form empty.
         if (!emailid || !username || !password) {
-            alert("All fields are required.");
+            toast.error("All fields are required.");
             return;
             }
 
@@ -42,12 +47,13 @@ export function Signup() {
 
         navigate('/signin')  //redirect to the next page.
 
-        alert('You are signed in')
+        toast.success('Successfully created account, Now signin')
 
 
             
         } catch (error) {
             console.log('signup error'+ error)
+            toast.error('signup error')
             
         }
         

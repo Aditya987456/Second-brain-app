@@ -12,7 +12,7 @@ import { SupportPage } from "./pages/supportme"
 import { About } from "./pages/about"
 import { Contact } from "./pages/contact"
 
-
+import { Toaster } from 'react-hot-toast';
   
 function App() {
   
@@ -20,7 +20,7 @@ function App() {
  
 <ThemeProvider>  
     <BrowserRouter>
-    
+    <Toaster position="top-center" reverseOrder={false} />
   <Routes>
 
     {/* Layout with Navbar */}

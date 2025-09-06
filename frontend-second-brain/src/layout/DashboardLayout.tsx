@@ -104,7 +104,7 @@ export default function DashboardLayout() {
         <div className="flex-1 overflow-y-auto p-4">
           <Outlet />
         </div>
-        <Toaster position="top-center" reverseOrder={false} />
+        {/* <Toaster position="top-center" reverseOrder={false} /> */}
       </div>
     </DashboardProvider>
   );
