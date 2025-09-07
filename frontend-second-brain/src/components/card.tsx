@@ -10,9 +10,10 @@ import { CircleEllipsis, Github, Link, Link2 } from "lucide-react";
 import { BACKEND_URL } from "../pages/config";
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { TwitterCard } from "./TwitterCard";
+// import { TwitterCard } from "./TwitterCard";
 import { useState } from "react";
 import GitHubCard from "./githubCard";
+import { SharebrainModal } from "./SharebrainModal";
 
 interface Cardprops{
     id: string;
@@ -25,6 +26,8 @@ interface Cardprops{
     onDelete: (id: string) => void;
     status: "ready" | "pending" | "retrying" | "failed"
     retrycounting:Number
+    setShareModal?: React.Dispatch<React.SetStateAction<boolean>>
+    setSharelink?:React.Dispatch<React.SetStateAction<string>>
   }
 
 
@@ -83,7 +86,8 @@ const TypeIcons=(type:string)=>{
 
 
 //#-------------------------------**** cards that accept all this things ****-----------------------------------
-export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded, onDelete, status}:Cardprops) {
+export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded, onDelete, status, setShareModal,setSharelink}:Cardprops) {
+
 
   //----  status color dots logic here.
  const statusColors: Record<string, string> = {
@@ -95,7 +99,7 @@ export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScr
 
 const statusTooltips: Record<string, string> = {
   ready: "Content fetched successfully. Search results will be accurate.",
-  pending: "Content is still being processed. AI searches might not find this content yet.",
+  pending: "Content is still being processed. AI searches might not find this content yet.Refresh after sometime",
   retrying: "Fetching again. Processing is still active.",
   failed: "Failed to fetch or process content. Search results may be inaccurate. Try editing or retrying.",
 };
@@ -236,25 +240,6 @@ useEffect(() => {
 
 
 
-    //.................. for the links card  ..........................
-
-
-
-
-
-    //.................. for the docs card  ..........................
-
-
-
-
-
-
-
-
-    //.................. for the others card  ..........................
-
-
-
 
 
 
@@ -274,8 +259,9 @@ const testingsomething=()=>{
 
 
 
-        <div className="dark:bg-[#282727] dark:border-zinc-950 dark:hover:border-zinc-500  min-h-48 mt-4 p-2
-         min-w-80 max-w-80 shadow-lg hover:shadow-2xl rounded-lg 
+        <div className="dark:bg-[#282727] dark:border-zinc-950 dark:hover:border-zinc-500 
+         md:min-h-48 mt-4 md:p-2 p-1
+         md:min-w-80 max-w-80 shadow-lg hover:shadow-2xl rounded-lg 
           border-slate-200 border
          transition-all duration-300 ease-linear
           
@@ -315,9 +301,13 @@ const testingsomething=()=>{
 
 
 
-                    <div className="mr-3">
+                    <div onClick={()=>{ setShareModal?.(true)
+                                      setSharelink?.(link) }
+
+                     } className="mr-3">
                         <ShareIcons/>
                     </div>
+
 
                   {/* delete icon on top of the card */}
                     <div onClick={DeletingCard} >

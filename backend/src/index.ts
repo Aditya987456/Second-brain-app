@@ -344,7 +344,7 @@ app.delete('/api/v1/content', UserMiddleware, async (req, res)=>{
 
 
 //--------------------------------  share content  -------------------------------------
-
+//will add this in v2
 app.post('/api/v1/brain/share', UserMiddleware, async (req:Request, res:Response)=>{
 
     
@@ -415,7 +415,7 @@ app.post('/api/v1/brain/share', UserMiddleware, async (req:Request, res:Response
 
 
 //-----------------------------------  get shared contents... ---------------------------------
-
+//will add this in v2
 app.get('/api/v1/brain/:sharelink', async (req, res)=>{
     
     const hash = req.params.sharelink;
@@ -610,123 +610,6 @@ app.post("/api/v1/demo-login", async (req, res) => {
 // });
 
 
-//metasearch
-// app.get("/api/v1/ai-answer", UserMiddleware, async (req: AuthRequest, res) => {
-//   try {
-//     const SearchQuery = req.query.q as string;
-
-//     if (!SearchQuery) {
-//       return res.status(400).json({ error: "Missing query" });
-//     }
-
-//     // 1️⃣ Get embedding for the search query
-//     const SearchQueryEmbedding = await getEmbedding(SearchQuery);
-
-//     // 2️⃣ Perform vector search using $searchMeta
-//     let searchResults;
-//     try {
-//       searchResults = await ContentModel.aggregate([
-//         {
-//           $searchMeta: {
-//             index: "SB-vectorSearch",
-//             knnBeta: {
-//               vector: SearchQueryEmbedding,
-//               path: "embedding",
-//               k: 10, // top 10 results
-//             },
-//             // optional: filter by user
-            
-//           }
-//         },{
-//         $match: { userId: new mongoose.Types.ObjectId(req.userId) } // filter by user
-//         }
-//       ]);
-//     } catch (dbError: any) {
-//       console.error("❌ Vector search failed:", dbError.message || dbError);
-//       return res.status(500).json({
-//         LLMresponses: "⚠️ Vector search failed, please try again.",
-//         cards: [],
-//       });
-//     }
-
-//     // 3️⃣ Map searchResults to include score and document fields
-//     const results = searchResults.map(r => ({
-//       ...r.doc,
-//       score: r.score
-//     }));
-
-//     // 4️⃣ Print scores for debugging
-//     results.forEach(r => console.log(r.score?.toFixed(2) ?? "N/A"));
-
-//     // 5️⃣ Sort by score descending
-//     results.sort((a, b) => (b.score || 0) - (a.score || 0));
-
-//     // 6️⃣ Apply threshold filtering
-//     const threshold = parseFloat(req.query.threshold as string) || 0.5;
-//     let relevantResults = results.filter(r => (r.score || 0) >= threshold);
-
-//     // fallback if no results pass threshold
-//     if (relevantResults.length === 0 && results.length > 0) {
-//       relevantResults = results.slice(0, 2);
-//     }
-
-//     // 7️⃣ Build LLM prompt
-//     let prompt = "";
-//     let cards: any[] = [];
-
-//     if (relevantResults.length > 0) {
-//       const ContextLLM = relevantResults
-//         .map((item, idx) => `Card: ${idx + 1}: ${item.title}\n${item.content}`)
-//         .join("\n\n");
-
-//       prompt = `
-// You are an AI assistant for a Second Brain app.
-// User's question: "${SearchQuery}"
-
-// Here are the most relevant saved notes/cards:
-// ${ContextLLM}
-
-// Answer the question using the saved content.
-// At the end, also mention: "I've included your saved cards below."
-// `;
-
-//       // Prepare cards for frontend
-//       cards = relevantResults.map(doc => ({
-//         _id: doc._id,
-//         title: doc.title,
-//         link: doc.link,
-//         type: doc.type,
-//         score: doc.score // include score for reference
-//       }));
-//     } else {
-//       prompt = `
-// User's question: "${SearchQuery}"
-
-// You have no saved content for this topic.
-// Answer the question from your own knowledge.
-// Also mention: "No saved cards matched your search."
-// `;
-//     }
-
-//     console.log("📝 Final prompt sent to LLM:\n", prompt);
-
-//     // 8️⃣ Get LLM response
-//     const LLMresponses = await getLLMResponse(prompt);
-//     const safeResponse = LLMresponses && LLMresponses.trim()
-//       ? LLMresponses
-//       : "No AI answer found 🤔";
-
-//     // 9️⃣ Send response
-//     res.json({ LLMresponses: safeResponse, cards });
-
-//   } catch (error: any) {
-//     console.error("search Error", error.message || error);
-//     res.status(500).json({ error: error.message || "Internal server error" });
-//   }
-// });
-
-
-
 
 
 
@@ -860,129 +743,6 @@ app.post("/api/v1/demo-login", async (req, res) => {
 // });
 
 
-
-
-// app.get("/api/v1/ai-answer", UserMiddleware, async (req: AuthRequest, res) => {
-//   try {
-//     const SearchQuery = req.query.q as string;
-//     if (!SearchQuery) return res.status(400).json({ error: "Missing query" });
-
-//     // 1️⃣ Generate embedding for query
-//     const SearchQueryEmbedding = await getEmbedding(SearchQuery);
-//     console.log("Query embedding length:", SearchQueryEmbedding.length);
-
-//     // 2️⃣ Perform vector search using $search + knnBeta
-//     let results: any[] = [];
-//     try {
-//       results = await ContentModel.aggregate([
-//         {
-//           $search: {
-//             index: "vector_index", // Lucene-based Atlas Search index
-//             knnBeta: {
-//               vector: SearchQueryEmbedding,
-//               path: "embedding",
-//               k: 20 // more candidates for better filtering
-//             }
-//           }
-//         },
-//         {
-//           $match: {
-//             userId: new mongoose.Types.ObjectId(req.userId)
-//           }
-//         },
-//         {
-//           $project: {
-//             title: 1,
-//             content: 1,
-//             link: 1,
-//             type: 1,
-//             _vectorScore: { $meta: "searchScore" }
-//           }
-//         },
-//         {
-//           $sort: { _vectorScore: -1 }
-//         },
-//         {
-//           $limit: 10
-//         }
-//       ]);
-//     } catch (dbError: any) {
-//       console.error("❌ Vector search failed:", dbError.message || dbError);
-//       return res.status(500).json({
-//         LLMresponses: "⚠️ Vector search failed, please try again.",
-//         cards: [],
-//       });
-//     }
-
-//     // 3️⃣ Log scores for debugging
-//     results.forEach(r => {
-//       console.log(`Title: ${r.title} | Score: ${r._vectorScore?.toFixed(3) ?? "N/A"}`);
-//     });
-
-//     // 4️⃣ Filter by score threshold
-//     const threshold = parseFloat(req.query.threshold as string) || 0.5;
-//     let relevantResults = results.filter(r => (r._vectorScore ?? 0) >= threshold);
-
-//     // Fallback: top 2 if none pass threshold
-//     if (relevantResults.length === 0 && results.length > 0) {
-//       console.warn("⚠️ No results passed threshold. Using fallback.");
-//       relevantResults = results.slice(0, 2);
-//     }
-
-//     // 5️⃣ Construct LLM prompt and card list
-//     let prompt = "";
-//     let cards: any[] = [];
-
-//     if (relevantResults.length > 0) {
-//       const ContextLLM = relevantResults
-//         .map((item, idx) =>
-//           `Card ${idx + 1} (score: ${(item._vectorScore ?? 0).toFixed(2)}): ${item.title}\n${item.content}`
-//         )
-//         .join("\n\n");
-
-//       prompt = `
-// You are an AI assistant for a Second Brain app.
-// User's question: "${SearchQuery}"
-
-// Here are the most relevant saved notes/cards:\n${ContextLLM}
-
-// Answer the question using the saved content.
-// At the end, also mention: "I've included your saved cards below."`;
-
-//       cards = relevantResults.map(doc => ({
-//         _id: doc._id,
-//         title: doc.title,
-//         link: doc.link,
-//         type: doc.type,
-//       }));
-//     } else {
-//       prompt = `
-// User's question: "${SearchQuery}"
-
-// You have no saved content for this topic.
-// Answer the question from your own knowledge.
-// Also mention: "No saved cards matched your search."`;
-//     }
-
-//     console.log("📝 Final prompt sent to LLM:\n", prompt);
-
-//     // 6️⃣ Get LLM response
-//     const LLMresponses = await getLLMResponse(prompt);
-//     const safeResponse = LLMresponses && LLMresponses.trim()
-//       ? LLMresponses
-//       : "No AI answer found 🤔";
-
-//     // 7️⃣ Send response
-//     res.json({ LLMresponses: safeResponse, cards });
-
-//   } catch (error: any) {
-//     console.error("search Error", error.message || error);
-//     res.status(500).json({ error: error.message || "Internal server error" });
-//   }
-// });
-
-
-
 // //works lates--> with scores.
 app.get("/api/v1/ai-answer", UserMiddleware, async (req: AuthRequest, res) => {
   
@@ -1002,7 +762,7 @@ app.get("/api/v1/ai-answer", UserMiddleware, async (req: AuthRequest, res) => {
 
 
 
-console.log("--------------------length----------------",SearchQueryEmbedding.length)
+//console.log("--------------------length----------------",SearchQueryEmbedding.length)
    
 
 
@@ -1043,12 +803,12 @@ console.log("--------------------length----------------",SearchQueryEmbedding.le
     vectorResults.sort((a, b) => b._vectorScore - a._vectorScore);
 
 
-
-    console.log("🔍 Raw vector results:", vectorResults.map(r => ({
-  id: r._id,
-  title: r.title,
-  score: r._vectorScore
-})));
+//----it need when we need to see who are selected from our keyword even with very low score
+//     console.log("🔍 Raw vector results:", vectorResults.map(r => ({
+//   id: r._id,
+//   title: r.title,
+//   score: r._vectorScore
+// })));
 
 
 
@@ -1059,12 +819,12 @@ console.log("--------------------length----------------",SearchQueryEmbedding.le
 
 
 
-
-console.log("✅ Filtered relevant results:", relevantResults.map(r => ({
-  id: r._id,
-  title: r.title,
-  score: r._vectorScore
-})));
+//----this are those results that are selected i.e who are above the threshold score.
+// console.log("✅ Filtered relevant results:", relevantResults.map(r => ({
+//   id: r._id,
+//   title: r.title,
+//   score: r._vectorScore
+// })));
 
 
 
@@ -1136,7 +896,7 @@ Also mention: "No saved cards matched your search."
       `;
     }
 
-    console.log("🚀 Final Prompt:", prompt.length, prompt.slice(0, 400));
+   // console.log("🚀 Final Prompt:", prompt.length, prompt.slice(0, 400));
 
 
     // 6️⃣ LLM Answer
@@ -1158,11 +918,6 @@ Also mention: "No saved cards matched your search."
 
 
 
-
-
-
-  
-
 });
 
 
@@ -1174,7 +929,7 @@ Also mention: "No saved cards matched your search."
 
 
 
-app.listen(3000, ()=>{
+app.listen(3000,"0.0.0.0", ()=>{
     console.log(`server running on the port 3000`)
 })
 

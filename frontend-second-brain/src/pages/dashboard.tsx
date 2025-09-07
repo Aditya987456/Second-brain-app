@@ -15,6 +15,7 @@ import { useOutletContext } from "react-router-dom";
 import axios from "axios"
 import React from "react"
 import { DashboardContext } from "./DashboardContext"
+import { BACKEND_URL } from "./config"
 // type OutletContextType = {
 //   isSidebarOpen: boolean;
 //   filter: string;
@@ -23,7 +24,8 @@ import { DashboardContext } from "./DashboardContext"
 //   query:string
 //   setQuery:(value:string)=>void
 // };
-
+import { SharebrainModal } from "../components/SharebrainModal"
+import { DashboardShare } from "../components/dashboardShare"
 
 
 
@@ -34,7 +36,15 @@ export function Dashboard() {
   
     const { query, setQuery, filter, setFilter, showResults, setShowResults, isSidebarOpen, setIsSidebarOpen } = contextDashboard;
   
-  
+  const [ shareModal, setShareModal ]=useState(false)
+  //----------  sharing link of the content  ---------
+  const [ sharelink, setSharelink ]=useState('')
+
+
+
+  //----full dashboard share
+  const [ shareDashboard, setShareDashboard ]=useState(false)
+
 
 
 const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
@@ -81,7 +91,7 @@ async function HandleSearch() {
 
   try {
      const token = localStorage.getItem("token")
-    const res = await axios.get(`http://localhost:3000/api/v1/ai-answer`,
+    const res = await axios.get(`${BACKEND_URL}/api/v1/ai-answer`,
       { params: { q: query },
        headers: { Authorization: token ? token : "" } },
       );
@@ -137,13 +147,12 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
   return (
 
    <div className={`transition-all duration-300 ease-linear   ${ 
-          isSidebarOpen ? "ml-72" : "ml-16"} `} >
+          isSidebarOpen ? "md:ml-64" : "md:ml-16"} `} >
 
     
+    <div className={`${isSidebarOpen?`md:pr-6 md:pl-2`:''}  pl-2 md:py-6 py-10  min-h-screen transition-all duration-300 ease-in-out `}>
 
-    <div className={`p-4 min-h-screen transition-all duration-300 ease-in-out `}>
-
-
+{/* ----------- ye add content modal ka hai  ------------- */}
         { isOpen && <AddContentModal 
           isOpen={isOpen}
           setAllContents={setAllContents}
@@ -151,11 +160,20 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
           onClose={ ()=>{ setIsOpen(false) }}
            /> }
 
+{/* ------------  ye share content modal ka hai  ----------- */}
+          { shareModal && <SharebrainModal
+            setShareModal={setShareModal}
+            sharelink={sharelink}
+          />}
 
+{/* ------------  ye full dashboard share ka modal  --------- */}
+            { shareDashboard &&  <DashboardShare
+               setShareDashboard={setShareDashboard}
+            /> }
 
-        {/* -------------------------   Demo section   ------------------------- */}
+        {/* -------------------------   Demo section  ------------------------- */}
         {isDemo && (
-          <div className="bg-yellow-100 text-yellow-800 p-3 rounded mb-4 text-sm">
+          <div className="bg-yellow-100 text-yellow-800 md:p-3 pl-9 rounded mb-4 text-sm">
             You're using a <strong>temporary demo account</strong>. All data will be deleted after 2 hours.
             <br />
             <a href="/signup" className="text-blue-600 underline font-semibold">Sign up</a> to keep your content!
@@ -166,51 +184,39 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
 
 
-  {/*  **** header of dashboard -> your sec brain , search bar, share, add, theme button. */}
-        
+  {/*  **** header of dashboard -> your sec brain* , search bar, share, add, theme button. */}
+           
+    <div className={` sm:ml-0 ml-10  md:flex md:gap-6 gap-2  items-center ${showResults? `justify-center`:`justify-end`}`}>
+          
+        {/*--------------- search bar  ---------------- */}
+          <div className="relative z-10 w-full max-w-xl mr-0 md:mr-8">
+            
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}   // $$$Each keystroke is captured by onChange.---> i think here no need of this??????
+              type="text"
+              placeholder="Let AI find it for you..."
+              className="w-full sm:pr-4 pr-0 md:pr-20 md:pl-4 pl-2 py-2 border dark:bg-zinc-800 dark:text-white border-purple-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
+            />
+            <button
+              onClick={HandleSearch}
+              className=" font-semibold absolute right-1 top-1 bottom-1 px-2 sm:px-4
+                bg-custom-gradient
+                hover:bg-custom-gradient2
+              text-white rounded-lg  transition"
+            >
+              AI search
+            </button>
 
-        
-        <div className="flex gap-4 justify-end items-center">
-          {/* <div className="bg-green-400 mr-20"><SearchBar/></div> */}
+          </div>
 
-  {/*--------------- search bar  ---------------- */}
-      {/* <input
-        type="text"
-        placeholder="Let AI find it for you..."
-        className="flex-1 bg-green-100 m-4 ml-60 rounded-lg  border-2 border-purple-200 p-2 outline-none bg-transparent text-gray-800 placeholder:text-gray-400"
-        value={query}
-
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button className="bg-green-600 " onClick={HandleSearch}>Search</button> */}
-
-    <div className="relative w-full max-w-xl mr-8">
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}   // $$$Each keystroke is captured by onChange.
-        type="text"
-        placeholder="Let AI find it for you..."
-        className="w-full pr-20 pl-4 py-2 border dark:bg-zinc-800 dark:text-white border-purple-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
-      />
-      <button
-        onClick={HandleSearch}
-        className=" font-semibold absolute right-1 top-1 bottom-1 px-4
-          bg-custom-gradient
-          hover:bg-custom-gradient2
-        text-white rounded-lg  transition"
-      >
-        AI search
-      </button>
-    </div>
-
-
-
-        
-      {/* -----------------   Two buttons add content  and  share brain ----------- */}
+        {/* -----------------   Two buttons add content  and  share brain ----------- */}
+        <div className={`${showResults?'hidden':''} md:flex-none flex justify-center md:gap-2 gap-10  items-center`}>
           <Button  onClick={ ()=>{setIsOpen(true)} }  variant='primary'  text="Add content"  startIcon={<AddIcons/>}></Button>
-          <Button  variant='secondary'  text="Share brain" startIcon={<ShareIcons/>} ></Button>
-
+          <Button onClick={ ()=>setShareDashboard(true) }  variant='secondary'  text="Share brain" startIcon={<ShareIcons/>} ></Button>
         </div>
+
+    </div>
 
 
  
@@ -223,7 +229,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
 
   {/* -------------------------- all the cards are there ------------------ */}
-    <div className=" transition-all duration-300 ease-linear   mt-10  ">
+    <div className=" transition-all duration-300 ease-linear md:ml-0 ml-10 mt-10  ">
           
 
 
@@ -234,7 +240,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
         <>
           {/* ########---------- AI's Answer  -----------######## */}
           {/* <div className="p-4 mb-4  border border-purple-200 rounded-lg"> */}
-            <div className="mb-4 ml-10"><strong className="text-xl dark:text-white text-purple-700">AI Answer :</strong></div>
+            <div className="md:mb-4 mb-2 ml-3 md:ml-10"><strong className="text-xl dark:text-white text-purple-700">AI Answer :</strong></div>
             {/* <p className="text-md">{aiResult ? aiResult : "No AI answer found 🤔"}</p> */}
           <AIResponseCard text={aiResult} isLoading={loadai} onTypingComplete={ ()=>setTypingdone(true) } />
           {/* </div> */}
@@ -243,7 +249,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
           {typingdone && results.length > 0 && (
             <>
-              <div className="font-bold text-xl mt-12 ml-10 text-purple-700 dark:text-white">Your Saved Contents:</div>
+              <div className="font-bold text-xl mt-12 ml-3 md:ml-10 text-purple-700 dark:text-white">Your Saved Contents:</div>
               <div className="md:flex rounded-lg flex-wrap">
                 {results.map(({ _id, type, link, title }) => (
                   <div key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20">
@@ -269,7 +275,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
           :
         
 // default dashboard--
-           <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2  md:columns-3 xl:columns-4 space-y-6">
+           <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2   md:columns-3 xl:columns-4 space-y-6">
         <>
           { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
               contents.map(({ _id, type, link, title,status }) => {
@@ -283,6 +289,8 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
                   isTwitterScriptLoaded={isTwitterScriptLoaded}
                   setTwitterScriptLoaded={setTwitterScriptLoaded}
                   onDelete={handleDelete}
+                  setShareModal={setShareModal}
+                  setSharelink={setSharelink}
                   />
                   </div>
               })
@@ -294,22 +302,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
       
       }
 
-          {/* { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
-            contents.map(({ _id, type, link, title }) => {
-              //const { type, link, title } = item;  // it is same as passing in the props like
-              return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20" > <Card
-                id={_id}  
-                type={type}
-               
-                link={link}
-                title={title}
-                isTwitterScriptLoaded={isTwitterScriptLoaded}
-                setTwitterScriptLoaded={setTwitterScriptLoaded}
-                onDelete={handleDelete}
-                 />
-                 </div>
-            })
-          } */}
+ 
 
 
 

@@ -9,7 +9,7 @@ interface AIResponseCardProps {
 
 export const AIResponseCard = ({ text, isLoading, onTypingComplete }: AIResponseCardProps) => {
   return (
-    <div className="bg-white shadow-xl dark:border dark:border-gray-700 dark:bg-[#272727] dark:text-purple-50 rounded-lg p-4 mx-8">
+    <div className="bg-white shadow-xl dark:border dark:border-gray-700 dark:bg-[#272727] border dark:text-purple-50 rounded-lg p-2 md:p-4 mx-1 md:mx-8">
       {isLoading ? (
         <div className="text-sm text-gray-500 flex items-center">
           <span>Thinking</span>

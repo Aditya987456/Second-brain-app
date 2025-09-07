@@ -54,10 +54,10 @@ const navigate=useNavigate()
     return <div>
 
 
-            <div className={` top-4 rounded-r-xl h-screen  border-r border-t bg-purple-50 dark:bg-[#363636] dark:border-gray-700 dark:text-white 
+            <div className={`z-20 top-4 rounded-r-xl h-screen  border-r border-t bg-purple-50 dark:bg-[#363636] dark:border-gray-700 dark:text-white 
              fixed left-0  transition-all duration-300 ease-linear rounded-br-sm
                              
-                             ${isSidebarOpen ? 'w-72 ' : 'w-16'}
+                             ${isSidebarOpen ? 'w-72 ' : 'w-14 md:w-16'}
 
                              `}>
 
@@ -67,7 +67,7 @@ const navigate=useNavigate()
                             {/* --------- for the logo and menu mobile view -------- */}
                             <div
                                     className={`cursor-pointer transition-all duration-300 ease-linear                                
-                                                ${isSidebarOpen ? 'ml-72 rotate-180' : 'ml-16 '}
+                                                ${isSidebarOpen ? 'ml-72 rotate-180' : 'ml-14 md:ml-16 '}
                                                 `}
                                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                                     >
@@ -143,7 +143,7 @@ const navigate=useNavigate()
                     //   });
                 }
                 }}
-              className="dark:hover:bg-gray-800 relative top-72 p-2 cursor-pointer  rounded-md flex justify-center hover:rounded-md  hover:bg-purple-200">
+              className="dark:hover:bg-gray-800 relative top-44 md:top-72 p-2 cursor-pointer  rounded-md flex justify-center hover:rounded-md  hover:bg-purple-200">
                 <LogOut></LogOut><p className={` pl-4 text-lg  ${isSidebarOpen ? 'opacity-100 w-auto ml-1 ' : 'opacity-0 w-0'}`} >Logout</p>
             </div>
 
