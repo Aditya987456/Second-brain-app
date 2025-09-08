@@ -1,5 +1,5 @@
 // testUpdatedEmbedding.ts
-import { getEmbedding } from "./utils/embedding";
+import { getEmbedding } from "../utils/embedding";
 
 async function test() {
   const text = "Hello world, test embedding!";
