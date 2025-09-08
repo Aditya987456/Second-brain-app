@@ -1,4 +1,4 @@
-// checkEnv.ts
+// checkEnv.ts---> test karne ke liye ki sab sahi chal raha hia like var from .env
 
 
 import dotenv from 'dotenv'

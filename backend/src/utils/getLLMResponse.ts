@@ -126,7 +126,7 @@ export async function getLLMResponse(prompt: string): Promise<string> {
 }
 
 /**
- * Retries the LLM call on failure, with exponential delay.
+ * Retries the LLM call on failure, with exponential delay--> 2sec, 4s,6s....
  */
 export async function getLLMResponseWithRetry(
   prompt: string,
