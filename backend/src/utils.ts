@@ -1,4 +1,4 @@
-//to generate the random id when sharing the contents...
+//to generate the random id when sharing the contents...--> will use in v2
 
 export function random(length:number) {
 
