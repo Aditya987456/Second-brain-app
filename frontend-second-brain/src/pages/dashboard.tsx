@@ -16,6 +16,8 @@ import axios from "axios"
 import React from "react"
 import { DashboardContext } from "./DashboardContext"
 import { BACKEND_URL } from "./config"
+
+import { BeatLoader } from 'react-spinners';
 // type OutletContextType = {
 //   isSidebarOpen: boolean;
 //   filter: string;
@@ -146,11 +148,11 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 
   return (
 
-   <div className={`transition-all duration-300 ease-linear   ${ 
+   <div className={`transition-all duration-300 ease-linear  ${ 
           isSidebarOpen ? "md:ml-64" : "md:ml-16"} `} >
 
     
-    <div className={`${isSidebarOpen?`md:pr-6 md:pl-2`:''}  pl-2 md:py-6 py-10  min-h-screen transition-all duration-300 ease-in-out `}>
+    <div className={`${isSidebarOpen?`md:pr-6 md:pl-2`:''}  pl-2 md:py-6 py-10  min-h-screen transition-all duration-300 ease-linear `}>
 
 {/* ----------- ye add content modal ka hai  ------------- */}
         { isOpen && <AddContentModal 
@@ -277,7 +279,14 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
 // default dashboard--
            <div className=" transition-all duration-300 ease-linear columns-1 mt-10 sm:columns-2   md:columns-3 xl:columns-4 space-y-6">
         <>
-          { loading? (<p className="bg-black p-2 text-red-50">loading...</p>):
+        
+          { loading?
+            (
+              <div className="absolute left-1/2 top-1/2">
+              <BeatLoader color="#8A27F2" size={50} margin={10} loading={loading} />
+              </div>
+            )
+           :
               contents.map(({ _id, type, link, title,status }) => {
                 //const { type, link, title } = item;  // it is same as passing in the props like
                 return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20 transition" > <Card

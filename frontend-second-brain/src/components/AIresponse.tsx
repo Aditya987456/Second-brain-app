@@ -18,7 +18,7 @@ export const AIResponseCard = ({ text, isLoading, onTypingComplete }: AIResponse
           <span className="animate-bounce mx-1 delay-200">.</span>
         </div>
       ) : (
-        <Typingtext text={text} onComplete={onTypingComplete} />
+        <Typingtext key={text}  text={text} onComplete={onTypingComplete} />
       )}
     </div>
   );

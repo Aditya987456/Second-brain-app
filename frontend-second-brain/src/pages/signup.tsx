@@ -30,8 +30,8 @@ export function Signup() {
         try {
 
         const username = UsernameRef.current?.value;
-        const password = PasswordRef.current?.value;
-        const emailid = EmailRef.current?.value;
+        const password = PasswordRef.current?.value.trim();
+        const emailid = EmailRef.current?.value.trim();
 
         //checking not submit the form empty.
         if (!emailid || !username || !password) {
@@ -123,8 +123,6 @@ export function Signup() {
                         Second Brain doesn’t just store your knowledge — it thinks with you. Our AI understands context, connects ideas, and find ideas by meaning, not just keywords.</p>
                  </div>
             </div>
-
-
 
         </div>
         )   

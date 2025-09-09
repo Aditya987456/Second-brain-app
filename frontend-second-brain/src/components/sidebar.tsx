@@ -91,7 +91,7 @@ const navigate=useNavigate()
                                         
 
 
-                                    transition-all duration-300 ease-in-out 
+                                    transition-all duration-300 ease-linear 
                                     whitespace-nowrap 
                                     overflow-hidden
                                     text-2xl
@@ -120,7 +120,7 @@ const navigate=useNavigate()
                         <li><SidebarItems isActive={filter === "Youtube"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Youtube" icon={<YtIcons/>}/></li>
                         <li><SidebarItems isActive={filter === "Github"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Github" icon={< Github/>}/></li>
                         <li><SidebarItems isActive={filter === "Docs"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Docs" icon={<FileText className="text-yellow-400"></FileText>}/></li>
-                        <li><SidebarItems isActive={filter === "Links"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Links" icon={<Link2 className="text-slate-600 dark:text-slate-300"></Link2>}/></li>
+                        <li><SidebarItems isActive={filter === "Links"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Link" icon={<Link2 className="text-slate-600 dark:text-slate-300"></Link2>}/></li>
                         <li><SidebarItems isActive={filter === "Others"}  setFilter={setFilter} sidebar={isSidebarOpen} text="Others" icon={<CircleEllipsis className="text-blue-400"></CircleEllipsis> }/></li>
                         <li className=""><span className="pl-3 flex"><DarkmodeButton/>
                             <p className="pl-3 flex justify-center items-center"><ChevronsLeft />Toogle theme </p>

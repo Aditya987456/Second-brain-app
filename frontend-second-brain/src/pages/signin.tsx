@@ -25,8 +25,8 @@ export function Signin() {
 
         try {
 
-            const emailid=emailidref.current?.value
-            const password=passwordref.current?.value
+            const emailid=emailidref.current?.value.trim()
+            const password=passwordref.current?.value.trim()
 
 
             const response=await axios.post(BACKEND_URL+"/api/v1/signin", {
