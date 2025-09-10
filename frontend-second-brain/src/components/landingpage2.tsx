@@ -46,7 +46,7 @@ export default function LandingSection() {
     <section className="relative md:ml-64 md:mr-8 md:px-0">
 
 
-      <div className="max-w-8xl  md:ml-8 grid grid-cols-1 md:grid-cols-2 md:gap-x-8   items-center">
+      <div className="max-w-8xl px-2  md:ml-8 grid grid-cols-1 md:grid-cols-2 md:gap-x-8   items-center">
         
         {/* Left: Demo Video */}
         <motion.div
@@ -75,7 +75,7 @@ export default function LandingSection() {
             intelligent retrieval, and modular design to help you build your Second Brain effortlessly.
           </p> */}
 
-          <ul className="md:space-y-3 mr-52 space-y-1">
+          <ul className="md:space-y-3  md:mr-52 space-y-1">
             {[
               "Upload or sync notes, articles, videos, bookmarks, and more—all in one place that’s easy to access anytime.",
               "We embed and index your content using vector search",

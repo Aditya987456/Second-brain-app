@@ -23,6 +23,7 @@ import { getEmbedding } from "./utils/embedding";
 import { getLLMResponse } from "./utils/getLLMResponse";
 import { queueFetchContent } from "./worker";
 import { getLLMResponseWithRetry } from "./utils/getLLMResponse";
+import { validateLinkByType } from "./utils/ValidateLinks";
 
 export interface AuthRequest extends Request {
   userId?: string;
@@ -250,6 +251,12 @@ app.post('/api/v1/content', UserMiddleware , async (req, res )=>{
             return res.status(400).json({ error: "Link and title are required." });
         }
 
+        //####------- validating links entered by user ----------------
+        const validation = validateLinkByType(type, link);
+          if (!validation.valid) {
+            return res.status(400).json({ error: validation.error });
+          }
+
 
         //----save content immediately only title and link----
         const content = await ContentModel.create({
@@ -264,12 +271,12 @@ app.post('/api/v1/content', UserMiddleware , async (req, res )=>{
         retryCount:0
         });
 
-// kick off background worker.ts for running async task in bg.
+// ----########### give work assign in  background worker.ts for running async task in bg--> embedding.
 queueFetchContent(content._id.toString());
 
 
        
-//instant message after saving link and title...
+//instant message after saving link and title...-----> should we display on screen ???  in v2...
     res.status(200).json({
         message: "Content saved, processing metadata in background",
         contentId: content._id,
