@@ -1,5 +1,4 @@
-import AddContentModal from "./components/modal"
-import { Navbar } from "./components/Navbar"
+
 import DashboardLayout from "./layout/DashboardLayout"
 import NavbarLayout from "./layout/NavbarLayout"
 import { Dashboard } from "./pages/dashboard"

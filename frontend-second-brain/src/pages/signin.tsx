@@ -4,7 +4,6 @@ import { Inputcomponent } from "../components/inputbox";
 import axios from "axios";
 import { BACKEND_URL } from "./config";
 import { useNavigate } from "react-router-dom";
-import { Dashboard } from "./dashboard";
 import brainimg from "../assets/brainimg.png"
 import brainimgdark from "../assets/brainimgdark.png"
 import toast from "react-hot-toast";

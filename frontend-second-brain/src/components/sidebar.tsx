@@ -1,21 +1,21 @@
 
-import { CrossIcon } from "../icons/crossIcon"
+
 import { TwitterIcon } from "../icons/twitterIcon"
 import { YtIcons } from "../icons/ytIcons"
 //import { SidebarItems isActive={filter === "Twitter"}  } from "./sidebarItems"
 import brain2icon from "../assets/brain2icon.png"
-import icontext from "../assets/icontext.png"
-import secondbrainmain from "../assets/secondbrainmain.png"
+
+
 import { MenuIcon } from "../icons/menu"
-import { useState } from "react"
-import { DocsIcon } from "../icons/docsIcons"
-import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, LogOut, Instagram, Github } from "lucide-react";
+
+
+import { FileText, Link2,CircleEllipsis, LogOut, Github } from "lucide-react";
 import { SidebarItems } from "./sidebarItems"
 import { DashboardContext } from "../pages/DashboardContext"
 import React from "react"
 import { DarkmodeButton } from "./darkLightButton"
 import { useNavigate } from "react-router-dom"
-import toast from "react-hot-toast";
+
 import { ChevronsLeft } from 'lucide-react';
 
 
@@ -40,7 +40,7 @@ const navigate=useNavigate()
   const contextDashboard = React.useContext(DashboardContext);
   if (!contextDashboard) return null;
 
-  const { query, setQuery, filter, setFilter, showResults, setShowResults, isSidebarOpen, setIsSidebarOpen } = contextDashboard;
+  const { setQuery, filter, setFilter, setShowResults, isSidebarOpen, setIsSidebarOpen } = contextDashboard;
 
 
   //--logout funtionality---

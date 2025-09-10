@@ -3,7 +3,7 @@ import { X, Twitter, Youtube, FileText, Link2,CircleEllipsis, Github } from "luc
 import { Inputcomponent } from "./inputbox";
 import axios from "axios";
 import { BACKEND_URL } from "../pages/config";
-import { TwitterIcon } from "../icons/twitterIcon";
+
 import toast from "react-hot-toast";
 
 
@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 //  here isOpen is saying is the modal is open like popup or not?
 // onclose for setIsOpen false and close the modal.
 
-export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllContents  }:any) {
+export default function AddContentModal( {isOpen ,onClose,setAllContents  }:any) {
  
  
   const [ nextmodal, setNextmodal ]=useState<"select"|"enterdetails">("select")
@@ -21,15 +21,15 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
   const titleRef=useRef<HTMLInputElement>(null)
   const linkRef=useRef<HTMLInputElement>(null)
 
-  const [ loading, setLoading ]=useState(false)
+  //const [ loading, setLoading ]=useState(false)   //--> i think i don't need of loading
 
 
 
 //----------------adding content--------------
   const HandleSubmitform=async (e:React.FormEvent)=>{
-      e.preventDefault();  //prevent deafault form submission 
+      e.preventDefault();  //-- it prevent deafault form submission 
 
-    setLoading(true);
+    //setLoading(true);
     const loadingToast = toast.loading("Adding your content...");
 
 
@@ -63,7 +63,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
         id: loadingToast,
       });
     } finally {
-      setLoading(false);
+     // setLoading(false);
      // onClose()    //here also we can add like irrespective of error or sucess in adding content just close modal.
     }
   }

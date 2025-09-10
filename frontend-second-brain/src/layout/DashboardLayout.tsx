@@ -92,7 +92,7 @@
 // layouts/DashboardLayout.tsx
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/sidebar";
-import { Toaster } from "react-hot-toast";
+
 
 
 import { DashboardProvider } from "../pages/DashboardContext";   //it imports all the props

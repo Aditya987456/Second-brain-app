@@ -1,19 +1,19 @@
 import { useEffect, useMemo } from "react";
 import { DeleteIcons } from "../icons/deleteIcons";
 import { DocsIcon } from "../icons/docsIcons";
-import { InstaIcon } from "../icons/instaIcons";
+
 import { ShareIcons } from "../icons/ShareIcon";
 import { TwitterIcon } from "../icons/twitterIcon";
 import { YtIcons } from "../icons/ytIcons";
 import { useRef } from "react";
-import { CircleEllipsis, Github, Link, Link2 } from "lucide-react";
+import { CircleEllipsis, Github,  Link2 } from "lucide-react";
 import { BACKEND_URL } from "../pages/config";
 import axios from "axios";
 import toast from 'react-hot-toast';
 // import { TwitterCard } from "./TwitterCard";
-import { useState } from "react";
+
 import GitHubCard from "./githubCard";
-import { SharebrainModal } from "./SharebrainModal";
+
 
 interface Cardprops{
     id: string;

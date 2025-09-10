@@ -1,4 +1,3 @@
-import { Mail } from 'lucide-react';
 
 export const Contact = () => {
  

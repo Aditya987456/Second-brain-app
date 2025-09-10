@@ -1,8 +1,8 @@
 
-import { useState } from "react"
+
 import { CrossIcon } from "../icons/crossIcon"
 import { Button } from "./Button"
-import AddContentModal from "./modal"
+
 import { Inputcomponent } from "./inputbox"
 
 //@ts-ignore

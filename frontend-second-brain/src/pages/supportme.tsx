@@ -1,4 +1,4 @@
-import { QrCode } from "lucide-react";
+
 
 import qrcode1 from "../assets/qrcode1.png"
 import { HeartPlus } from 'lucide-react';

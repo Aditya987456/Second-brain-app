@@ -1,17 +1,17 @@
-import { useState, useEffect, useCallback } from "react"
-import { AddContent } from "../components/AddContent"
+import { useState } from "react"
+
 import { Button } from "../components/Button"
 import { Card } from "../components/card"
 import { AddIcons } from "../icons/PlusIcon"
 import { ShareIcons } from "../icons/ShareIcon"
-import { Sidebar } from "../components/sidebar"
+
 import { useContent } from "../hooks/useContent"
 import AddContentModal from "../components/modal"
-import { SearchBar } from "../components/Searchbar"
-import { SearchIcon } from "../icons/search"
+// import { SearchBar } from "../components/Searchbar"
+// import { SearchIcon } from "../icons/search"
 import { AIResponseCard } from "../components/AIresponse"
 
-import { useOutletContext } from "react-router-dom";
+// import { useOutletContext } from "react-router-dom";
 import axios from "axios"
 import React from "react"
 import { DashboardContext } from "./DashboardContext"
@@ -36,7 +36,7 @@ export function Dashboard() {
     const contextDashboard = React.useContext(DashboardContext);
     if (!contextDashboard) return null;
   
-    const { query, setQuery, filter, setFilter, showResults, setShowResults, isSidebarOpen, setIsSidebarOpen } = contextDashboard;
+    const { query, setQuery, filter, showResults, setShowResults, isSidebarOpen } = contextDashboard;
   
   const [ shareModal, setShareModal ]=useState(false)
   //----------  sharing link of the content  ---------
@@ -53,7 +53,7 @@ const [isTwitterScriptLoaded, setTwitterScriptLoaded] = useState(false);
 //const { isSidebarOpen, filter, setShowResults, showResults, query, setQuery } = useOutletContext<OutletContextType>();
 
 const [isOpen, setIsOpen] = useState(false); // Set to false initially in real project -->
-const { contents, loading, fetchcontents, setContents, setAllContents } = useContent(filter);
+const { contents, loading, fetchcontents, setAllContents } = useContent(filter);
 
 //--------------- for search ---------
 //const [query, setQuery] = useState("");
@@ -138,7 +138,7 @@ function handleDelete(id: string) {
 
 
 
-const username = localStorage.getItem("username") || "guest";    // -- will do something in v2
+//const username = localStorage.getItem("username") || "guest";    // -- will do something in v2
 const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a string
 
 
@@ -255,6 +255,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
               <div className="md:flex rounded-lg flex-wrap">
                 {results.map(({ _id, type, link, title }) => (
                   <div key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20">
+                    {/* @ts-ignore */}
                     <Card
                       id={_id}
                       type={type}
@@ -289,6 +290,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
            :
               contents.map(({ _id, type, link, title,status }) => {
                 //const { type, link, title } = item;  // it is same as passing in the props like
+                // @ts-ignore
                 return <div  key={_id} className="break-inside-avoid mb-4 md:ml-8 scroll-mt-20 transition" > <Card
                   id={_id}  
                   type={type}

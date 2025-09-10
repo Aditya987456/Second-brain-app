@@ -6,7 +6,7 @@ interface ButtonProps{
     text:string;
     startIcon?:ReactElement;   //? : optional.
     endIcon?:ReactElement;
-    onClick?: ()=>void;
+    onClick?: (e?: any) => void;
     fullwidth?:boolean;
     loading?:boolean;
 
