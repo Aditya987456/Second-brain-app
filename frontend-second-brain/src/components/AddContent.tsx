@@ -5,7 +5,7 @@ import { Button } from "./Button"
 import AddContentModal from "./modal"
 import { Inputcomponent } from "./inputbox"
 
-
+//@ts-ignore
 export const AddContent=({open, onClose})=>{
 
     return <div>

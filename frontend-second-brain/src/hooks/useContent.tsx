@@ -7,7 +7,9 @@ import axios from "axios"
 
 //creating this custom hook----------------------------
 export const useContent=(filterType = "")=>{
+  //@ts-ignore
       const [allContents, setAllContents] = useState<ContentType[]>([]);   //it have all the content fetched from server
+  //@ts-ignore
       const [contents, setContents] = useState<ContentType[]>([]);     //it has only filtered content like "", "Youtube", "Twitter"  etc.
       const [loading, setLoading] = useState(false);
      

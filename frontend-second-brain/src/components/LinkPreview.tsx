@@ -1,6 +1,7 @@
 // --> it shows the preview of any link of like websites or pages or docs using getLinkPreview who actually to api call to microlink for preview
 
 import { useEffect, useState } from "react";
+//@ts-ignore
 import { getLinkPreview, PreviewData } from "link-preview-js";
 
 type Props = {
