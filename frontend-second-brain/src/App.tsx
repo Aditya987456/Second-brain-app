@@ -18,7 +18,8 @@ function App() {
   
   return (
  
-<ThemeProvider>  
+//  here theme is provided so it works on both pages landing+dashboard
+<ThemeProvider>     
     <BrowserRouter>
     <Toaster position="top-center" reverseOrder={false} />
   <Routes>

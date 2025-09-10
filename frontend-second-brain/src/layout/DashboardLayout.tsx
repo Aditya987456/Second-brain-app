@@ -95,7 +95,7 @@ import { Sidebar } from "../components/sidebar";
 import { Toaster } from "react-hot-toast";
 
 
-import { DashboardProvider } from "../pages/DashboardContext";
+import { DashboardProvider } from "../pages/DashboardContext";   //it imports all the props
 export default function DashboardLayout() {
   return (
     <DashboardProvider>

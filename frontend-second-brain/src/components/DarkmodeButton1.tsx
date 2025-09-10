@@ -1,3 +1,5 @@
+//---currently not using this---
+
 const DarkmodeButton = () => {
   return (
     <div className="cursor-pointer p-2 rounded-full hover:bg-gray-200 dark:hover:bg-purple-200 bg-purple-100 transition">

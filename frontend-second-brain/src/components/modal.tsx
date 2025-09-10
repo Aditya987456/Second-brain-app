@@ -25,7 +25,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
 
 
 
-
+//----------------adding content--------------
   const HandleSubmitform=async (e:React.FormEvent)=>{
       e.preventDefault();  //prevent deafault form submission 
 

@@ -1,3 +1,6 @@
+//---- it is for sharing the individual contents by coping the link of that content.
+
+
 import { X } from "lucide-react"
 import { Copy } from "lucide-react"
 import toast from "react-hot-toast"

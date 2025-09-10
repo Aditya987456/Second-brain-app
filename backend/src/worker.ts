@@ -16,7 +16,7 @@ import { getOpenAISummary } from "./utils/getopenAIsummary";
 import { getMetadataFromLink } from "./utils/metadata";
 import axios from "axios";
 
-const RETRY_LIMIT=5;
+const RETRY_LIMIT=6;
 
 
 
@@ -65,7 +65,7 @@ await ContentModel.findByIdAndUpdate(item._id, {
     status: "ready",
 });
 
-console.log(`✅ Processe--> async fetching content and generated correct embedding-- ${id}`);
+//console.log(`✅ Processe--> async fetching content and generated correct embedding-- ${id}`);
 }catch(err: any) {
     console.error(`❌ Error processing-> fetching content and generating embedding ${id}:`, err.message);
 
@@ -80,7 +80,7 @@ console.log(`✅ Processe--> async fetching content and generated correct embedd
       await ContentModel.findByIdAndUpdate(id, { status: "retrying", retryCount: newRetry });
 
       const delay = Math.pow(2, newRetry) * 1000; // 2s, 4s, 8s, 16s, 32s
-      console.log(`🔄 Retrying ${id} in ${delay / 1000}s`);
+     // console.log(`🔄 Retrying ${id} in ${delay / 1000}s`);
       setTimeout(() => processContent(id), delay);
     }
   }

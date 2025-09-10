@@ -1,7 +1,5 @@
-// src/pages/LandingPage.tsx
+// ---------main landing page --> have to add grid or dot in bg-> in v2 -------
 
-import { Link2, Youtube, Twitter, FileText } from "lucide-react";
-import RightIllustration from "../components/rightillustration";
 import heroImage from "../assets/heroImage.png"
 import { useNavigate } from "react-router-dom";
 import { HandleDemo } from "./HandleDemo";
@@ -95,16 +93,6 @@ export default function LandingPage() {
       </section>
 
 
-        {/* <div className=" font-bold text-xl md:text-4xl flex justify-center md:-mt-8 mt-20 md:mb-8 ">
-          Here’s What You Can Save
-          </div>
-      
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-8 pb-16 max-w-7xl mx-auto md:mt-0 mt-6">
-        <FeatureCard icon={<Link2 className="text-blue-600" />} title="Links" description="Save and manage your online resources." />
-        <FeatureCard icon={<Youtube className="text-red-600" />} title="Videos" description="Organize and access your favorite clips." />
-        <FeatureCard icon={<Twitter className="text-sky-500" />} title="Tweets" description="Keep a collection of your saved tweets." />
-        <FeatureCard icon={<FileText className="text-purple-600" />} title="Docs" description="Collect and organize important documents." />
-      </section> */}
       <LandingSection />
 
       

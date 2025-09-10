@@ -198,7 +198,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
               onChange={(e) => setQuery(e.target.value)}   // $$$Each keystroke is captured by onChange.---> i think here no need of this??????
               type="text"
               placeholder="Let AI find it for you..."
-              className="w-full sm:pr-4 pr-0 md:pr-20 md:pl-4 pl-2 py-2 border dark:bg-zinc-800 dark:text-white border-purple-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full pr-24 overflow-x-auto  sm:pr-28  md:pl-4 pl-2 py-2 border dark:bg-zinc-800 dark:text-white border-purple-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
             />
             <button
               onClick={HandleSearch}

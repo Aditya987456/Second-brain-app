@@ -89,7 +89,8 @@ const TypeIcons=(type:string)=>{
 export function Card({id,title, link, type, isTwitterScriptLoaded, setTwitterScriptLoaded, onDelete, status, setShareModal,setSharelink}:Cardprops) {
 
 
-  //----  status color dots logic here.
+  //----  status color dots logic here
+  // ///-----------##########  but status not working properly have to define a usestate for the status  ######33.
  const statusColors: Record<string, string> = {
   ready: "",
   pending: "bg-yellow-500",
@@ -180,7 +181,7 @@ const statusTooltips: Record<string, string> = {
 //--------------revise some part of this ------------++++++++++  yt card
 const hasAlertedRef = useRef(false); // ✳️ Track alert state
 
-const embededLink = useMemo(() => {
+const embededLink = useMemo(() => {      //here using useMemo matlab-> only run convertLink when type or link will change
   if (type !== "Youtube") return "";
   return convertLink(link);
 }, [link, type]);
@@ -233,17 +234,8 @@ useEffect(() => {
 
 
 
-
-
-
-
-
-
-
-
-
-
 //////////////////////----------------------testing something.
+//@ts-ignore
 const testingsomething=()=>{
   alert('clicked saaaaar')
 }
@@ -338,7 +330,7 @@ const testingsomething=()=>{
                </div>}
                
 
-{/*    GPT explanation --
+{/*    GPT explanation ------###
 +---------------------+
 |  Your React Page    |
 |---------------------|
@@ -382,7 +374,7 @@ const testingsomething=()=>{
 
 
 
-            {/************************  twitter card  *******************************/}
+   {/************************  twitter card  *******************************/}
             
     {type==='Twitter' && 
                  <div>
@@ -437,23 +429,6 @@ const testingsomething=()=>{
            
             
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     </div>

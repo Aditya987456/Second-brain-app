@@ -15,7 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState<Theme>(() => {
     
     
-    // Check saved theme in localStorage
+    // Check saved theme in localStorage-
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored) return stored;
 
@@ -27,14 +27,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         : "light";
     }
 
-    // Default to light theme
+    // Default --> light theme
     return "light";
   });
 
 
 
 
-  // --- Apply theme to <html> and save in localStorage ...
+  // --- Apply theme to html and save in localStorage ...
   useEffect(() => {
     const root = window.document.documentElement;
 
@@ -59,7 +59,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 
 
-  //  Toggle theme-->  function---
+  //  Toggle theme----->  function---
   const toggleTheme = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
 
   return (

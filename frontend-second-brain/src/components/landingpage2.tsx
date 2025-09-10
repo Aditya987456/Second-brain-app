@@ -43,15 +43,15 @@ export default function LandingSection() {
 
 {/* --------------------------------demo video section--------------------------- */}
 
-    <section className="relative  px-6 md:px-20">
+    <section className="relative md:ml-64 md:mr-8 md:px-0">
 
 
-      <div className="max-w-7xl md:px-20  mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-x-24 items-center">
+      <div className="max-w-8xl  md:ml-8 grid grid-cols-1 md:grid-cols-2 md:gap-x-8   items-center">
         
         {/* Left: Demo Video */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }} // animate immediately on mount
+          animate={{ opacity: 1, x: 0 }} //---it animate on mounting...
           transition={{ duration: 1.0 }}
           className="w-full"
                 >
@@ -75,7 +75,7 @@ export default function LandingSection() {
             intelligent retrieval, and modular design to help you build your Second Brain effortlessly.
           </p> */}
 
-          <ul className="md:space-y-3 space-y-1">
+          <ul className="md:space-y-3 mr-52 space-y-1">
             {[
               "Upload or sync notes, articles, videos, bookmarks, and more—all in one place that’s easy to access anytime.",
               "We embed and index your content using vector search",
@@ -83,7 +83,7 @@ export default function LandingSection() {
             ].map((step, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="w-4 md:w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-secondary text-sm md:text-lg">{step}</span>
+                <span className="text-gray-700 dark:text-secondary font-light text-sm md:text-lg">{step}</span>
               </li>
             ))}
           </ul>

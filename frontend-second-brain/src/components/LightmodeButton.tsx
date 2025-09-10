@@ -16,4 +16,3 @@ export const LightmodeButton=()=>{
     </div>
 }
 
-// onClick="(() => document.body.classList.toggle('dark'))()"
