@@ -59,7 +59,7 @@ export default function AddContentModal( {isOpen ,onClose, fetchcontents,setAllC
               });
         
       } catch (error) {
-       toast.error(String(error) || "Something went wrong", {
+       toast.error('Error in adding content' + String(error) || "Something went wrong", {
         id: loadingToast,
       });
     } finally {

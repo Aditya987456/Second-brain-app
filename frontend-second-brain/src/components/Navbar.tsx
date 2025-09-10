@@ -48,10 +48,10 @@ export const Navbar = () => {
      <header
   className="fixed z-[999] h-16 w-full max-w-[1250px] 
   bg-purple-200/30
-  dark:bg-[#111111]/60
+  dark:bg-[#2D2D2E]/30
   backdrop-blur-md rounded-full md:rounded-xl
-  border-purple-600 dark:border-[#1E1E1E]
-  shadow-md dark:shadow-purple-900/30
+  border-purple-600 dark:border-[#242323]
+  shadow-md dark:shadow-purple-900/40
   px-4 md:px-6 py-4 mx-1
   md:mt-0 dark:border-x-4
   flex items-center justify-between gap-4"

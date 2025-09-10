@@ -17,13 +17,13 @@ export default function LandingPage() {
 
 
   return (
-    <div className=" min-h-screen text-black dark:text-white dark:bg-darkbg">
+    <div className="md:-mb-8 min-h-screen text-black dark:text-white dark:bg-darkbg">
       {/* Header
       <Navbar/>    */}
 
 
       {/* Hero */}
-      <section className="flex flex-col-reverse  md:flex-row md:justify-center  md:px-20 min-h-screen  max-w-7xl mx-auto mt-2 md:-mt-6 ">
+      <section className="flex flex-col-reverse  md:flex-row md:justify-center md:px-20 min-h-screen  max-w-7xl mx-auto mt-2 md:-mt-6 ">
         {/* Left Content */}
         <div className="flex-1 ">
           <div className="flex justify-center md:justify-normal">

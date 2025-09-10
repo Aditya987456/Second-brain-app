@@ -32,7 +32,7 @@ export default function LandingSection() {
   ]; 
 
   return (
-    <div className="min-h-screen text-gray-800 md:px-6 mt-10 md:-mt-32 dark:bg-darkbg">
+    <div className="min-h-screen text-gray-800 md:px-6 mt-10 md:-mt-36 dark:bg-darkbg">
    
 
 
