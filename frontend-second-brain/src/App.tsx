@@ -12,7 +12,7 @@ import { About } from "./pages/about"
 import { Contact } from "./pages/contact"
 
 import { Toaster } from 'react-hot-toast';
-import { Analytics } from "@vercel/analytics/next"
+import { AnalyticsTracker } from "./components/AnalyticsTracker"
   
 function App() {
   
@@ -22,6 +22,10 @@ function App() {
 <ThemeProvider>     
     <BrowserRouter>
     <Toaster position="top-center" reverseOrder={false} />
+     
+      {/* Track SPA route changes */}
+        <AnalyticsTracker />
+
   <Routes>
 
     {/* Layout with Navbar */}
@@ -41,8 +45,7 @@ function App() {
 
 
   </Routes>
-{/* here added the analytics so user on any page it gets added */}
-   <Analytics />
+
 </BrowserRouter>
 
 
