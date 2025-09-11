@@ -12,6 +12,7 @@ import { About } from "./pages/about"
 import { Contact } from "./pages/contact"
 
 import { Toaster } from 'react-hot-toast';
+import { Analytics } from "@vercel/analytics/next"
   
 function App() {
   
@@ -40,6 +41,8 @@ function App() {
 
 
   </Routes>
+{/* here added the analytics so user on any page it gets added */}
+   <Analytics />
 </BrowserRouter>
 
 
