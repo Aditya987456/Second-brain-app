@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { Inputcomponent } from "../components/inputbox";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import brainimg from "../assets/brainimg.png"
 import brainimgdark from "../assets/brainimgdark.png"
 import toast from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
 
 
 
@@ -16,11 +17,12 @@ export function Signin() {
 
     const emailidref=useRef<HTMLInputElement>(null);
     const passwordref=useRef<HTMLInputElement>(null);
-
+    const [ loader, setLoader]=useState(false)
 
 
     async function signin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
+        setLoader(true)
 
         try {
 
@@ -48,7 +50,9 @@ export function Signin() {
         }catch (error:any) {
             console.log(error.response?.data);  // <-- ?
             toast.error(error.response?.data?.message || "Something went wrong");
-            }
+            }finally{
+                setLoader(false)
+            }   
 
     }
 
@@ -84,7 +88,9 @@ export function Signin() {
                         <div className="py-4">
                        <Button
                             variant="primary"
-                            text="Sign in"
+                            text={loader ? "Signing in..." : "Sign in"}
+                            
+                            
                             fullwidth={true}
                             //@ts-ignore
                             onClick={ (e:any)=>signin(e) }

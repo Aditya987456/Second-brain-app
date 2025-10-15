@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { Inputcomponent } from "../components/inputbox";
 import axios from "axios";
@@ -18,7 +18,7 @@ export function Signup() {
      const UsernameRef = useRef<HTMLInputElement>(null);
      const EmailRef = useRef<HTMLInputElement>(null);
      const PasswordRef = useRef<HTMLInputElement>(null);
-
+     const [ loader, setLoader ]=useState(false)
      const navigate = useNavigate()
     
 
@@ -27,6 +27,7 @@ export function Signup() {
 
     async function signup(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();    //$$$$ because --> triggers a default submit, which reloads the page unless explicitly prevented.
+        setLoader(true)
         try {
 
         const username = UsernameRef.current?.value;
@@ -55,6 +56,8 @@ export function Signup() {
             console.log('signup error'+ error)
             toast.error('signup error')
             
+        }finally{
+            setLoader(false)
         }
         
     }
@@ -97,7 +100,7 @@ export function Signup() {
                        <Button
                        
                             variant="primary"
-                            text="Sign up"
+                            text={loader? 'signing up ...': 'Sign up'}
                             fullwidth={true}
                             onClick={(e:any)=>signup(e)}
                        /></div>
