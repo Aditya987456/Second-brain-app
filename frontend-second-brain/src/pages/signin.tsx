@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import brainimg from "../assets/brainimg.png"
 import brainimgdark from "../assets/brainimgdark.png"
 import toast from "react-hot-toast";
-import { BeatLoader } from "react-spinners";
+//import { BeatLoader } from "react-spinners";
 
 
 
