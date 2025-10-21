@@ -7,12 +7,13 @@ import LandingSection from "../components/landingpage2";
 //import heroimagedark1 from "../assets/heroimagedark1.png"
 //import heroimagedark2 from "../assets/heroimagedark2.png"
 import heroimagedark4 from "../assets/heroimagedark4.png"
-
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function LandingPage() {
 
- 
-
+ const [ loader, setLoader ]=useState(false)
   const navigate=useNavigate()
 
 
@@ -62,22 +63,23 @@ export default function LandingPage() {
             <div className="flex justify-center md:justify-normal items-stretch md:gap-16 lg:gap-24 gap-12 mt-8 md:mt-16 lg:mt-16 md:ml-6 lg:ml-10">
                 <button
                   type="button"
-                  onClick={() => navigate('/signup')}
+                  onClick={()=>{navigate('/signup')}}
                   className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 md:px-4 md:py-2
                     lg:px-6 lg:py-4 xl:px-8 xl:py-4  rounded-md md:rounded-md lg:rounded-lg xl:rounded-lg
                      text-sm md:text-lg lg:text-lg xl:text-xl font-semibold transition"
                 >
-                  Get Started
+               Get Started
+                
                 </button>
+
 
                 <button
                   className="dark:hover:bg-zinc-800 dark:text-white px-8 py-2 lg:px-8 lg:py-4 md:px-4
                    md:py-1 font-semibold text-[15px] text-sm lg:text-lg xl:text-xl  border-purple-600 border-2 hover:bg-purple-200
                     text-purple-900 rounded-md md:rounded-md lg:rounded-lg xl:rounded-xl transition"
-                   onClick={()=>HandleDemo(navigate)}
+                   onClick={()=>HandleDemo({navigate, setLoader})}
                 >
-                 
-                  Try Demo
+                 {loader?  <ThreeDots height={15} color="white"/>: 'Try Demo'}  
                 </button>
             </div>
 

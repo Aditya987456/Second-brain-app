@@ -284,7 +284,7 @@ const isDemo = localStorage.getItem("isDemo") === "true"; // it's stored as a st
           { loading?
             (
               <div className="absolute left-1/2 top-1/2">
-              <BeatLoader color="#8A27F2" size={50} margin={10} loading={loading} />
+              <BeatLoader color="#8A27F2" size={40} margin={10} loading={loading} />
               </div>
             )
            :
