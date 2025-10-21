@@ -8,7 +8,7 @@ import LandingSection from "../components/landingpage2";
 //import heroimagedark2 from "../assets/heroimagedark2.png"
 import heroimagedark4 from "../assets/heroimagedark4.png"
 import { useState } from "react";
-import toast from "react-hot-toast";
+//import toast from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function LandingPage() {
