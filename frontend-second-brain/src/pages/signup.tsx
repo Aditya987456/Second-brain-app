@@ -39,7 +39,10 @@ export function Signup() {
             toast.error("All fields are required.");
             return;
             }
-
+        
+        toast.loading('Please wait!. It may take at max 60 sec', {
+            id:'abcd'
+        })
 
         //sending post request --> to backend
         await axios.post(BACKEND_URL + "/api/v1/signup" , {
@@ -48,13 +51,17 @@ export function Signup() {
 
         navigate('/signin')  //redirect to the next page.
 
-        toast.success('Successfully created account, Now signin')
+        toast.success('Successfully created account, Now signin', {
+            id:'abcd'
+        })
 
 
             
         } catch (error) {
             console.log('signup error'+ error)
-            toast.error('signup error')
+            toast.error('signup error', {
+            id:'abcd'
+        })
             
         }finally{
             setLoader(false)

@@ -29,6 +29,9 @@ export function Signin() {
             const emailid=emailidref.current?.value.trim()
             const password=passwordref.current?.value.trim()
 
+            toast.loading('Please wait!, It may take at max 60 sec.', {
+            id:'signin'
+            })
 
             const response=await axios.post(BACKEND_URL+"/api/v1/signin", {
                 emailID:emailid,
@@ -42,14 +45,18 @@ export function Signin() {
             localStorage.setItem("isDemo", response.data.isDemo);
 
 
-            toast.success(response.data.message || "Signed in successfully!"); 
+            toast.success(response.data.message || "Signed in successfully!" , {
+            id:'signin'
+            }); 
 
             navigate('/dashboard')
 
             
         }catch (error:any) {
             console.log(error.response?.data);  // <-- ?
-            toast.error(error.response?.data?.message || "Something went wrong");
+            toast.error(error.response?.data?.message || "Something went wrong" , {
+            id:'signin'
+        });
             }finally{
                 setLoader(false)
             }   
