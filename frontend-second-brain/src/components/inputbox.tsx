@@ -1,22 +1,34 @@
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
-
-interface inputprops {
-  placeholder:string;
-  reference?:any
-  type?:string
+interface InputProps {
+  placeholder: string;
+  reference?: any;
+  type?: string;
 }
 
-export function Inputcomponent( {placeholder, reference, type="text" }: inputprops ) {
-console.log('type =============== '+ type)
-    return <div>
+export function Inputcomponent({ placeholder, reference, type = "text" }: InputProps) {
+  const [showPassword, setShowPassword] = useState(false);
 
-        <input
-          ref={reference}
-          type={type}
-          placeholder={placeholder}
-          //className="px-2 py-2 my-2 border rounded-sm"
-          className="w-full px-4 py-2 border dark:bg-[#191919] dark:text-white border-[#E0E0E0] rounded focus:outline-none focus:ring-1 focus:ring-[#867eb5]"
-            
-           />
+  return (
+    <div className="relative w-full">
+      <input
+        ref={reference}
+        type={type === "password" ? (showPassword ? "text" : "password") : type}
+        placeholder={placeholder}
+        className="w-full px-4 py-2 border dark:bg-[#191919] dark:text-white border-[#E0E0E0] rounded focus:outline-none focus:ring-1 focus:ring-[#867eb5] pr-10" 
+        // 👆 Added pr-10 to make space for the icon on the right
+      />
 
-        </div>}
+      {type === "password" && (
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+        >
+          {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+        </button>
+      )}
+    </div>
+  );
+}

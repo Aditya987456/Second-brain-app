@@ -26,7 +26,7 @@ export function Signin() {
 
         try {
 
-            const emailid=emailidref.current?.value.trim()
+            const emailid=emailidref.current?.value.trim().toLocaleLowerCase()
             const password=passwordref.current?.value.trim()
 
             toast.loading('Please wait!, It may take at max 60 sec.', {

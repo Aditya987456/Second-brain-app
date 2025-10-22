@@ -13,3 +13,12 @@ html.theme-transition {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+
+ /* Hiding default password hide or show button icons of the browsers  */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-clear-button,
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none !important;
+}
+

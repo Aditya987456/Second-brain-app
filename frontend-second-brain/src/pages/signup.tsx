@@ -32,7 +32,7 @@ export function Signup() {
 
         const username = UsernameRef.current?.value;
         const password = PasswordRef.current?.value.trim();
-        const emailid = EmailRef.current?.value.trim();
+        const emailid = EmailRef.current?.value.trim().toLocaleLowerCase();
 
         //checking not submit the form empty.
         if (!emailid || !username || !password) {
