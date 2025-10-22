@@ -83,6 +83,7 @@ export function Signin() {
                        <Inputcomponent
                             reference={emailidref}
                             placeholder="gmail"
+                            type="string"
                        /></div>
 
 
@@ -90,6 +91,7 @@ export function Signin() {
                         <Inputcomponent
                             reference={passwordref}
                             placeholder="password"
+                            type="password"
                        /></div>
 
                         <div className="py-4">

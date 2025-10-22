@@ -101,6 +101,7 @@ export function Signup() {
                         <Inputcomponent
                             reference={PasswordRef}
                             placeholder="password"
+                            type="password"
                        /></div>
 
                         <div className="py-4">

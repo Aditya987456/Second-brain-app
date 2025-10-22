@@ -79,7 +79,7 @@ export default function LandingPage() {
                     text-purple-900 rounded-md md:rounded-md lg:rounded-lg xl:rounded-xl transition"
                    onClick={()=>HandleDemo({navigate, setLoader})}
                 >
-                 {loader?  <ThreeDots height={15} color="white"/>: 'Try Demo'}  
+                 {loader?  <ThreeDots height={10} color="purple"/>: 'Try Demo'}  
                 </button>
             </div>
 
