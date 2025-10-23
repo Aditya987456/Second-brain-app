@@ -21,6 +21,13 @@ export function Signup() {
      const [ loader, setLoader ]=useState(false)
      const navigate = useNavigate()
     
+//#### because we are accessing it in the finally block as well for clearing the timeout so for that we can't define it in the try block only.
+  let stage1: ReturnType<typeof setTimeout>;
+  let stage2: ReturnType<typeof setTimeout>;
+  let stage3: ReturnType<typeof setTimeout>;
+  let stage4: ReturnType<typeof setTimeout>;
+  let stage_5_withRetry: ReturnType<typeof setTimeout>;
+
 
 
 
@@ -36,13 +43,38 @@ export function Signup() {
 
         //checking not submit the form empty.
         if (!emailid || !username || !password) {
-            toast.error("All fields are required.");
+            toast.error("All fields are required.", { id: "signup" });
             return;
             }
         
-        toast.loading('Please wait!. It may take at max 60 sec', {
-            id:'abcd'
-        })
+        toast.loading("Creating your Second brain...", { id: "signup" });
+
+        stage1=setTimeout(() => {
+            toast.loading("Starting server, please wait...", { id: "signup" });
+        }, 10000);
+
+        stage2=setTimeout(() => {
+            toast.loading("Connecting to backend...", { id: "signup" });
+        }, 30000);
+
+        stage3=setTimeout(() => {
+            toast.loading("Setting up your account...", { id: "signup" });
+        }, 45000);
+
+        stage4=setTimeout(() => {
+            toast.loading("Final step in progress...", { id: "signup" });
+        }, 60000);
+
+        stage_5_withRetry=setTimeout(() => {
+            toast.error("Still waiting? 🔁 Try refreshing.", {
+            id: "signup",
+            // action: {
+            //   label: "🔄 Refresh",
+            //   onClick: () => window.location.reload(),
+            // },
+            });
+        }, 75000);
+
 
         //sending post request --> to backend
         await axios.post(BACKEND_URL + "/api/v1/signup" , {
@@ -52,7 +84,7 @@ export function Signup() {
         navigate('/signin')  //redirect to the next page.
 
         toast.success('Successfully created account, Now signin', {
-            id:'abcd'
+            id:'signup'
         })
 
 
@@ -60,11 +92,16 @@ export function Signup() {
         } catch (error) {
             console.log('signup error'+ error)
             toast.error('signup error', {
-            id:'abcd'
+            id:'signup'
         })
             
         }finally{
             setLoader(false)
+            clearTimeout(stage1);
+            clearTimeout(stage2);
+            clearTimeout(stage3);
+            clearTimeout(stage4);
+            clearTimeout(stage_5_withRetry);
         }
         
     }

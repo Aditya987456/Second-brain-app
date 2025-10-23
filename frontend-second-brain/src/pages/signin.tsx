@@ -20,6 +20,15 @@ export function Signin() {
     const [ loader, setLoader]=useState(false)
 
 
+//#### because we are accessing it in the finally block as well for clearing the timeout so for that we can't define it in the try block only.
+  let stage1: ReturnType<typeof setTimeout>;
+  let stage2: ReturnType<typeof setTimeout>;
+  let stage3: ReturnType<typeof setTimeout>;
+  let stage4: ReturnType<typeof setTimeout>;
+  let stage_5_withRetry: ReturnType<typeof setTimeout>;
+
+
+
     async function signin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
         setLoader(true)
@@ -29,9 +38,45 @@ export function Signin() {
             const emailid=emailidref.current?.value.trim().toLocaleLowerCase()
             const password=passwordref.current?.value.trim()
 
-            toast.loading('Please wait!, It may take at max 60 sec.', {
-            id:'signin'
-            })
+
+            //checking not submit the form empty.
+            if (!emailid || !password) {
+                toast.error("All fields are required.", { id: "signin" });
+                return;
+                }
+
+
+
+
+            toast.loading("Signing in...", { id: "signin" });
+
+            stage1 = setTimeout(() => {
+                toast.loading("Starting server, please wait...", { id: "signin" });
+                }, 15000);
+
+            stage2 = setTimeout(() => {
+                toast.loading("Connecting to backend...", { id: "signin" });
+                }, 30000);
+
+            stage3 = setTimeout(() => {
+                toast.loading("Loading your second brain...", { id: "signin" });
+                }, 45000);
+
+            stage4 = setTimeout(() => {
+                toast.loading("Final step in progress...", { id: "signin" });
+                }, 60000);
+
+            stage_5_withRetry = setTimeout(() => {
+                toast.error("Still waiting? 🔁 Try refreshing.", {
+                id: "signin",
+                //---------???? refresh button also will add this later.
+                // action: {      
+                //   label: "🔄 Refresh",
+                //   onClick: () => window.location.reload(),
+                // },
+                });
+            }, 75000);
+
 
             const response=await axios.post(BACKEND_URL+"/api/v1/signin", {
                 emailID:emailid,
@@ -59,6 +104,11 @@ export function Signin() {
         });
             }finally{
                 setLoader(false)
+                clearTimeout(stage1);
+                clearTimeout(stage2);
+                clearTimeout(stage3);
+                clearTimeout(stage4);
+                clearTimeout(stage_5_withRetry);
             }   
 
     }
